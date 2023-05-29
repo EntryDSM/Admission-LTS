@@ -1,17 +1,11 @@
-import React, { SetStateAction } from 'react';
 import styled from '@emotion/styled';
-import { Textarea, theme } from '@team-entry/design_system';
+import { Textarea } from '@team-entry/design_system';
 import { useInput } from '../../hooks/useInput';
-import { UserWriteValue } from '../../interface/type';
+import { useUserWrite } from '../../hooks/useStore';
 
-interface UserTypeProps {
-  userWriteValues: UserWriteValue;
-  setUserWriteValues: React.Dispatch<SetStateAction<UserWriteValue>>;
-}
-
-const UserWrite = ({ userWriteValues, setUserWriteValues }: UserTypeProps) => {
-  const { form: inputValues, onChange: changeInputValues } = useInput(userWriteValues);
-  setUserWriteValues(inputValues);
+const UserWrite = () => {
+  const { userWrite, setUserWrite } = useUserWrite();
+  const { form: inputValues, onChange: changeInputValues } = useInput(userWrite);
   return (
     <_Wrapper>
       <Textarea
@@ -20,7 +14,7 @@ const UserWrite = ({ userWriteValues, setUserWriteValues }: UserTypeProps) => {
         limit={2000}
         width="100%"
         name="intro"
-        value={inputValues.intro}
+        value={userWrite.intro}
         onChange={changeInputValues}
       />
       <Textarea
@@ -29,7 +23,7 @@ const UserWrite = ({ userWriteValues, setUserWriteValues }: UserTypeProps) => {
         limit={2000}
         width="100%"
         name="study_plan"
-        value={inputValues.study_plan}
+        value={userWrite.study_plan}
         onChange={changeInputValues}
       />
     </_Wrapper>

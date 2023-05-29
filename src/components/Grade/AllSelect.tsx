@@ -1,29 +1,22 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
-import { IElement, Grade } from '../../interface/type';
+import { Grade } from '../../interface/type';
+import { useGradeElement } from '../../hooks/useStore';
 
 interface IAllSelect {
   current: number;
-  element?: IElement[][];
-  setElement?: React.Dispatch<SetStateAction<IElement[][]>>;
 }
 
 const arr: Grade[] = ['A', 'B', 'C', 'D', 'E', 'X'];
 
-const AllSelect = ({ current, element, setElement }: IAllSelect) => {
+const AllSelect = ({ current }: IAllSelect) => {
   const [grade, setGrade] = useState<Grade>('A');
+  const { setAllGrade } = useGradeElement();
 
   useEffect(() => {
     setGrade('A');
   }, [current]);
-
-  const ChangeAllGrade = (grade: Grade) => {
-    let copiedItems = [...element];
-    copiedItems[current].map((res) => (res.grade = grade));
-    setElement(copiedItems);
-    setGrade(grade);
-  };
 
   return (
     <_Wrapper>
@@ -33,7 +26,12 @@ const AllSelect = ({ current, element, setElement }: IAllSelect) => {
       {arr.map((arr) => {
         const isClick = arr === grade;
         return (
-          <_Button onClick={() => ChangeAllGrade(arr)} backgroundColor={isClick}>
+          <_Button
+            onClick={() => {
+              setAllGrade(current, arr), setGrade(arr);
+            }}
+            backgroundColor={isClick}
+          >
             <Text color={isClick ? 'realWhite' : 'black600'} size="body4">
               {arr}
             </Text>

@@ -3,18 +3,15 @@ import styled from '@emotion/styled';
 import { Dropdown, Input, Radio, Text, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useInput } from '../../hooks/useInput';
-import { UserInfoValue } from '../../interface/type';
 import { ArrayForDropdown } from '../../utils/ArrayForDropdown';
+import { useUserInfo, useUserType } from '../../hooks/useStore';
 
-interface UserTypeProps {
-  userInfoValues: UserInfoValue;
-  setUserInfoValues: React.Dispatch<React.SetStateAction<UserInfoValue>>;
-  isBlackExam: boolean;
-}
+const UserInfo = () => {
+  const { userInfo } = useUserInfo();
+  const { userType } = useUserType();
+  const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
 
-const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypeProps) => {
-  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userInfoValues);
-  setUserInfoValues(inputValues);
+  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userInfo);
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files, name } = e.target;
@@ -25,7 +22,7 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
         setInputValues({
-          ...userInfoValues,
+          ...userInfo,
           [name]: reader.result,
         });
       };
@@ -36,8 +33,8 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
     <_ApplicationWrapper>
       <label>
         <_ApplicationImg>
-          {userInfoValues.img ? (
-            <Img src={userInfoValues.img} alt="userImg" />
+          {userInfo.img ? (
+            <Img src={userInfo.img} alt="userImg" />
           ) : (
             <Text color="black700" size="body3">
               원서 사진을 등록해주세요
@@ -74,7 +71,7 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
           width={85}
           onChange={(e) =>
             setInputValues({
-              ...userInfoValues,
+              ...userInfo,
               birthday: e,
             })
           }
@@ -86,7 +83,7 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
           width={85}
           onChange={(e) =>
             setInputValues({
-              ...userInfoValues,
+              ...userInfo,
               birthday: e,
             })
           }
@@ -98,7 +95,7 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
           width={85}
           onChange={(e) =>
             setInputValues({
-              ...userInfoValues,
+              ...userInfo,
               birthday: e,
             })
           }

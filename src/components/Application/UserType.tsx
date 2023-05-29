@@ -1,18 +1,13 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { Radio, theme, Dropdown } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useInput } from '../../hooks/useInput';
-import { UserTypeValue } from '../../interface/type';
+import { useUserType } from '../../hooks/useStore';
 
-interface UserTypeProps {
-  userTypeValues: UserTypeValue;
-  setUserTypeValues: React.Dispatch<React.SetStateAction<UserTypeValue>>;
-}
+const UserType = () => {
+  const { userType } = useUserType();
+  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userType);
 
-const UserType = ({ userTypeValues, setUserTypeValues }: UserTypeProps) => {
-  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userTypeValues);
-  setUserTypeValues(inputValues);
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
@@ -37,21 +32,21 @@ const UserType = ({ userTypeValues, setUserTypeValues }: UserTypeProps) => {
             value="SOCIAL"
             onClick={changeInputValues}
             isChecked={
-              userTypeValues.application_type !== 'COMMON' &&
-              userTypeValues.application_type !== 'MEISTER' &&
-              userTypeValues.application_type !== ''
+              userType.application_type !== 'COMMON' &&
+              userType.application_type !== 'MEISTER' &&
+              userType.application_type !== ''
             }
           />
           <Dropdown
             className="application_type"
             width={110}
             disabled={
-              userTypeValues.application_type === 'COMMON' ||
-              userTypeValues.application_type === 'MEISTER' ||
-              userTypeValues.application_type === ''
+              userType.application_type === 'COMMON' ||
+              userType.application_type === 'MEISTER' ||
+              userType.application_type === ''
             }
             onChange={(e) => {
-              setInputValues({ ...userTypeValues, application_type: e });
+              setInputValues({ ...userType, application_type: e });
             }}
             options={['사회통합', '사회통합1', '사회통합2', '사회통합3']}
             unit="년"
@@ -104,14 +99,14 @@ const UserType = ({ userTypeValues, setUserTypeValues }: UserTypeProps) => {
         <Dropdown
           className="graduated_at"
           width={85}
-          onChange={(e) => setInputValues({ ...userTypeValues, graduated_at: e })}
+          onChange={(e) => setInputValues({ ...userType, graduated_at: e })}
           options={['2023', '2024', '2025']}
           unit="년"
         />
         <Dropdown
           className="graduated_at"
           width={85}
-          onChange={(e) => setInputValues({ ...userTypeValues, graduated_at: e })}
+          onChange={(e) => setInputValues({ ...userType, graduated_at: e })}
           options={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}
           unit="월"
         />
