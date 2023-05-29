@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import Modal from '../components/Modal/Modal';
 
 type ModalType = '' | 'CANCEL_SUBMIT' | 'SIGN_OUT';
@@ -17,7 +17,10 @@ export const useModal = ({ useBlur = true } = {}) => {
   }, []);
 
   return {
-    Modal: isOpen ? ({ children }) => <Modal onClose={useBlur && close}>{children}</Modal> : () => null,
+    Modal:
+      isOpen && useBlur
+        ? ({ children }: { children: ReactNode }) => <Modal onClose={useBlur && close}>{children}</Modal>
+        : () => null,
     open,
     close,
     isOpen,

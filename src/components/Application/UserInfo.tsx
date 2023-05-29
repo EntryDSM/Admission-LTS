@@ -15,17 +15,19 @@ const UserInfo = () => {
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files, name } = e.target;
-    if (files && files.length === 0) {
-      return;
-    } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onloadend = () => {
-        setInputValues({
-          ...userInfo,
-          [name]: reader.result,
-        });
-      };
+    if (files) {
+      if (files.length === 0) {
+        return;
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {
+          setInputValues({
+            ...userInfo,
+            [name]: reader.result,
+          });
+        };
+      }
     }
   };
 

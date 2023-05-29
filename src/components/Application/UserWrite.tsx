@@ -4,8 +4,8 @@ import { useInput } from '../../hooks/useInput';
 import { useUserWrite } from '../../hooks/useStore';
 
 const UserWrite = () => {
-  const { userWrite, setUserWrite } = useUserWrite();
-  const { form: inputValues, onChange: changeInputValues } = useInput(userWrite);
+  const { userWrite } = useUserWrite();
+  const { onChange: changeInputValues } = useInput(userWrite);
   return (
     <_Wrapper>
       <Textarea
