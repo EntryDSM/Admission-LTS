@@ -1,4 +1,3 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Global } from '@emotion/react';
 import { StyledProvider } from '@team-entry/design_system';

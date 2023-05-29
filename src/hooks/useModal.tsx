@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import Modal from '@/components/Modal';
+import { useCallback, useState } from 'react';
+import Modal from '../components/Modal/Modal';
 
 type ModalType = '' | 'CANCEL_SUBMIT' | 'SIGN_OUT';
 

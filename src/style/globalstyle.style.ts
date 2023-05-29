@@ -1,4 +1,4 @@
-import { css } from "@emotion/css";
+import { css } from '@emotion/css';
 
 export const GlobalStyle = css`
   html,
@@ -125,7 +125,7 @@ export const GlobalStyle = css`
   blockquote:after,
   q:before,
   q:after {
-    content: "";
+    content: '';
     content: none;
   }
   table {
@@ -139,7 +139,7 @@ export const GlobalStyle = css`
     font-weight: 300;
     color: black;
     line-height: 1.2;
-    font-family: "Avenir LT Std", sans-serif;
+    font-family: 'Avenir LT Std', sans-serif;
   }
   .normal {
     font-weight: 400;
