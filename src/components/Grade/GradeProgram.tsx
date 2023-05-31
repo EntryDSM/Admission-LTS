@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
-import { useGradeElement } from '../../hooks/useStore';
 import AllSelect from './AllSelect';
 import ProgressBar from './ProgressBar';
 import SelectGrade from './SelectGrade/SelectGrade';
@@ -10,16 +9,10 @@ interface ProgramProps {
 }
 
 const Program = ({ current }: ProgramProps) => {
-  const { gradeElement } = useGradeElement();
-
   let arr = [
-    { step: 1, title: '3학년 1학기', gradeElement },
-    {
-      step: 2,
-      title: '직전 학기',
-      gradeElement,
-    },
-    { step: 3, title: '직전전 학기', gradeElement },
+    { step: 1, title: '3학년 1학기' },
+    { step: 2, title: '직전 학기' },
+    { step: 3, title: '직전전 학기' },
   ];
 
   const subject = ['국어', '사회', '역사', '수학', '과학', '기술가정', '영어'];

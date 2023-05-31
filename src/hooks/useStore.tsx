@@ -1,8 +1,8 @@
 import { create } from 'zustand';
-import { GradeElement, UserInfo, UserType, userWrite } from '../interface/type';
+import { IGradeElement, IUserInfo, IUserType, IUserWrite } from '../interface/type';
 import { devtools } from 'zustand/middleware';
 
-export const useUserType = create<UserType>()(
+export const useUserType = create<IUserType>()(
   devtools((set) => ({
     userType: {
       application_type: '',
@@ -11,11 +11,12 @@ export const useUserType = create<UserType>()(
       graduated_at: '',
       application_remark: '',
     },
+    ㅁㄴㅇㄹ: () => set((state) => ({ userType: { ...state.userType } })),
     setUserType: (name: string, value: string) => set((state) => ({ userType: { ...state.userType, [name]: value } })),
   })),
 );
 
-export const useUserInfo = create<UserInfo>()(
+export const useUserInfo = create<IUserInfo>()(
   devtools((set) => ({
     userInfo: {
       img: '',
@@ -31,7 +32,7 @@ export const useUserInfo = create<UserInfo>()(
   })),
 );
 
-export const useUserWrite = create<userWrite>()(
+export const useUserWrite = create<IUserWrite>()(
   devtools((set) => ({
     userWrite: {
       intro: '',
@@ -42,7 +43,7 @@ export const useUserWrite = create<userWrite>()(
   })),
 );
 
-export const useGradeElement = create<GradeElement>()(
+export const useGradeElement = create<IGradeElement>()(
   devtools((set) => ({
     gradeElement: [
       ['A', 'A', 'A', 'A', 'A', 'A', 'A'],

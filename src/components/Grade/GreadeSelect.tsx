@@ -1,19 +1,19 @@
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
-import { Grade } from '../../interface/type';
+import { GradeType } from '../../interface/type';
 import { useGradeElement } from '../../hooks/useStore';
+import { gradeArr } from '../../constant/grade';
 
 interface ISelectGrade {
   current: number;
   title: string;
   subTitle?: string;
   placeholder?: string;
-  grade?: Grade;
+  grade?: GradeType;
   index: number;
 }
 
 const SelectGrade = ({ title, subTitle, grade, current, index }: ISelectGrade) => {
-  let arr: Grade[] = ['A', 'B', 'C', 'D', 'E', 'X'];
   const { setElementValue } = useGradeElement();
   return (
     <_Wrapper>
@@ -26,7 +26,7 @@ const SelectGrade = ({ title, subTitle, grade, current, index }: ISelectGrade) =
         </Text>
       </_Texts>
       <_Buttons>
-        {arr.map((item: Grade) => {
+        {gradeArr.map((item: GradeType) => {
           return (
             <_Button key={item} onClick={() => setElementValue(index, current, item)} isClick={item === grade}>
               {item}

@@ -1,12 +1,12 @@
-export type Grade = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';
+export type GradeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';
 
-export interface GradeElement {
+export interface IGradeElement {
   gradeElement: string[][];
   setElementValue: (current: number, index: number, value: string) => void;
   setAllGrade: (current: number, grade: string) => void;
 }
 
-export interface UserType {
+export interface IUserType {
   userType: {
     application_type: string;
     is_daejeon: string;
@@ -17,7 +17,7 @@ export interface UserType {
   setUserType: (name: string, value: string) => void;
 }
 
-export interface UserInfo {
+export interface IUserInfo {
   userInfo: {
     img: string;
     name: string;
@@ -31,7 +31,7 @@ export interface UserInfo {
   setUserInfo: (name: string, value: string) => void;
 }
 
-export interface userWrite {
+export interface IUserWrite {
   userWrite: {
     intro: string;
     study_plan: string;
