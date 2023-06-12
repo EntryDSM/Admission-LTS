@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IGradeElement, IUserInfo, IUserType, IUserWrite } from '../interface/type';
+import { IGradeElement, IUserInfo, IUserType, IUserWrite, InputType } from '../interface/type';
 import { devtools } from 'zustand/middleware';
 
 export const useUserType = create<IUserType>()(
@@ -11,8 +11,15 @@ export const useUserType = create<IUserType>()(
       graduated_at: '',
       application_remark: '',
     },
-    ㅁㄴㅇㄹ: () => set((state) => ({ userType: { ...state.userType } })),
-    setUserType: (name: string, value: string) => set((state) => ({ userType: { ...state.userType, [name]: value } })),
+    setUserType: (e: InputType) =>
+      set((state) => {
+        const { name, value } = e.currentTarget;
+        return { userType: { ...state.userType, [name]: value } };
+      }),
+    setAllValues: <T,>(initialForm: T) =>
+      set((state) => {
+        return { userType: { ...state.userType, ...initialForm } };
+      }),
   })),
 );
 
@@ -28,7 +35,15 @@ export const useUserInfo = create<IUserInfo>()(
       parent_tel: '',
       telephone_number: '',
     },
-    setUserInfo: (name: string, value: string) => set((state) => ({ userInfo: { ...state.userInfo, [name]: value } })),
+    setUserInfo: (e: InputType) =>
+      set((state) => {
+        const { name, value } = e.currentTarget;
+        return { userInfo: { ...state.userInfo, [name]: value } };
+      }),
+    setAllValues: <T,>(initialForm: T) =>
+      set((state) => {
+        return { userInfo: { ...state.userInfo, ...initialForm } };
+      }),
   })),
 );
 
@@ -38,8 +53,15 @@ export const useUserWrite = create<IUserWrite>()(
       intro: '',
       study_plan: '',
     },
-    setUserWrite: (name: string, value: string) =>
-      set((state) => ({ userWrite: { ...state.userWrite, [name]: value } })),
+    setUserWrite: (e: InputType) =>
+      set((state) => {
+        const { name, value } = e.currentTarget;
+        return { userWrite: { ...state.userWrite, [name]: value } };
+      }),
+    setAllValues: <T,>(initialForm: T) =>
+      set((state) => {
+        return { userWrite: { ...state.userWrite, ...initialForm } };
+      }),
   })),
 );
 

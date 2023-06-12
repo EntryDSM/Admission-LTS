@@ -1,13 +1,10 @@
 import styled from '@emotion/styled';
 import { Radio, theme, Dropdown } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useInput } from '../../hooks/useInput';
 import { useUserType } from '../../hooks/useStore';
 
 const UserType = () => {
-  const { userType } = useUserType();
-  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userType);
-
+  const { userType, setUserType, setAllValues } = useUserType();
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
@@ -15,22 +12,22 @@ const UserType = () => {
           label="일반"
           name="application_type"
           value="COMMON"
-          onClick={changeInputValues}
-          isChecked={inputValues.application_type === 'COMMON'}
+          onClick={setUserType}
+          isChecked={userType.application_type === 'COMMON'}
         />
         <Radio
           label="마이스터 인재"
           name="application_type"
           value="MEISTER"
-          onClick={changeInputValues}
-          isChecked={inputValues.application_type === 'MEISTER'}
+          onClick={setUserType}
+          isChecked={userType.application_type === 'MEISTER'}
         />
         <_RadioWrapper>
           <Radio
             label=""
             name="application_type"
             value="SOCIAL"
-            onClick={changeInputValues}
+            onClick={setUserType}
             isChecked={
               userType.application_type !== 'COMMON' &&
               userType.application_type !== 'MEISTER' &&
@@ -46,7 +43,7 @@ const UserType = () => {
               userType.application_type === ''
             }
             onChange={(e) => {
-              setInputValues({ ...userType, application_type: e });
+              setAllValues({ ...userType, application_type: e });
             }}
             options={['사회통합', '사회통합1', '사회통합2', '사회통합3']}
             unit="년"
@@ -59,15 +56,15 @@ const UserType = () => {
           label="대전"
           name="is_daejeon"
           value="true"
-          onClick={changeInputValues}
-          isChecked={inputValues.is_daejeon === 'true'}
+          onClick={setUserType}
+          isChecked={userType.is_daejeon === 'true'}
         />
         <Radio
           label="전국"
           name="is_daejeon"
           value="false"
-          onClick={changeInputValues}
-          isChecked={inputValues.is_daejeon === 'false'}
+          onClick={setUserType}
+          isChecked={userType.is_daejeon === 'false'}
         />
       </ApplicationContent>
 
@@ -76,22 +73,22 @@ const UserType = () => {
           label="졸업 예정"
           name="educational_status"
           value="PROSPECTIVE_GRADUATE"
-          onClick={changeInputValues}
-          isChecked={inputValues.educational_status === 'PROSPECTIVE_GRADUATE'}
+          onClick={setUserType}
+          isChecked={userType.educational_status === 'PROSPECTIVE_GRADUATE'}
         />
         <Radio
           label="졸업"
           name="educational_status"
           value="GRADUATE"
-          onClick={changeInputValues}
-          isChecked={inputValues.educational_status === 'GRADUATE'}
+          onClick={setUserType}
+          isChecked={userType.educational_status === 'GRADUATE'}
         />
         <Radio
           label="검정고시"
           name="educational_status"
           value="QUALIFICATION_EXAM"
-          onClick={changeInputValues}
-          isChecked={inputValues.educational_status === 'QUALIFICATION_EXAM'}
+          onClick={setUserType}
+          isChecked={userType.educational_status === 'QUALIFICATION_EXAM'}
         />
       </ApplicationContent>
 
@@ -99,14 +96,14 @@ const UserType = () => {
         <Dropdown
           className="graduated_at"
           width={85}
-          onChange={(e) => setInputValues({ ...userType, graduated_at: e })}
+          onChange={(e) => setAllValues({ ...userType, graduated_at: e })}
           options={['2023', '2024', '2025']}
           unit="년"
         />
         <Dropdown
           className="graduated_at"
           width={85}
-          onChange={(e) => setInputValues({ ...userType, graduated_at: e })}
+          onChange={(e) => setAllValues({ ...userType, graduated_at: e })}
           options={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}
           unit="월"
         />
@@ -122,15 +119,15 @@ const UserType = () => {
           label="국가 유공자"
           name="application_remark"
           value="PRIVILEGED_ADMISSION"
-          onClick={changeInputValues}
-          isChecked={inputValues.application_remark === 'PRIVILEGED_ADMISSION'}
+          onClick={setUserType}
+          isChecked={userType.application_remark === 'PRIVILEGED_ADMISSION'}
         />
         <Radio
           label="특례 입학 대상"
           name="application_remark"
           value="SPECIAL"
-          onClick={changeInputValues}
-          isChecked={inputValues.application_remark === 'SPECIAL'}
+          onClick={setUserType}
+          isChecked={userType.application_remark === 'SPECIAL'}
         />
       </ApplicationContent>
     </_ApplicationWrapper>

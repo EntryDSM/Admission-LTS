@@ -1,10 +1,6 @@
-export type GradeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';
-
-export interface IGradeElement {
-  gradeElement: string[][];
-  setElementValue: (current: number, index: number, value: string) => void;
-  setAllGrade: (current: number, grade: string) => void;
-}
+export type InputType =
+  | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  | React.MouseEvent<HTMLInputElement, MouseEvent>;
 
 export interface IUserType {
   userType: {
@@ -14,7 +10,8 @@ export interface IUserType {
     graduated_at: string;
     application_remark: string;
   };
-  setUserType: (name: string, value: string) => void;
+  setUserType: (e: InputType) => void;
+  setAllValues: <T>(initialForm: T) => void;
 }
 
 export interface IUserInfo {
@@ -28,7 +25,8 @@ export interface IUserInfo {
     parent_tel: string;
     telephone_number: string;
   };
-  setUserInfo: (name: string, value: string) => void;
+  setUserInfo: (e: InputType) => void;
+  setAllValues: <T>(initialForm: T) => void;
 }
 
 export interface IUserWrite {
@@ -36,5 +34,14 @@ export interface IUserWrite {
     intro: string;
     study_plan: string;
   };
-  setUserWrite: (name: string, value: string) => void;
+  setUserWrite: (e: InputType) => void;
+  setAllValues: <T>(initialForm: T) => void;
+}
+
+export type GradeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';
+
+export interface IGradeElement {
+  gradeElement: string[][];
+  setElementValue: (current: number, index: number, value: string) => void;
+  setAllGrade: (current: number, grade: string) => void;
 }

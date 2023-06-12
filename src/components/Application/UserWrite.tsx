@@ -1,11 +1,9 @@
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { useInput } from '../../hooks/useInput';
 import { useUserWrite } from '../../hooks/useStore';
 
 const UserWrite = () => {
-  const { userWrite } = useUserWrite();
-  const { onChange: changeInputValues } = useInput(userWrite);
+  const { userWrite, setUserWrite } = useUserWrite();
   return (
     <_Wrapper>
       <Textarea
@@ -15,7 +13,7 @@ const UserWrite = () => {
         width="100%"
         name="intro"
         value={userWrite.intro}
-        onChange={changeInputValues}
+        onChange={setUserWrite}
       />
       <Textarea
         placeholder="내용을 입력해주세요"
@@ -24,7 +22,7 @@ const UserWrite = () => {
         width="100%"
         name="study_plan"
         value={userWrite.study_plan}
-        onChange={changeInputValues}
+        onChange={setUserWrite}
       />
     </_Wrapper>
   );

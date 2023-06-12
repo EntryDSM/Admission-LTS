@@ -2,16 +2,13 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Dropdown, Input, Radio, Text, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useInput } from '../../hooks/useInput';
 import { ArrayForDropdown } from '../../utils/ArrayForDropdown';
 import { useUserInfo, useUserType } from '../../hooks/useStore';
 
 const UserInfo = () => {
-  const { userInfo } = useUserInfo();
   const { userType } = useUserType();
+  const { userInfo, setUserInfo, setAllValues } = useUserInfo();
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
-
-  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userInfo);
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files, name } = e.target;
@@ -22,7 +19,7 @@ const UserInfo = () => {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
-          setInputValues({
+          setAllValues({
             ...userInfo,
             [name]: reader.result,
           });
@@ -30,7 +27,7 @@ const UserInfo = () => {
       }
     }
   };
-
+  
   return (
     <_ApplicationWrapper>
       <label>
@@ -47,32 +44,19 @@ const UserInfo = () => {
       </label>
 
       <ApplicationContent grid={1} title="이름" width={40}>
-        <Input
-          type="text"
-          placeholder="이름"
-          width={230}
-          name="name"
-          onChange={changeInputValues}
-          value={inputValues.name}
-        />
+        <Input type="text" placeholder="이름" width={230} name="name" onChange={setUserInfo} value={userInfo.name} />
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
-        <Radio label="남자" name="sex" value="MEN" onClick={changeInputValues} isChecked={inputValues.sex === 'MEN'} />
-        <Radio
-          label="여자"
-          name="sex"
-          value="WOMEN"
-          onClick={changeInputValues}
-          isChecked={inputValues.sex === 'WOMEN'}
-        />
+        <Radio label="남자" name="sex" value="MEN" onClick={setUserInfo} isChecked={userInfo.sex === 'MEN'} />
+        <Radio label="여자" name="sex" value="WOMEN" onClick={setUserInfo} isChecked={userInfo.sex === 'WOMEN'} />
       </ApplicationContent>
       <ApplicationContent grid={3} title="생년월일" width={40}>
         <Dropdown
           className="birthday"
           width={85}
           onChange={(e) =>
-            setInputValues({
+            setAllValues({
               ...userInfo,
               birthday: e,
             })
@@ -84,7 +68,7 @@ const UserInfo = () => {
           className="birthday"
           width={85}
           onChange={(e) =>
-            setInputValues({
+            setAllValues({
               ...userInfo,
               birthday: e,
             })
@@ -96,7 +80,7 @@ const UserInfo = () => {
           className="birthday"
           width={85}
           onChange={(e) =>
-            setInputValues({
+            setAllValues({
               ...userInfo,
               birthday: e,
             })
@@ -112,8 +96,8 @@ const UserInfo = () => {
             placeholder="검정고시 평균"
             width={230}
             name="blackExam"
-            value={inputValues.blackExam}
-            onChange={changeInputValues}
+            value={userInfo.blackExam}
+            onChange={setUserInfo}
             unit="점"
           />
         </ApplicationContent>
@@ -126,8 +110,8 @@ const UserInfo = () => {
               placeholder="보호자명"
               width={230}
               name="parent_name"
-              value={inputValues.parent_name}
-              onChange={changeInputValues}
+              value={userInfo.parent_name}
+              onChange={setUserInfo}
             />
           </ApplicationContent>
 
@@ -137,8 +121,8 @@ const UserInfo = () => {
               placeholder="본인 연락처"
               width={230}
               name="telephone_number"
-              value={inputValues.telephone_number}
-              onChange={changeInputValues}
+              value={userInfo.telephone_number}
+              onChange={setUserInfo}
             />
           </ApplicationContent>
 
@@ -148,8 +132,8 @@ const UserInfo = () => {
               placeholder="보호자 연락처"
               width={230}
               name="parent_tel"
-              value={inputValues.parent_tel}
-              onChange={changeInputValues}
+              value={userInfo.parent_tel}
+              onChange={setUserInfo}
             />
           </ApplicationContent>
         </>
