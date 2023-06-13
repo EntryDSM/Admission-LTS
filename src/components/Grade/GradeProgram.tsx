@@ -9,7 +9,7 @@ interface ProgramProps {
 }
 
 const Program = ({ current }: ProgramProps) => {
-  let arr = [
+  const titles = [
     { step: 1, title: '3학년 1학기' },
     { step: 2, title: '직전 학기' },
     { step: 3, title: '직전전 학기' },
@@ -22,12 +22,12 @@ const Program = ({ current }: ProgramProps) => {
       <Title>
         <div>
           <Text color="black900" size="header1">
-            {arr[current].title}
+            {titles[current].title}
           </Text>
         </div>
         {current < 3 && <AllSelect current={current} />}
       </Title>
-      <ProgressBar step={arr[current].step} />
+      <ProgressBar step={titles[current].step} />
       <_Selects>
         {subject.map((item, index) => {
           return <SelectGrade key={item} title={item} current={current} index={index} />;
