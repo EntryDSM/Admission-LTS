@@ -29,6 +29,16 @@ export interface IUserInfo {
   setAllValues: <T>(initialForm: T) => void;
 }
 
+export interface IUserMiddle {
+  userMiddle: {
+    name: string;
+    studentId: number;
+    telephoneNumber: number;
+  };
+  setUserMiddle: (e: InputType) => void;
+  setAllValues: <T>(initialForm: T) => void;
+}
+
 export interface IUserWrite {
   userWrite: {
     intro: string;
@@ -44,4 +54,5 @@ export interface IGradeElement {
   gradeElement: string[][];
   setElementValue: (current: number, index: number, value: string) => void;
   setAllGrade: (current: number, grade: string) => void;
+  setWriteValue: (e: InputType, current: number, index: number) => void;
 }

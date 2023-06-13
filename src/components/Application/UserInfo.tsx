@@ -27,7 +27,7 @@ const UserInfo = () => {
       }
     }
   };
-  
+
   return (
     <_ApplicationWrapper>
       <label>
@@ -138,6 +138,9 @@ const UserInfo = () => {
           </ApplicationContent>
         </>
       )}
+      <ApplicationContent grid={1} title='주소'>
+        {/* 여기에 주소 추가하면 됩니다. */}
+      </ApplicationContent>
     </_ApplicationWrapper>
   );
 };

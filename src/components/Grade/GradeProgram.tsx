@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
-import AllSelect from './AllSelect';
+import AllSelect from './SelectGrade/AllSelect';
 import ProgressBar from './ProgressBar';
 import SelectGrade from './SelectGrade/SelectGrade';
+import WriteAttendence from './WriteInfo/WriteAttendence';
+import WriteVolunteer from './WriteInfo/WriteVolunteer';
 
 interface ProgramProps {
   current: number;
@@ -13,8 +15,9 @@ const Program = ({ current }: ProgramProps) => {
     { step: 1, title: '3학년 1학기' },
     { step: 2, title: '직전 학기' },
     { step: 3, title: '직전전 학기' },
+    { step: 4, title: '출석 점수' },
+    { step: 5, title: '봉사 점수' },
   ];
-
   const subject = ['국어', '사회', '역사', '수학', '과학', '기술가정', '영어'];
 
   return (
@@ -29,9 +32,12 @@ const Program = ({ current }: ProgramProps) => {
       </Title>
       <ProgressBar step={titles[current].step} />
       <_Selects>
-        {subject.map((item, index) => {
-          return <SelectGrade key={item} title={item} current={current} index={index} />;
-        })}
+        {current < 3 &&
+          subject.map((item, index) => {
+            return <SelectGrade key={item} title={item} current={current} index={index} />;
+          })}
+        {current === 3 && <WriteAttendence />}
+        {current === 4 && <WriteVolunteer />}
       </_Selects>
     </_Wrapper>
   );

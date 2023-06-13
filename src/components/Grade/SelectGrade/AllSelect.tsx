@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
-import { GradeType } from '../../interface/type';
-import { useGradeElement } from '../../hooks/useStore';
-import { gradeArr } from '../../constant/grade';
+import { GradeType } from '../../../interface/type';
+import { useGradeElement } from '../../../hooks/useStore';
+import { gradeArr } from '../../../constant/grade';
 
 interface IAllSelect {
   current: number;
@@ -26,6 +26,7 @@ const AllSelect = ({ current }: IAllSelect) => {
         const isClick = item === grade;
         return (
           <_Button
+            key={item}
             onClick={() => {
               setAllGrade(current, item);
               setGrade(item);

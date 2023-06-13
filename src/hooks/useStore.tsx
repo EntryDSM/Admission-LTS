@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IGradeElement, IUserInfo, IUserType, IUserWrite, InputType } from '../interface/type';
+import { IGradeElement, IUserInfo, IUserMiddle, IUserType, IUserWrite, InputType } from '../interface/type';
 import { devtools } from 'zustand/middleware';
 
 export const useUserType = create<IUserType>()(
@@ -47,6 +47,25 @@ export const useUserInfo = create<IUserInfo>()(
   })),
 );
 
+export const useUserMiddle = create<IUserMiddle>()(
+  devtools((set) => ({
+    userMiddle: {
+      name: '',
+      studentId: 0,
+      telephoneNumber: 0,
+    },
+    setUserMiddle: (e: InputType) =>
+      set((state) => {
+        const { name, value } = e.currentTarget;
+        return { userMiddle: { ...state.userMiddle, [name]: value } };
+      }),
+    setAllValues: <T,>(initialForm: T) =>
+      set((state) => {
+        return { userMiddle: { ...state.userMiddle, ...initialForm } };
+      }),
+  })),
+);
+
 export const useUserWrite = create<IUserWrite>()(
   devtools((set) => ({
     userWrite: {
@@ -86,6 +105,13 @@ export const useGradeElement = create<IGradeElement>()(
         copiedItems[current] = copiedItems[current].map(() => {
           return grade;
         });
+        return { gradeElement: [...copiedItems] };
+      }),
+    setWriteValue: (e: InputType, current: number, index: number) =>
+      set((state) => {
+        const copiedItems = [...state.gradeElement];
+        const { value } = e.currentTarget;
+        copiedItems[current][index] = value;
         return { gradeElement: [...copiedItems] };
       }),
   })),
