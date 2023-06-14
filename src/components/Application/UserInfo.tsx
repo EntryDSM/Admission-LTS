@@ -1,17 +1,22 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Dropdown, Input, Radio, Text, theme } from '@team-entry/design_system';
+import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { ArrayForDropdown } from '../../utils/ArrayForDropdown';
-import { useUserInfo, useUserType } from '../../hooks/useStore';
+import { useUserInfo, useUserPhoto, useUserType } from '../../hooks/useStore';
+import { useModal } from '../../hooks/useModal';
+import DaumPostCode from 'react-daum-postcode';
+import Modal from '../Modal/Modal';
 
 const UserInfo = () => {
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setAllValues } = useUserInfo();
+  const { photo, setUserPhoto } = useUserPhoto();
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
+  const { close, modalState, setModalState } = useModal();
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files, name } = e.target;
+    const { files } = e.target;
     if (files) {
       if (files.length === 0) {
         return;
@@ -19,21 +24,29 @@ const UserInfo = () => {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
-          setAllValues({
-            ...userInfo,
-            [name]: reader.result,
-          });
+          setUserPhoto(reader.result as string);
+          console.log(photo);
         };
       }
     }
+  };
+
+  const handleAddress = (data: any) => {
+    close();
+    console.log(data);
+    setAllValues({
+      ...userInfo,
+      address: data?.address,
+      post_code: data?.zonecode,
+    });
   };
 
   return (
     <_ApplicationWrapper>
       <label>
         <_ApplicationImg>
-          {userInfo.img ? (
-            <Img src={userInfo.img} alt="userImg" />
+          {photo ? (
+            <Img src={photo} alt="userImg" />
           ) : (
             <Text color="black700" size="body3">
               원서 사진을 등록해주세요
@@ -138,9 +151,37 @@ const UserInfo = () => {
           </ApplicationContent>
         </>
       )}
-      <ApplicationContent grid={1} title='주소'>
-        {/* 여기에 주소 추가하면 됩니다. */}
+      <ApplicationContent grid={1} title="주소">
+        <VStack margin={[30, 0]} gap={10}>
+          <HStack gap={20}>
+            <Input name="post_code" type="text" width={125} placeholder="우편번호" value={userInfo.post_code} />
+            <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} />
+            <Button
+              kind="outlined"
+              onClick={() => {
+                setModalState('SEARCH_ADDRESS');
+              }}
+            >
+              검색
+            </Button>
+          </HStack>
+          <HStack gap={20}>
+            <Input
+              name="detail_address"
+              type="text"
+              width={485}
+              placeholder="상세주소"
+              onChange={setUserInfo}
+              value={userInfo.detail_address}
+            />
+          </HStack>
+        </VStack>
       </ApplicationContent>
+      {modalState === 'SEARCH_ADDRESS' && (
+        <Modal onClose={close}>
+          <DaumPostCode onComplete={handleAddress} />
+        </Modal>
+      )}
     </_ApplicationWrapper>
   );
 };

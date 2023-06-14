@@ -92,7 +92,7 @@ const UserType = () => {
         />
       </ApplicationContent>
 
-      <ApplicationContent grid={2} title="졸업 연월">
+      <ApplicationContent grid={2} title="졸업 연월" placeholder="졸업 예정자의 경우 졸업 예정월만 선택해주세요">
         <Dropdown
           className="graduated_at"
           width={85}

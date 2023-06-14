@@ -16,7 +16,6 @@ export interface IUserType {
 
 export interface IUserInfo {
   userInfo: {
-    img: string;
     name: string;
     sex: string;
     birthday: string;
@@ -24,9 +23,18 @@ export interface IUserInfo {
     parent_name: string;
     parent_tel: string;
     telephone_number: string;
+    home_tel: string;
+    address: string;
+    detail_address: string;
+    post_code: string;
   };
   setUserInfo: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
+}
+
+export interface IUserPhoto {
+  photo: string;
+  setUserPhoto: (photo: string) => void;
 }
 
 export interface IUserMiddle {
@@ -55,4 +63,11 @@ export interface IGradeElement {
   setElementValue: (current: number, index: number, value: string) => void;
   setAllGrade: (current: number, grade: string) => void;
   setWriteValue: (e: InputType, current: number, index: number) => void;
+}
+
+export type ModalType = '' | 'CANCEL_SUBMIT' | 'SIGN_OUT' | 'SEARCH_ADDRESS';
+
+export interface IModalState {
+  modalState: ModalType;
+  setModalState: (modalState: ModalType) => void;
 }

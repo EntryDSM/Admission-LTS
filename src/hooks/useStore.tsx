@@ -1,6 +1,15 @@
 import { create } from 'zustand';
-import { IGradeElement, IUserInfo, IUserMiddle, IUserType, IUserWrite, InputType } from '../interface/type';
-import { devtools } from 'zustand/middleware';
+import {
+  IGradeElement,
+  IModalState,
+  IUserInfo,
+  IUserMiddle,
+  IUserPhoto,
+  IUserType,
+  IUserWrite,
+  InputType,
+} from '../interface/type';
+import { createJSONStorage, devtools, persist } from 'zustand/middleware';
 
 export const useUserType = create<IUserType>()(
   devtools((set) => ({
@@ -26,7 +35,6 @@ export const useUserType = create<IUserType>()(
 export const useUserInfo = create<IUserInfo>()(
   devtools((set) => ({
     userInfo: {
-      img: '',
       name: '',
       sex: '',
       birthday: '',
@@ -34,6 +42,10 @@ export const useUserInfo = create<IUserInfo>()(
       parent_name: '',
       parent_tel: '',
       telephone_number: '',
+      home_tel: '',
+      address: '',
+      detail_address: '',
+      post_code: '',
     },
     setUserInfo: (e: InputType) =>
       set((state) => {
@@ -44,6 +56,13 @@ export const useUserInfo = create<IUserInfo>()(
       set((state) => {
         return { userInfo: { ...state.userInfo, ...initialForm } };
       }),
+  })),
+);
+
+export const useUserPhoto = create<IUserPhoto>()(
+  devtools((set) => ({
+    photo: '',
+    setUserPhoto: (photo) => set(() => ({ photo })),
   })),
 );
 
@@ -85,34 +104,47 @@ export const useUserWrite = create<IUserWrite>()(
 );
 
 export const useGradeElement = create<IGradeElement>()(
+  persist(
+    devtools((set) => ({
+      gradeElement: [
+        ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
+        ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
+        ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
+        ['', '', '', '', ''],
+        ['', '', ''],
+      ],
+      setElementValue: (current: number, index: number, value: string) =>
+        set((state) => {
+          const copiedItems = [...state.gradeElement];
+          copiedItems[current][index] = value;
+          return { gradeElement: copiedItems };
+        }),
+      setAllGrade: (current: number, grade: string) =>
+        set((state) => {
+          const copiedItems = [...state.gradeElement];
+          copiedItems[current] = copiedItems[current].map(() => {
+            return grade;
+          });
+          return { gradeElement: [...copiedItems] };
+        }),
+      setWriteValue: (e: InputType, current: number, index: number) =>
+        set((state) => {
+          const copiedItems = [...state.gradeElement];
+          const { value } = e.currentTarget;
+          copiedItems[current][index] = value;
+          return { gradeElement: [...copiedItems] };
+        }),
+    })),
+    {
+      name: 'user_grade',
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);
+
+export const useModalStateStore = create<IModalState>()(
   devtools((set) => ({
-    gradeElement: [
-      ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
-      ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
-      ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
-      ['', '', '', '', ''],
-      ['', '', ''],
-    ],
-    setElementValue: (current: number, index: number, value: string) =>
-      set((state) => {
-        const copiedItems = [...state.gradeElement];
-        copiedItems[current][index] = value;
-        return { gradeElement: copiedItems };
-      }),
-    setAllGrade: (current: number, grade: string) =>
-      set((state) => {
-        const copiedItems = [...state.gradeElement];
-        copiedItems[current] = copiedItems[current].map(() => {
-          return grade;
-        });
-        return { gradeElement: [...copiedItems] };
-      }),
-    setWriteValue: (e: InputType, current: number, index: number) =>
-      set((state) => {
-        const copiedItems = [...state.gradeElement];
-        const { value } = e.currentTarget;
-        copiedItems[current][index] = value;
-        return { gradeElement: [...copiedItems] };
-      }),
+    modalState: '',
+    setModalState: (modalState) => set(() => ({ modalState })),
   })),
 );

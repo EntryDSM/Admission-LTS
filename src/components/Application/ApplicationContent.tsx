@@ -43,7 +43,7 @@ const _ApplicationContent = styled.div<{ width?: number }>`
   align-items: center;
   justify-content: space-between;
   width: ${({ width }) => (width ? `${width}rem` : '100%')};
-  height: 85px;
+  min-height: 85px;
   padding: 0px 32px 0px 16px;
   border-bottom: 1px solid ${theme.color.black100};
   &:last-child {
