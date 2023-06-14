@@ -1,43 +1,52 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Dropdown, Input, Radio, Text, theme } from '@team-entry/design_system';
+import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useInput } from '../../hooks/useInput';
-import { UserInfoValue } from '../../interface/type';
-import { ArrayForDropdown } from '../../utils/ArrayForDropdown';
+import { useUserInfo, useUserPhoto, useUserType } from '../../hooks/useStore';
+import { useModal } from '../../hooks/useModal';
+import DaumPostCode from 'react-daum-postcode';
+import Modal from '../Modal/Modal';
+import { generateNumberArray } from '../../utils/GenerateNumberArray';
 
-interface UserTypeProps {
-  userInfoValues: UserInfoValue;
-  setUserInfoValues: React.Dispatch<React.SetStateAction<UserInfoValue>>;
-  isBlackExam: boolean;
-}
-
-const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypeProps) => {
-  const { form: inputValues, setForm: setInputValues, onChange: changeInputValues } = useInput(userInfoValues);
-  setUserInfoValues(inputValues);
+const UserInfo = () => {
+  const { userType } = useUserType();
+  const { userInfo, setUserInfo, setAllValues, setDropdown } = useUserInfo();
+  const { photo, setUserPhoto } = useUserPhoto();
+  const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
+  const { close, modalState, setModalState } = useModal();
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files, name } = e.target;
-    if (files && files.length === 0) {
-      return;
-    } else {
-      const reader = new FileReader();
-      reader.readAsDataURL(files[0]);
-      reader.onloadend = () => {
-        setInputValues({
-          ...userInfoValues,
-          [name]: reader.result,
-        });
-      };
+    const { files } = e.target;
+    if (files) {
+      if (files.length === 0) {
+        return;
+      } else {
+        const reader = new FileReader();
+        reader.readAsDataURL(files[0]);
+        reader.onloadend = () => {
+          setUserPhoto(reader.result as string);
+          console.log(photo);
+        };
+      }
     }
+  };
+
+  const handleAddress = (data: any) => {
+    close();
+    console.log(data);
+    setAllValues({
+      ...userInfo,
+      address: data?.address,
+      post_code: data?.zonecode,
+    });
   };
 
   return (
     <_ApplicationWrapper>
       <label>
         <_ApplicationImg>
-          {userInfoValues.img ? (
-            <Img src={userInfoValues.img} alt="userImg" />
+          {photo ? (
+            <Img src={photo} alt="userImg" />
           ) : (
             <Text color="black700" size="body3">
               원서 사진을 등록해주세요
@@ -48,61 +57,33 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
       </label>
 
       <ApplicationContent grid={1} title="이름" width={40}>
-        <Input
-          type="text"
-          placeholder="이름"
-          width={230}
-          name="name"
-          onChange={changeInputValues}
-          value={inputValues.name}
-        />
+        <Input type="text" placeholder="이름" width={230} name="name" onChange={setUserInfo} value={userInfo.name} />
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
-        <Radio label="남자" name="sex" value="MEN" onClick={changeInputValues} isChecked={inputValues.sex === 'MEN'} />
-        <Radio
-          label="여자"
-          name="sex"
-          value="WOMEN"
-          onClick={changeInputValues}
-          isChecked={inputValues.sex === 'WOMEN'}
-        />
+        <Radio label="남자" name="sex" value="MEN" onClick={setUserInfo} isChecked={userInfo.sex === 'MEN'} />
+        <Radio label="여자" name="sex" value="WOMEN" onClick={setUserInfo} isChecked={userInfo.sex === 'WOMEN'} />
       </ApplicationContent>
       <ApplicationContent grid={3} title="생년월일" width={40}>
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) =>
-            setInputValues({
-              ...userInfoValues,
-              birthday: e,
-            })
-          }
-          options={ArrayForDropdown(2000, 2024)}
+          onChange={(e) => setDropdown(0, e, 'birthday')}
+          options={generateNumberArray(2000, 2024)}
           unit="년"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) =>
-            setInputValues({
-              ...userInfoValues,
-              birthday: e,
-            })
-          }
-          options={ArrayForDropdown(1, 12)}
+          onChange={(e) => setDropdown(1, e, 'birthday')}
+          options={generateNumberArray(1, 12)}
           unit="월"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) =>
-            setInputValues({
-              ...userInfoValues,
-              birthday: e,
-            })
-          }
-          options={ArrayForDropdown(1, 31)}
+          onChange={(e) => setDropdown(2, e, 'birthday')}
+          options={generateNumberArray(1, 31)}
           unit="일"
         />
       </ApplicationContent>
@@ -113,8 +94,8 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
             placeholder="검정고시 평균"
             width={230}
             name="blackExam"
-            value={inputValues.blackExam}
-            onChange={changeInputValues}
+            value={userInfo.blackExam}
+            onChange={setUserInfo}
             unit="점"
           />
         </ApplicationContent>
@@ -127,8 +108,8 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
               placeholder="보호자명"
               width={230}
               name="parent_name"
-              value={inputValues.parent_name}
-              onChange={changeInputValues}
+              value={userInfo.parent_name}
+              onChange={setUserInfo}
             />
           </ApplicationContent>
 
@@ -138,8 +119,8 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
               placeholder="본인 연락처"
               width={230}
               name="telephone_number"
-              value={inputValues.telephone_number}
-              onChange={changeInputValues}
+              value={userInfo.telephone_number}
+              onChange={setUserInfo}
             />
           </ApplicationContent>
 
@@ -149,11 +130,42 @@ const UserInfo = ({ userInfoValues, setUserInfoValues, isBlackExam }: UserTypePr
               placeholder="보호자 연락처"
               width={230}
               name="parent_tel"
-              value={inputValues.parent_tel}
-              onChange={changeInputValues}
+              value={userInfo.parent_tel}
+              onChange={setUserInfo}
             />
           </ApplicationContent>
         </>
+      )}
+      <ApplicationContent grid={1} title="주소">
+        <VStack margin={[30, 0]} gap={10}>
+          <HStack gap={20}>
+            <Input name="post_code" type="text" width={125} placeholder="우편번호" value={userInfo.post_code} />
+            <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} />
+            <Button
+              kind="outlined"
+              onClick={() => {
+                setModalState('SEARCH_ADDRESS');
+              }}
+            >
+              검색
+            </Button>
+          </HStack>
+          <HStack gap={20}>
+            <Input
+              name="detail_address"
+              type="text"
+              width={485}
+              placeholder="상세주소"
+              onChange={setUserInfo}
+              value={userInfo.detail_address}
+            />
+          </HStack>
+        </VStack>
+      </ApplicationContent>
+      {modalState === 'SEARCH_ADDRESS' && (
+        <Modal onClose={close}>
+          <DaumPostCode onComplete={handleAddress} />
+        </Modal>
       )}
     </_ApplicationWrapper>
   );

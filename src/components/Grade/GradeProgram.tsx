@@ -1,60 +1,43 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
-import AllSelect from './AllSelect';
+import AllSelect from './SelectGrade/AllSelect';
 import ProgressBar from './ProgressBar';
-import SelectGrade from './SelectGrade';
-import { IElement } from '../../interface/type';
-
-interface arrProps {
-  step: number;
-  title: string;
-  element: IElement[][];
-  subTitle?: string | undefined;
-}
+import SelectGrade from './SelectGrade/SelectGrade';
+import WriteAttendence from './WriteInfo/WriteAttendence';
+import WriteVolunteer from './WriteInfo/WriteVolunteer';
 
 interface ProgramProps {
-  arr: arrProps[];
   current: number;
-  element: IElement[][];
-  setElement: React.Dispatch<React.SetStateAction<IElement[][]>>;
 }
 
-const Program = ({ arr, current, element, setElement }: ProgramProps) => {
+const Program = ({ current }: ProgramProps) => {
+  const titles = [
+    { step: 1, title: '3학년 1학기' },
+    { step: 2, title: '직전 학기' },
+    { step: 3, title: '직전전 학기' },
+    { step: 4, title: '출석 점수' },
+    { step: 5, title: '봉사 점수' },
+  ];
+  const subject = ['국어', '사회', '역사', '수학', '과학', '기술가정', '영어'];
+
   return (
     <_Wrapper>
       <Title>
         <div>
           <Text color="black900" size="header1">
-            {arr[current].title}
+            {titles[current].title}
           </Text>
-          {arr[current].subTitle && (
-            <Text color="black600" size="body1">
-              {arr[current].subTitle}
-            </Text>
-          )}
         </div>
-        {current < 3 && <AllSelect current={current} element={element} setElement={setElement} />}
+        {current < 3 && <AllSelect current={current} />}
       </Title>
-      <ProgressBar step={arr[current].step} />
+      <ProgressBar step={titles[current].step} />
       <_Selects>
-        {arr[current]?.element[current]?.map((res, index) => {
-          const { title, subTitle, type, grade, placeholder, unit } = res;
-          return (
-            <SelectGrade
-              current={current}
-              title={title}
-              subTitle={subTitle}
-              type={type}
-              placeholder={placeholder}
-              unit={unit}
-              grade={grade}
-              element={element}
-              setElement={setElement}
-              index={index}
-            />
-          );
-        })}
+        {current < 3 &&
+          subject.map((item, index) => {
+            return <SelectGrade key={item} title={item} current={current} index={index} />;
+          })}
+        {current === 3 && <WriteAttendence />}
+        {current === 4 && <WriteVolunteer />}
       </_Selects>
     </_Wrapper>
   );

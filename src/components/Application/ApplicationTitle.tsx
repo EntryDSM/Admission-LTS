@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
 
-interface ApplicationTitleProps {
+interface IApplicationTitleProps {
   title: string;
 }
 
-const ApplicationTitle = ({ title }: ApplicationTitleProps) => {
+const ApplicationTitle = ({ title }: IApplicationTitleProps) => {
   return (
     <Wrapper>
       <Text size="title2" color="black600">

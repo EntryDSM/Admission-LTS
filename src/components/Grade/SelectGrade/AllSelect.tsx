@@ -1,41 +1,40 @@
-import React, { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
-import { IElement, Grade } from '../../interface/type';
+import { GradeType } from '../../../interface/type';
+import { useGradeElement } from '../../../hooks/useStore';
+import { gradeArr } from '../../../constant/grade';
 
 interface IAllSelect {
   current: number;
-  element?: IElement[][];
-  setElement?: React.Dispatch<SetStateAction<IElement[][]>>;
 }
 
-const arr: Grade[] = ['A', 'B', 'C', 'D', 'E', 'X'];
-
-const AllSelect = ({ current, element, setElement }: IAllSelect) => {
-  const [grade, setGrade] = useState<Grade>('A');
+const AllSelect = ({ current }: IAllSelect) => {
+  const [grade, setGrade] = useState<GradeType>('A');
+  const { setAllGrade } = useGradeElement();
 
   useEffect(() => {
     setGrade('A');
   }, [current]);
-
-  const ChangeAllGrade = (grade: Grade) => {
-    let copiedItems = [...element];
-    copiedItems[current].map((res) => (res.grade = grade));
-    setElement(copiedItems);
-    setGrade(grade);
-  };
 
   return (
     <_Wrapper>
       <Text margin={['right', 8]} size="body3" color="black600">
         전체 선택
       </Text>
-      {arr.map((arr) => {
-        const isClick = arr === grade;
+      {gradeArr.map((item) => {
+        const isClick = item === grade;
         return (
-          <_Button onClick={() => ChangeAllGrade(arr)} backgroundColor={isClick}>
+          <_Button
+            key={item}
+            onClick={() => {
+              setAllGrade(current, item);
+              setGrade(item);
+            }}
+            backgroundColor={isClick}
+          >
             <Text color={isClick ? 'realWhite' : 'black600'} size="body4">
-              {arr}
+              {item}
             </Text>
           </_Button>
         );

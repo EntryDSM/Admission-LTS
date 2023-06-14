@@ -3,13 +3,13 @@ import { Text, theme } from '@team-entry/design_system';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
   const progess = [
-    { element: <_Circle isNow={1 <= step} /> },
-    { element: <_Line isNow={2 <= step} /> },
-    { element: <_Circle isNow={2 <= step} /> },
-    { element: <_Line isNow={3 <= step} /> },
-    { element: <_Circle isNow={3 <= step} /> },
-    { element: <_Line isNow={4 <= step} /> },
-    { element: <_Circle isNow={4 <= step} /> },
+    { element: <_Circle key={1} isNow={1 <= step} /> },
+    { element: <_Line key={2} isNow={2 <= step} /> },
+    { element: <_Circle key={3} isNow={2 <= step} /> },
+    { element: <_Line key={4} isNow={3 <= step} /> },
+    { element: <_Circle key={5} isNow={3 <= step} /> },
+    { element: <_Line key={6} isNow={4 <= step} /> },
+    { element: <_Circle key={7} isNow={4 <= step} /> },
   ];
 
   return (

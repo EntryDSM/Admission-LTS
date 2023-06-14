@@ -1,15 +1,24 @@
 import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 import { Icon, theme } from '@team-entry/design_system';
+import ModalPortal from './ModalPortal';
 
-const Modal = ({ children, onClose }: { children: ReactNode; onClose: () => void }) => {
+interface IModalProps {
+  children: ReactNode;
+  onClose: () => void;
+  closeAble?: boolean;
+}
+
+const Modal = ({ children, onClose, closeAble }: IModalProps) => {
   return (
-    <Background onClick={onClose}>
-      <ModalContainer onClick={(e) => e.stopPropagation()}>
-        <_CloseIcon cursor="pointer" onClick={onClose} size={24} icon="Close" color="black900" />
-        {children}
-      </ModalContainer>
-    </Background>
+    <ModalPortal>
+      <Background onClick={onClose}>
+        <ModalContainer onClick={(e) => e.stopPropagation()}>
+          {closeAble && <_CloseIcon cursor="pointer" onClick={onClose} size={24} icon="Close" color="black900" />}
+          {children}
+        </ModalContainer>
+      </Background>
+    </ModalPortal>
   );
 };
 
@@ -27,14 +36,13 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  z-index: 100;
+  z-index: 99;
 `;
 
 const _CloseIcon = styled(Icon)`
   position: absolute;
   top: 15px;
   right: 15px;
-  z-index: 101;
 `;
 
 const ModalContainer = styled.div`
