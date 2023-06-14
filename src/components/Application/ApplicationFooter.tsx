@@ -11,18 +11,20 @@ interface ApplicationFooterProps {
 }
 
 const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: ApplicationFooterProps) => {
-  const progress = [0, 1, 2, 3, 4];
+  const progress = [0, 1, 2, 3, 4, 5];
   const { userType } = useUserType();
 
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   //const checkDisabled = Object.values(check).includes('');
 
   const onClickPlus = () => {
-    if (current == 2 && isBlackExam) {
+    if (current == 1 && isBlackExam) {
+      setCurrent(current + 2);
+    } else if (current == 3 && isBlackExam) {
       setCurrent(current + 2);
     } else if (gradeCurrent == 4) {
       setCurrent(current + 1);
-    } else if (current == 3) {
+    } else if (current == 4) {
       setGradeCurrent(gradeCurrent + 1);
     } else {
       setCurrent(current + 1);
@@ -30,11 +32,13 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
   };
 
   const onClickMinus = () => {
-    if (current == 4 && isBlackExam) {
+    if (current == 3 && isBlackExam) {
+      setCurrent(current - 2);
+    } else if (current == 5 && isBlackExam) {
       setCurrent(current - 2);
     } else if (gradeCurrent == 0) {
       setCurrent(current - 1);
-    } else if (current == 3) {
+    } else if (current == 4) {
       setGradeCurrent(gradeCurrent - 1);
     } else {
       setCurrent(current - 1);
@@ -50,7 +54,7 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
           <_ProgressStep key={step} isStep={step === current} />
         ))}
       </_Progress>
-      {current !== 4 ? (
+      {current !== 5 ? (
         <Button color="orange" kind="contained" onClick={onClickPlus}>
           다음
         </Button>

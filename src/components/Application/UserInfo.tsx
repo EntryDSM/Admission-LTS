@@ -2,15 +2,15 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { ArrayForDropdown } from '../../utils/ArrayForDropdown';
 import { useUserInfo, useUserPhoto, useUserType } from '../../hooks/useStore';
 import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
+import { generateNumberArray } from '../../utils/GenerateNumberArray';
 
 const UserInfo = () => {
   const { userType } = useUserType();
-  const { userInfo, setUserInfo, setAllValues } = useUserInfo();
+  const { userInfo, setUserInfo, setAllValues, setDropdown } = useUserInfo();
   const { photo, setUserPhoto } = useUserPhoto();
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const { close, modalState, setModalState } = useModal();
@@ -68,37 +68,22 @@ const UserInfo = () => {
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) =>
-            setAllValues({
-              ...userInfo,
-              birthday: e,
-            })
-          }
-          options={ArrayForDropdown(2000, 2024)}
+          onChange={(e) => setDropdown(0, e, 'birthday')}
+          options={generateNumberArray(2000, 2024)}
           unit="년"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) =>
-            setAllValues({
-              ...userInfo,
-              birthday: e,
-            })
-          }
-          options={ArrayForDropdown(1, 12)}
+          onChange={(e) => setDropdown(1, e, 'birthday')}
+          options={generateNumberArray(1, 12)}
           unit="월"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) =>
-            setAllValues({
-              ...userInfo,
-              birthday: e,
-            })
-          }
-          options={ArrayForDropdown(1, 31)}
+          onChange={(e) => setDropdown(2, e, 'birthday')}
+          options={generateNumberArray(1, 31)}
           unit="일"
         />
       </ApplicationContent>

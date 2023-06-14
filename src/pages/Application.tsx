@@ -7,6 +7,7 @@ import UserInfo from '../components/Application/UserInfo';
 import UserWrite from '../components/Application/UserWrite';
 import UserPreview from '../components/Application/UserPreview';
 import GradeProgram from '../components/Grade/GradeProgram';
+import UserMiddleSchool from '../components/Application/UserMiddleShool';
 
 const Application = () => {
   const [current, setCurrent] = useState<number>(0);
@@ -18,6 +19,10 @@ const Application = () => {
     {
       title: '지원자 인적사항',
       component: <UserInfo />,
+    },
+    {
+      title: '중학교 정보입력',
+      component: <UserMiddleSchool />      
     },
     {
       title: '자기소개서 & 학업 계획서',

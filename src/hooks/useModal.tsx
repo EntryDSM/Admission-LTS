@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useModalStateStore } from './useStore';
 
 export const useModal = () => {

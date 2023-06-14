@@ -3,7 +3,7 @@ import {
   IGradeElement,
   IModalState,
   IUserInfo,
-  IUserMiddle,
+  IUserMiddleSchool,
   IUserPhoto,
   IUserType,
   IUserWrite,
@@ -20,6 +20,7 @@ export const useUserType = create<IUserType>()(
       graduated_at: '',
       application_remark: '',
     },
+    graduatedAtArray: ['', ''],
     setUserType: (e: InputType) =>
       set((state) => {
         const { name, value } = e.currentTarget;
@@ -29,6 +30,18 @@ export const useUserType = create<IUserType>()(
       set((state) => {
         return { userType: { ...state.userType, ...initialForm } };
       }),
+    setDropdown: (index: number, value: string, type: string) =>
+      set((state) => {
+        state.graduatedAtArray[index] = value;
+        return { userType: { ...state.userType, [type]: state.graduatedAtArray.join('') } };
+      }),
+  })),
+);
+
+export const useUserPhoto = create<IUserPhoto>()(
+  devtools((set) => ({
+    photo: '',
+    setUserPhoto: (photo) => set(() => ({ photo })),
   })),
 );
 
@@ -47,6 +60,7 @@ export const useUserInfo = create<IUserInfo>()(
       detail_address: '',
       post_code: '',
     },
+    yearArray: ['', '', ''],
     setUserInfo: (e: InputType) =>
       set((state) => {
         const { name, value } = e.currentTarget;
@@ -56,31 +70,29 @@ export const useUserInfo = create<IUserInfo>()(
       set((state) => {
         return { userInfo: { ...state.userInfo, ...initialForm } };
       }),
+    setDropdown: (index: number, value: string, type: string) =>
+      set((state) => {
+        state.yearArray[index] = value;
+        return { userInfo: { ...state.userInfo, [type]: state.yearArray.join('') } };
+      }),
   })),
 );
 
-export const useUserPhoto = create<IUserPhoto>()(
+export const useUserMiddleSchool = create<IUserMiddleSchool>()(
   devtools((set) => ({
-    photo: '',
-    setUserPhoto: (photo) => set(() => ({ photo })),
-  })),
-);
-
-export const useUserMiddle = create<IUserMiddle>()(
-  devtools((set) => ({
-    userMiddle: {
+    userMiddleSchool: {
       name: '',
-      studentId: 0,
-      telephoneNumber: 0,
+      studentId: undefined,
+      telephoneNumber: undefined,
     },
-    setUserMiddle: (e: InputType) =>
+    setUserMiddleSchool: (e: InputType) =>
       set((state) => {
         const { name, value } = e.currentTarget;
-        return { userMiddle: { ...state.userMiddle, [name]: value } };
+        return { userMiddleSchool: { ...state.userMiddleSchool, [name]: value } };
       }),
     setAllValues: <T,>(initialForm: T) =>
       set((state) => {
-        return { userMiddle: { ...state.userMiddle, ...initialForm } };
+        return { userMiddleSchool: { ...state.userMiddleSchool, ...initialForm } };
       }),
   })),
 );

@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { Radio, theme, Dropdown } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useUserType } from '../../hooks/useStore';
+import { generateNumberArray } from '../../utils/GenerateNumberArray';
 
 const UserType = () => {
-  const { userType, setUserType, setAllValues } = useUserType();
+  const { userType, setUserType, setAllValues, setDropdown } = useUserType();
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
@@ -26,7 +27,7 @@ const UserType = () => {
           <Radio
             label=""
             name="application_type"
-            value="SOCIAL"
+            value="기초생활수급자"
             onClick={setUserType}
             isChecked={
               userType.application_type !== 'COMMON' &&
@@ -36,7 +37,7 @@ const UserType = () => {
           />
           <Dropdown
             className="application_type"
-            width={110}
+            width={145}
             disabled={
               userType.application_type === 'COMMON' ||
               userType.application_type === 'MEISTER' ||
@@ -45,8 +46,15 @@ const UserType = () => {
             onChange={(e) => {
               setAllValues({ ...userType, application_type: e });
             }}
-            options={['사회통합', '사회통합1', '사회통합2', '사회통합3']}
-            unit="년"
+            options={[
+              '기초생활수급자',
+              '한부모가족',
+              '소년소녀가장',
+              '차상위계층',
+              '북한이탈주민',
+              '다문화가정',
+              '보호대상아동',
+            ]}
           />
         </_RadioWrapper>
       </ApplicationContent>
@@ -96,15 +104,15 @@ const UserType = () => {
         <Dropdown
           className="graduated_at"
           width={85}
-          onChange={(e) => setAllValues({ ...userType, graduated_at: e })}
-          options={['2023', '2024', '2025']}
+          onChange={(e) => setDropdown(0, e, 'graduated_at')}
+          options={generateNumberArray(2020, 2030)}
           unit="년"
         />
         <Dropdown
           className="graduated_at"
           width={85}
-          onChange={(e) => setAllValues({ ...userType, graduated_at: e })}
-          options={['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']}
+          onChange={(e) => setDropdown(1, e, 'graduated_at')}
+          options={generateNumberArray(1, 12)}
           unit="월"
         />
       </ApplicationContent>

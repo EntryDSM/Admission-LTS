@@ -10,8 +10,10 @@ export interface IUserType {
     graduated_at: string;
     application_remark: string;
   };
+  graduatedAtArray: string[];
   setUserType: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
+  setDropdown: (index: number, value: string, type: string) => void;
 }
 
 export interface IUserInfo {
@@ -28,8 +30,10 @@ export interface IUserInfo {
     detail_address: string;
     post_code: string;
   };
+  yearArray: string[];
   setUserInfo: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
+  setDropdown: (index: number, value: string, type: string) => void;
 }
 
 export interface IUserPhoto {
@@ -37,13 +41,13 @@ export interface IUserPhoto {
   setUserPhoto: (photo: string) => void;
 }
 
-export interface IUserMiddle {
-  userMiddle: {
+export interface IUserMiddleSchool {
+  userMiddleSchool: {
     name: string;
-    studentId: number;
-    telephoneNumber: number;
+    studentId: number | undefined;
+    telephoneNumber: number | undefined;
   };
-  setUserMiddle: (e: InputType) => void;
+  setUserMiddleSchool: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
 }
 
