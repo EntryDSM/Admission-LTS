@@ -3,9 +3,19 @@ import { Radio, theme, Dropdown } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useUserType } from '../../hooks/useStore';
 import { generateNumberArray } from '../../utils/GenerateNumberArray';
+import { GetUserType } from '../../apis/application';
+import { useEffect } from 'react';
 
 const UserType = () => {
   const { userType, setUserType, setAllValues, setDropdown } = useUserType();
+  const { data } = GetUserType();
+
+  useEffect(() => {
+    if (data) {
+      setAllValues({ ...userType, data });
+    }
+  }, []);
+
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
