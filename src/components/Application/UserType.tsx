@@ -6,16 +6,38 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 import { GetUserType } from '../../apis/application';
 import { useEffect } from 'react';
 
+type applicationType =
+  | '기초생활수급자'
+  | '한부모가족'
+  | '소년소녀가장'
+  | '차상위계층'
+  | '북한이탈주민'
+  | '다문화가정'
+  | '보호대상아동'
+  | '국가유공자';
+
 const UserType = () => {
-  const { userType, setUserType, setAllValues, setDropdown } = useUserType();
+  const { userType, setUserType, setAllValues, setDropdown, graduatedAtArray } = useUserType();
   const { data } = GetUserType();
+  console.log(userType);
+  const applicationTypeSelector = {
+    기초생활수급자: 'BASIC_LIVING',
+    한부모가족: 'ONE_PARENT',
+    소년소녀가장: 'TEEN_HOUSEHOLDER',
+    차상위계층: 'LOWEST_INCOME',
+    북한이탈주민: 'FROM_NORTH',
+    다문화가정: 'MULTICULTURAL',
+    보호대상아동: 'PROTECTED_CHILDREN',
+    국가유공자: 'NATIONAL_MERIT',
+    특례입학대상: 'PRIVILEGED_ADMISSION',
+  } as const;
 
   useEffect(() => {
     if (data) {
       setAllValues({ ...userType, data });
     }
   }, []);
-
+  console.log(userType);
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
@@ -37,24 +59,25 @@ const UserType = () => {
           <Radio
             label=""
             name="application_type"
-            value="기초생활수급자"
-            onClick={setUserType}
-            isChecked={
-              userType.application_type !== 'COMMON' &&
-              userType.application_type !== 'MEISTER' &&
-              userType.application_type !== ''
-            }
+            value="SOCIAL"
+            onClick={() => {
+              setAllValues({
+                ...userType,
+                application_type: 'SOCIAL',
+                application_remark: applicationTypeSelector['기초생활수급자'],
+              });
+            }}
+            isChecked={userType.application_type === 'SOCIAL'}
           />
           <Dropdown
-            className="application_type"
+            className="application_remark"
             width={145}
-            disabled={
-              userType.application_type === 'COMMON' ||
-              userType.application_type === 'MEISTER' ||
-              userType.application_type === ''
-            }
+            value={Object.keys(applicationTypeSelector).find(
+              (key) => applicationTypeSelector[key as applicationType] === userType.application_remark,
+            )}
+            disabled={userType.application_type !== 'SOCIAL'}
             onChange={(e) => {
-              setAllValues({ ...userType, application_type: e });
+              setAllValues({ ...userType, application_remark: applicationTypeSelector[e as applicationType] });
             }}
             options={[
               '기초생활수급자',
@@ -64,6 +87,8 @@ const UserType = () => {
               '북한이탈주민',
               '다문화가정',
               '보호대상아동',
+              '국가유공자',
+              '특례입학대상',
             ]}
           />
         </_RadioWrapper>
@@ -75,14 +100,14 @@ const UserType = () => {
           name="is_daejeon"
           value="true"
           onClick={setUserType}
-          isChecked={userType.is_daejeon === 'true'}
+          isChecked={userType.is_daejeon === true}
         />
         <Radio
           label="전국"
           name="is_daejeon"
           value="false"
           onClick={setUserType}
-          isChecked={userType.is_daejeon === 'false'}
+          isChecked={userType.is_daejeon === false}
         />
       </ApplicationContent>
 
@@ -114,6 +139,7 @@ const UserType = () => {
         <Dropdown
           className="graduated_at"
           width={85}
+          value={graduatedAtArray[0]}
           onChange={(e) => setDropdown(0, e, 'graduated_at')}
           options={generateNumberArray(2020, 2030)}
           unit="년"
@@ -121,31 +147,10 @@ const UserType = () => {
         <Dropdown
           className="graduated_at"
           width={85}
+          value={graduatedAtArray[1]}
           onChange={(e) => setDropdown(1, e, 'graduated_at')}
           options={generateNumberArray(1, 12)}
           unit="월"
-        />
-      </ApplicationContent>
-
-      <ApplicationContent
-        grid={2}
-        title="특기 사항"
-        required={false}
-        placeholder="특기사항에 해당하시는 항목이 있으면 체크해주세요"
-      >
-        <Radio
-          label="국가 유공자"
-          name="application_remark"
-          value="PRIVILEGED_ADMISSION"
-          onClick={setUserType}
-          isChecked={userType.application_remark === 'PRIVILEGED_ADMISSION'}
-        />
-        <Radio
-          label="특례 입학 대상"
-          name="application_remark"
-          value="SPECIAL"
-          onClick={setUserType}
-          isChecked={userType.application_remark === 'SPECIAL'}
         />
       </ApplicationContent>
     </_ApplicationWrapper>
