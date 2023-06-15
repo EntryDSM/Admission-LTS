@@ -19,7 +19,7 @@ export const useUserType = create<IUserType>()(
       educational_status: '',
       graduated_at: '202001',
       application_remark: null,
-      is_out_of_headcount: false,
+      is_out_of_headcount: false
     },
     graduatedAtArray: ['2020', '01'],
     setUserType: (e: InputType) =>

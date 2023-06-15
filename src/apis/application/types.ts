@@ -2,7 +2,7 @@ type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EX
 
 type ApplicationType = 'COMMON' | 'MEISTER' | 'SOCIAL';
 
-type ApplicationRemark =
+export type ApplicationRemark =
   | 'ONE_PARENT'
   | 'FROM_NORTH'
   | 'MULTICULTURAL'
@@ -14,10 +14,10 @@ type ApplicationRemark =
   | 'PROTECTED_CHILDREN';
 
 export interface IGetUserType {
-  educational_status: EducationalStatus;
-  application_type: ApplicationType;
-  is_daejeon: boolean;
-  application_remark: ApplicationRemark;
+  application_type: ApplicationType | '';
+  is_daejeon: boolean | undefined;
+  educational_status: EducationalStatus | '';
   graduated_at: string;
+  application_remark: ApplicationRemark | null;
   is_out_of_headcount: boolean;
 }

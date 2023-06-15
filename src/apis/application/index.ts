@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IGetUserType } from './types';
-import { IUserTypeParams } from '../../interface/type';
 
 const router = 'application';
 
@@ -16,7 +15,7 @@ export const GetUserType = () => {
 
 /** 전형 구분 선택 */
 export const EditUserType = () => {
-  const response = async (param: IUserTypeParams) => {
+  const response = async (param: IGetUserType) => {
     return instance.patch(`${router}/users/type`, param);
   };
   return useMutation(response, {

@@ -5,7 +5,7 @@ import useClickFooter from '../../hooks/useClickFooter';
 
 const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {
   const progress = [0, 1, 2, 3, 4, 5];
-  const { onClickPlus, onClickMinus, isDisabled } = useClickFooter({
+  const { onClickPlus, onClickMinus, onClickPatch } = useClickFooter({
     current,
     setCurrent,
     gradeCurrent,
@@ -14,7 +14,14 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
 
   return (
     <_Footer>
-      <Button color="black" kind="outlined" disabled={current === 0} onClick={onClickMinus}>
+      <Button
+        color="black"
+        kind="outlined"
+        disabled={current === 0}
+        onClick={() => {
+          onClickMinus[current - 1](), onClickPatch[current]();
+        }}
+      >
         이전
       </Button>
       <_Progress>
@@ -23,7 +30,13 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
         ))}
       </_Progress>
       {current !== 5 ? (
-        <Button color="orange" kind="contained" onClick={onClickPlus} disabled={isDisabled}>
+        <Button
+          color="orange"
+          kind="contained"
+          onClick={() => {
+            onClickPlus[current](), onClickPatch[current]();
+          }}
+        >
           다음
         </Button>
       ) : (
