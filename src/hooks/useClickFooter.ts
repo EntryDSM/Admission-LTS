@@ -13,7 +13,14 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const isDisabled = Object.values(checkArray[current]).includes('');
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
 
-  const onClickPatch = [() => patchUserType(userType as IGetUserType)];
+  const onClickPatch = [
+    () => patchUserType(userType as IGetUserType),
+    () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
+  ];
 
   const onClickPlus = [
     () => setCurrent(current + 1),
