@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import {
   IGradeElement,
   IModalState,
+  IUserBlackExam,
   IUserInfo,
   IUserMiddleSchool,
   IUserPhoto,
@@ -19,7 +20,7 @@ export const useUserType = create<IUserType>()(
       educational_status: '',
       graduated_at: '202001',
       application_remark: null,
-      is_out_of_headcount: false
+      is_out_of_headcount: false,
     },
     graduatedAtArray: ['2020', '01'],
     setUserType: (e: InputType) =>
@@ -46,8 +47,15 @@ export const useUserType = create<IUserType>()(
 
 export const useUserPhoto = create<IUserPhoto>()(
   devtools((set) => ({
-    photo: '',
-    setUserPhoto: (photo) => set(() => ({ photo })),
+    photo_file_name: '',
+    setUserPhoto: (photo_file_name) => set(() => ({ photo_file_name })),
+  })),
+);
+
+export const useUserBlackExam = create<IUserBlackExam>()(
+  devtools((set) => ({
+    ged_average_score: undefined,
+    setUserGedAverageScore: (ged_average_score) => set(() => ({ ged_average_score })),
   })),
 );
 
@@ -56,17 +64,15 @@ export const useUserInfo = create<IUserInfo>()(
     userInfo: {
       name: '',
       sex: '',
-      birthday: '',
-      blackExam: '',
+      birthday: '2000-01-01',
       parent_name: '',
       parent_tel: '',
       telephone_number: '',
-      home_tel: '',
       address: '',
       detail_address: '',
       post_code: '',
     },
-    yearArray: ['', '', ''],
+    yearArray: ['2000', '01', '01'],
     setUserInfo: (e: InputType) =>
       set((state) => {
         const { name, value } = e.currentTarget;
@@ -79,7 +85,7 @@ export const useUserInfo = create<IUserInfo>()(
     setDropdown: (index: number, value: string, type: string) =>
       set((state) => {
         state.yearArray[index] = value;
-        return { userInfo: { ...state.userInfo, [type]: state.yearArray.join('') } };
+        return { userInfo: { ...state.userInfo, [type]: state.yearArray.join('-') } };
       }),
   })),
 );

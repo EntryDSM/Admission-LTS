@@ -16,7 +16,7 @@ const UserType = () => {
       setAllValues({ ...userType, data });
     }
   }, []);
-  console.log(userType);
+
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">

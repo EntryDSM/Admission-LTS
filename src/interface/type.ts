@@ -26,16 +26,24 @@ export interface IUserType {
   setDropdown: (index: number, value: string, type: string) => void;
 }
 
+export interface IUserPhoto {
+  photo_file_name: string;
+  setUserPhoto: (photo_file_name: string) => void;
+}
+
+export interface IUserBlackExam {
+  ged_average_score: number | undefined;
+  setUserGedAverageScore: (ged_average_score: number) => void;
+}
+
 export interface IUserInfo {
   userInfo: {
     name: string;
     sex: string;
     birthday: string;
-    blackExam: string;
     parent_name: string;
     parent_tel: string;
     telephone_number: string;
-    home_tel: string;
     address: string;
     detail_address: string;
     post_code: string;
@@ -44,11 +52,6 @@ export interface IUserInfo {
   setUserInfo: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
   setDropdown: (index: number, value: string, type: string) => void;
-}
-
-export interface IUserPhoto {
-  photo: string;
-  setUserPhoto: (photo: string) => void;
 }
 
 export interface IUserMiddleSchool {
