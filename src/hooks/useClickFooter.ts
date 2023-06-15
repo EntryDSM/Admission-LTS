@@ -15,7 +15,7 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const { ged_average_score } = useUserBlackExam();
   const checkUserInfo = isBlackExam ? { ...userInfoParam, ged_average_score } : userInfoParam;
   const blackExam = Number(ged_average_score);
-  console.log(blackExam);
+
   const checkArray = [checkUserType, checkUserInfo, '1', '1', '1', '1', '1'];
 
   const { mutate: patchUserType } = EditUserType();
