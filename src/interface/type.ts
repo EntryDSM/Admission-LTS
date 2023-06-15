@@ -2,14 +2,24 @@ export type InputType =
   | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   | React.MouseEvent<HTMLInputElement, MouseEvent>;
 
+export interface IApplicationFooterProps {
+  current: number;
+  setCurrent: React.Dispatch<React.SetStateAction<number>>;
+  gradeCurrent: number;
+  setGradeCurrent: React.Dispatch<React.SetStateAction<number>>;
+}
+
+export interface IUserTypeParams {
+  application_type: string;
+  is_daejeon: boolean | undefined;
+  educational_status: string;
+  graduated_at: string;
+  application_remark: string | null;
+  is_out_of_headcount: boolean;
+}
+
 export interface IUserType {
-  userType: {
-    application_type: string;
-    is_daejeon: string;
-    educational_status: string;
-    graduated_at: string;
-    application_remark: string;
-  };
+  userType: IUserTypeParams;
   graduatedAtArray: string[];
   setUserType: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;

@@ -1,52 +1,27 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { Button, theme } from '@team-entry/design_system';
-import { useUserType } from '../../hooks/useStore';
+import { IApplicationFooterProps } from '../../interface/type';
+import useClickFooter from '../../hooks/useClickFooter';
 
-interface ApplicationFooterProps {
-  current: number;
-  setCurrent: React.Dispatch<React.SetStateAction<number>>;
-  gradeCurrent: number;
-  setGradeCurrent: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: ApplicationFooterProps) => {
+const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {
   const progress = [0, 1, 2, 3, 4, 5];
-  const { userType } = useUserType();
+  const { onClickPlus, onClickMinus, onClickPatch, isDisabled } = useClickFooter({
+    current,
+    setCurrent,
+    gradeCurrent,
+    setGradeCurrent,
+  });
 
-  const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
-  //const checkDisabled = Object.values(check).includes('');
-
-  const onClickPlus = () => {
-    if (current == 1 && isBlackExam) {
-      setCurrent(current + 2);
-    } else if (current == 3 && isBlackExam) {
-      setCurrent(current + 2);
-    } else if (gradeCurrent == 4) {
-      setCurrent(current + 1);
-    } else if (current == 4) {
-      setGradeCurrent(gradeCurrent + 1);
-    } else {
-      setCurrent(current + 1);
-    }
-  };
-
-  const onClickMinus = () => {
-    if (current == 3 && isBlackExam) {
-      setCurrent(current - 2);
-    } else if (current == 5 && isBlackExam) {
-      setCurrent(current - 2);
-    } else if (gradeCurrent == 0) {
-      setCurrent(current - 1);
-    } else if (current == 4) {
-      setGradeCurrent(gradeCurrent - 1);
-    } else {
-      setCurrent(current - 1);
-    }
-  };
   return (
     <_Footer>
-      <Button color="black" kind="outlined" disabled={current === 0} onClick={onClickMinus}>
+      <Button
+        color="black"
+        kind="outlined"
+        disabled={current === 0}
+        onClick={() => {
+          onClickMinus[current - 1](), onClickPatch[current]();
+        }}
+      >
         이전
       </Button>
       <_Progress>
@@ -55,7 +30,14 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
         ))}
       </_Progress>
       {current !== 5 ? (
-        <Button color="orange" kind="contained" onClick={onClickPlus}>
+        <Button
+          color="orange"
+          kind="contained"
+          onClick={() => {
+            onClickPlus[current](), onClickPatch[current]();
+          }}
+          disabled={isDisabled}
+        >
           다음
         </Button>
       ) : (
