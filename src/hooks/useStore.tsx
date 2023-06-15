@@ -54,7 +54,7 @@ export const useUserPhoto = create<IUserPhoto>()(
 
 export const useUserBlackExam = create<IUserBlackExam>()(
   devtools((set) => ({
-    ged_average_score: undefined,
+    ged_average_score: '',
     setUserGedAverageScore: (ged_average_score) => set(() => ({ ged_average_score })),
   })),
 );

@@ -128,7 +128,7 @@ const UserInfo = () => {
             width={230}
             name="blackExam"
             value={ged_average_score}
-            onChange={(e) => setUserGedAverageScore(Number(e.currentTarget.value))}
+            onChange={(e) => setUserGedAverageScore(e.currentTarget.value)}
             unit="점"
           />
         </ApplicationContent>

@@ -32,8 +32,8 @@ export interface IUserPhoto {
 }
 
 export interface IUserBlackExam {
-  ged_average_score: number | undefined;
-  setUserGedAverageScore: (ged_average_score: number) => void;
+  ged_average_score: string;
+  setUserGedAverageScore: (ged_average_score: string) => void;
 }
 
 export interface IUserInfo {

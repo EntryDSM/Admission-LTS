@@ -1,7 +1,7 @@
 import { useUserBlackExam, useUserInfo, useUserPhoto, useUserType } from './useStore';
 import { IApplicationFooterProps } from '../interface/type';
 import { EditUserBlackExam, EditUserInfo, EditUserType } from '../apis/application';
-import { IGetUserBlackExam, IGetUserType } from '../apis/application/types';
+import { IGetUserType } from '../apis/application/types';
 
 const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {
   const { userType } = useUserType();
@@ -14,7 +14,8 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const userInfoParam = { ...userInfo, photo_file_name };
   const { ged_average_score } = useUserBlackExam();
   const checkUserInfo = isBlackExam ? { ...userInfoParam, ged_average_score } : userInfoParam;
-  
+  const blackExam = Number(ged_average_score);
+  console.log(blackExam);
   const checkArray = [checkUserType, checkUserInfo, '1', '1', '1', '1', '1'];
 
   const { mutate: patchUserType } = EditUserType();
@@ -26,7 +27,7 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const onClickPatch = [
     () => patchUserType(userType as IGetUserType),
     () => {
-      patchUserInfo(userInfoParam), isBlackExam && patchBlackExam({ ged_average_score } as IGetUserBlackExam);
+      patchUserInfo(userInfoParam), isBlackExam && patchBlackExam({ ged_average_score: blackExam });
     },
     () => console.log(current),
     () => console.log(current),
