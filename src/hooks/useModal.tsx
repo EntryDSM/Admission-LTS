@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { useModalStateStore } from './useStore';
+import { useModalStateStore } from '../store/useModalStateStore';
 
 export const useModal = () => {
-  const [modalState, setModalState] = useModalStateStore((store) => [store.modalState, store.setModalState]);
+  const { modalState, setModalState } = useModalStateStore();
 
   const close = useCallback(() => {
     setModalState('');

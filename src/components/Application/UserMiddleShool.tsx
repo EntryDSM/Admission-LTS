@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Button, Input, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useUserMiddleSchool } from '../../hooks/useStore';
+import { useUserMiddleSchool } from '../../store/useUserMiddleSchool';
 
 const UserMiddleSchool = () => {
   const { userMiddleSchool, setUserMiddleSchool } = useUserMiddleSchool();

@@ -2,7 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useUserInfo, useUserPhoto, useUserType } from '../../hooks/useStore';
+import { useUserType } from '../../store/useUserType';
+import { useUserInfo } from '../../store/useUserInfo';
+import { useUserPhoto } from '../../store/useUserPhoto';
+import { useUserBlackExam } from '../../store/useUserBlackExam';
 import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
@@ -11,7 +14,8 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 const UserInfo = () => {
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setAllValues, setDropdown } = useUserInfo();
-  const { photo, setUserPhoto } = useUserPhoto();
+  const { photo_file_name, setUserPhoto } = useUserPhoto();
+  const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const { close, modalState, setModalState } = useModal();
 
@@ -25,7 +29,6 @@ const UserInfo = () => {
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
           setUserPhoto(reader.result as string);
-          console.log(photo);
         };
       }
     }
@@ -33,7 +36,6 @@ const UserInfo = () => {
 
   const handleAddress = (data: any) => {
     close();
-    console.log(data);
     setAllValues({
       ...userInfo,
       address: data?.address,
@@ -45,8 +47,8 @@ const UserInfo = () => {
     <_ApplicationWrapper>
       <label>
         <_ApplicationImg>
-          {photo ? (
-            <Img src={photo} alt="userImg" />
+          {photo_file_name ? (
+            <Img src={photo_file_name} alt="userImg" />
           ) : (
             <Text color="black700" size="body3">
               원서 사진을 등록해주세요
@@ -61,8 +63,8 @@ const UserInfo = () => {
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
-        <Radio label="남자" name="sex" value="MEN" onClick={setUserInfo} isChecked={userInfo.sex === 'MEN'} />
-        <Radio label="여자" name="sex" value="WOMEN" onClick={setUserInfo} isChecked={userInfo.sex === 'WOMEN'} />
+        <Radio label="남자" name="sex" value="MALE" onClick={setUserInfo} isChecked={userInfo.sex === 'MALE'} />
+        <Radio label="여자" name="sex" value="FEMALE" onClick={setUserInfo} isChecked={userInfo.sex === 'FEMALE'} />
       </ApplicationContent>
       <ApplicationContent grid={3} title="생년월일" width={40}>
         <Dropdown
@@ -87,55 +89,54 @@ const UserInfo = () => {
           unit="일"
         />
       </ApplicationContent>
+
+      <ApplicationContent grid={1} title="보호자명" width={40}>
+        <Input
+          type="text"
+          placeholder="보호자명"
+          width={230}
+          name="parent_name"
+          value={userInfo.parent_name}
+          onChange={setUserInfo}
+        />
+      </ApplicationContent>
+
+      <ApplicationContent grid={1} title="본인 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
+        <Input
+          type="number"
+          placeholder="본인 연락처"
+          width={230}
+          name="telephone_number"
+          value={userInfo.telephone_number}
+          onChange={setUserInfo}
+        />
+      </ApplicationContent>
+
+      <ApplicationContent grid={1} title="보호자 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
+        <Input
+          type="number"
+          placeholder="보호자 연락처"
+          width={230}
+          name="parent_tel"
+          value={userInfo.parent_tel}
+          onChange={setUserInfo}
+        />
+      </ApplicationContent>
+
       {isBlackExam && (
-        <ApplicationContent grid={1} title="검정고시 평균" width={40}>
+        <ApplicationContent grid={1} title="검정고시 평균">
           <Input
             type="number"
             placeholder="검정고시 평균"
             width={230}
             name="blackExam"
-            value={userInfo.blackExam}
-            onChange={setUserInfo}
+            value={ged_average_score}
+            onChange={(e) => setUserGedAverageScore(e.currentTarget.value)}
             unit="점"
           />
         </ApplicationContent>
       )}
-      {!isBlackExam && (
-        <>
-          <ApplicationContent grid={1} title="보호자명" width={40}>
-            <Input
-              type="text"
-              placeholder="보호자명"
-              width={230}
-              name="parent_name"
-              value={userInfo.parent_name}
-              onChange={setUserInfo}
-            />
-          </ApplicationContent>
 
-          <ApplicationContent grid={1} title="본인 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
-            <Input
-              type="number"
-              placeholder="본인 연락처"
-              width={230}
-              name="telephone_number"
-              value={userInfo.telephone_number}
-              onChange={setUserInfo}
-            />
-          </ApplicationContent>
-
-          <ApplicationContent grid={1} title="보호자 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
-            <Input
-              type="number"
-              placeholder="보호자 연락처"
-              width={230}
-              name="parent_tel"
-              value={userInfo.parent_tel}
-              onChange={setUserInfo}
-            />
-          </ApplicationContent>
-        </>
-      )}
       <ApplicationContent grid={1} title="주소">
         <VStack margin={[30, 0]} gap={10}>
           <HStack gap={20}>

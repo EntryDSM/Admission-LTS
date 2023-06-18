@@ -21,3 +21,20 @@ export interface IGetUserType {
   application_remark: ApplicationRemark | null;
   is_out_of_headcount: boolean;
 }
+
+export interface IGetUserInfo {
+  name: string;
+  sex: string;
+  birthday: string;
+  parent_name: string;
+  parent_tel: string;
+  telephone_number: string;
+  address: string;
+  detail_address: string;
+  post_code: string;
+  photo_file_name: string;
+}
+
+export interface IGetUserBlackExam {
+  ged_average_score: number;
+}

@@ -1,6 +1,6 @@
 import { Input } from '@team-entry/design_system';
 import GradeWraper from '../GradeWraper';
-import { useGradeElement } from '../../../hooks/useStore';
+import { useGradeElement } from '../../../store/useGradeElement';
 import { InputType } from '../../../interface/type';
 
 const WriteAttendence = () => {

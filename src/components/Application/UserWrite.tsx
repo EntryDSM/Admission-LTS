@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { useUserWrite } from '../../hooks/useStore';
+import { useUserWrite } from '../../store/useUserWrite';
+
 
 const UserWrite = () => {
   const { userWrite, setUserWrite } = useUserWrite();

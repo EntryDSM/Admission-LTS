@@ -1,22 +1,13 @@
 import styled from '@emotion/styled';
 import { Radio, theme, Dropdown } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useUserType } from '../../hooks/useStore';
+import { useUserType } from '../../store/useUserType';
 import { generateNumberArray } from '../../utils/GenerateNumberArray';
-import { GetUserType } from '../../apis/application';
-import { useEffect } from 'react';
 import { applicationType, applicationTypeSelector } from '../../constant/translate';
 
 const UserType = () => {
   const { userType, setUserType, setAllValues, setDropdown, graduatedAtArray } = useUserType();
-  const { data } = GetUserType();
 
-  useEffect(() => {
-    if (data) {
-      setAllValues({ ...userType, data });
-    }
-  }, []);
-  console.log(userType);
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
