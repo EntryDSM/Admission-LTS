@@ -2,7 +2,10 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
-import { useUserBlackExam, useUserInfo, useUserPhoto, useUserType } from '../../hooks/useStore';
+import { useUserType } from '../../store/useUserType';
+import { useUserInfo } from '../../store/useUserInfo';
+import { useUserPhoto } from '../../store/useUserPhoto';
+import { useUserBlackExam } from '../../store/useUserBlackExam';
 import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
@@ -60,8 +63,8 @@ const UserInfo = () => {
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
-        <Radio label="남자" name="sex" value="MALE" onClick={setUserInfo} isChecked={userInfo.sex === 'MEN'} />
-        <Radio label="여자" name="sex" value="FEMALE" onClick={setUserInfo} isChecked={userInfo.sex === 'WOMEN'} />
+        <Radio label="남자" name="sex" value="MALE" onClick={setUserInfo} isChecked={userInfo.sex === 'MALE'} />
+        <Radio label="여자" name="sex" value="FEMALE" onClick={setUserInfo} isChecked={userInfo.sex === 'FEMALE'} />
       </ApplicationContent>
       <ApplicationContent grid={3} title="생년월일" width={40}>
         <Dropdown

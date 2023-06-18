@@ -1,4 +1,7 @@
-import { useUserBlackExam, useUserInfo, useUserPhoto, useUserType } from './useStore';
+import { useUserType } from '../store/useUserType';
+import { useUserInfo } from '../store/useUserInfo';
+import { useUserPhoto } from '../store/useUserPhoto';
+import { useUserBlackExam } from '../store/useUserBlackExam';
 import { IApplicationFooterProps } from '../interface/type';
 import { EditUserBlackExam, EditUserInfo, EditUserType } from '../apis/application';
 import { IGetUserType } from '../apis/application/types';

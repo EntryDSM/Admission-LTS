@@ -1,7 +1,7 @@
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
 import { GradeType } from '../../../interface/type';
-import { useGradeElement } from '../../../hooks/useStore';
+import { useGradeElement } from '../../../store/useGradeElement';
 import { gradeArr } from '../../../constant/grade';
 
 interface ISelectGrade {
