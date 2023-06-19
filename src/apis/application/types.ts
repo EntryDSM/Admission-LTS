@@ -13,7 +13,7 @@ export type ApplicationRemark =
   | 'NATIONAL_MERIT'
   | 'PROTECTED_CHILDREN';
 
-export interface IGetUserType {
+export interface IPatchUserType {
   application_type: ApplicationType | '';
   is_daejeon: boolean | undefined;
   educational_status: EducationalStatus | '';
@@ -22,7 +22,7 @@ export interface IGetUserType {
   is_out_of_headcount: boolean;
 }
 
-export interface IGetUserInfo {
+export interface IPatchUserInfo {
   name: string;
   sex: string;
   birthday: string;
@@ -35,6 +35,14 @@ export interface IGetUserInfo {
   photo_file_name: string;
 }
 
-export interface IGetUserBlackExam {
+export interface IPatchUserBlackExam {
   ged_average_score: number;
+}
+
+export interface IPatchUserIntro {
+  content: string;
+}
+
+export interface IPatchUserPlan {
+  content: string;
 }

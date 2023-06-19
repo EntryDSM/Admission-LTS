@@ -64,13 +64,14 @@ export interface IUserMiddleSchool {
   setAllValues: <T>(initialForm: T) => void;
 }
 
-export interface IUserWrite {
-  userWrite: {
-    intro: string;
-    study_plan: string;
-  };
-  setUserWrite: (e: InputType) => void;
-  setAllValues: <T>(initialForm: T) => void;
+export interface IUserIntro {
+  userIntro: string;
+  setUserIntro: (e: InputType) => void;
+}
+
+export interface IUserPlan {
+  userPlan: string;
+  setUserPlan: (e: InputType) => void;
 }
 
 export type GradeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';

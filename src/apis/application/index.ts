@@ -1,21 +1,12 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { instance } from '../axios';
-import { IGetUserBlackExam, IGetUserInfo, IGetUserType } from './types';
+import { IPatchUserBlackExam, IPatchUserInfo, IPatchUserIntro, IPatchUserPlan, IPatchUserType } from './types';
 
 const router = 'application';
 
-/** 전형 구분 조회 */
-export const GetUserType = () => {
-  const response = async () => {
-    const { data } = await instance.get<IGetUserType>(`${router}/users/type`);
-    return data;
-  };
-  return useQuery(['userType'], response);
-};
-
 /** 전형 구분 선택 */
 export const EditUserType = () => {
-  const response = async (param: IGetUserType) => {
+  const response = async (param: IPatchUserType) => {
     return instance.patch(`${router}/users/type`, param);
   };
   return useMutation(response, {
@@ -24,18 +15,9 @@ export const EditUserType = () => {
   });
 };
 
-/** 인적사항 조회 */
-export const GetUserInfo = () => {
-  const response = async () => {
-    const { data } = await instance.get<IGetUserInfo>(`${router}/users`);
-    return data;
-  };
-  return useQuery(['userInfo'], response);
-};
-
 /** 인적사항 입력 */
 export const EditUserInfo = () => {
-  const response = async (params: IGetUserInfo) => {
+  const response = async (params: IPatchUserInfo) => {
     return instance.patch(`${router}/users`, params);
   };
   return useMutation(response, {
@@ -44,22 +26,35 @@ export const EditUserInfo = () => {
   });
 };
 
-/** 검정고시 조회 */
-export const GetUserBlackExam = () => {
-  const response = async () => {
-    const { data } = await instance.get<IGetUserBlackExam>('score/qualification');
-    return data;
-  };
-  return useQuery(['userBlackExam'], response);
-};
-
 /** 검정고시 입력 */
 export const EditUserBlackExam = () => {
-  const response = async (params: IGetUserBlackExam) => {
+  const response = async (params: IPatchUserBlackExam) => {
     return instance.patch('score/qualification', params);
   };
   return useMutation(response, {
     onError: () => alert('검정고시 제출에 실패하였습니다.'),
+    onSuccess: () => console.log('success!!'),
+  });
+};
+
+/** 자기소개서 입력 */
+export const EditUserIntro = () => {
+  const response = async (params: IPatchUserIntro) => {
+    return instance.patch('intro', params);
+  };
+  return useMutation(response, {
+    onError: () => alert('자기소개서 제출에 실패하였습니다.'),
+    onSuccess: () => console.log('success!!'),
+  });
+};
+
+/** 학업계획서 입력 */
+export const EditUserPlan = () => {
+  const response = async (params: IPatchUserPlan) => {
+    return instance.patch('study-plan', params);
+  };
+  return useMutation(response, {
+    onError: () => alert('학업계획서 제출에 실패하였습니다.'),
     onSuccess: () => console.log('success!!'),
   });
 };
