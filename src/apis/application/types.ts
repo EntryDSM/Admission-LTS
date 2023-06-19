@@ -35,10 +35,6 @@ export interface IPatchUserInfo {
   photo_file_name: string;
 }
 
-export interface IPatchUserBlackExam {
-  ged_average_score: number;
-}
-
 export interface IPatchUserIntro {
   content: string;
 }

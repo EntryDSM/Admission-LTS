@@ -5,7 +5,8 @@ import { useUserBlackExam } from '../store/useUserBlackExam';
 import { useUserIntro } from './../store/useUserIntro';
 import { useUserPlan } from '../store/useUserPlan';
 import { IApplicationFooterProps } from '../interface/type';
-import { EditUserBlackExam, EditUserInfo, EditUserIntro, EditUserPlan, EditUserType } from '../apis/application';
+import { EditUserInfo, EditUserIntro, EditUserPlan, EditUserType } from '../apis/application';
+import { EditUserBlackExam } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';
 
 const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '../axios';
-import { IPatchUserBlackExam, IPatchUserInfo, IPatchUserIntro, IPatchUserPlan, IPatchUserType } from './types';
+import { IPatchUserInfo, IPatchUserIntro, IPatchUserPlan, IPatchUserType } from './types';
 
 const router = 'application';
 
@@ -23,17 +23,6 @@ export const EditUserInfo = () => {
   return useMutation(response, {
     onError: () => alert('인적사항 제출에 실패하였습니다.'),
     onSuccess: () => console.log('success!'),
-  });
-};
-
-/** 검정고시 입력 */
-export const EditUserBlackExam = () => {
-  const response = async (params: IPatchUserBlackExam) => {
-    return instance.patch('score/qualification', params);
-  };
-  return useMutation(response, {
-    onError: () => alert('검정고시 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!!'),
   });
 };
 
