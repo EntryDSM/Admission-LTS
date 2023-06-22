@@ -50,6 +50,7 @@ export interface IUserInfo {
   };
   yearArray: string[];
   setUserInfo: (e: InputType) => void;
+  setTelephone: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
   setDropdown: (index: number, value: string, type: string) => void;
 }

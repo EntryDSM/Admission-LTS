@@ -13,7 +13,7 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 
 const UserInfo = () => {
   const { userType } = useUserType();
-  const { userInfo, setUserInfo, setAllValues, setDropdown } = useUserInfo();
+  const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
   const { photo_file_name, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
@@ -42,7 +42,7 @@ const UserInfo = () => {
       post_code: data?.zonecode,
     });
   };
-
+  
   return (
     <_ApplicationWrapper>
       <label>
@@ -103,23 +103,23 @@ const UserInfo = () => {
 
       <ApplicationContent grid={1} title="본인 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
         <Input
-          type="number"
+          type="tel"
           placeholder="본인 연락처"
           width={230}
           name="telephone_number"
           value={userInfo.telephone_number}
-          onChange={setUserInfo}
+          onChange={setTelephone}
         />
       </ApplicationContent>
 
       <ApplicationContent grid={1} title="보호자 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
         <Input
-          type="number"
+          type="tel"
           placeholder="보호자 연락처"
           width={230}
           name="parent_tel"
           value={userInfo.parent_tel}
-          onChange={setUserInfo}
+          onChange={setTelephone}
         />
       </ApplicationContent>
 
