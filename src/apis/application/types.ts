@@ -35,7 +35,7 @@ export interface IPatchUserInfo {
   photo_file_name: string;
 }
 
-export interface IPatchUserIntro {
+export interface IPatchUserIntroduce {
   content: string;
 }
 

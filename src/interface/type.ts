@@ -65,9 +65,9 @@ export interface IUserMiddleSchool {
   setAllValues: <T>(initialForm: T) => void;
 }
 
-export interface IUserIntro {
-  userIntro: string;
-  setUserIntro: (e: InputType) => void;
+export interface IUserIntroduce {
+  userIntroduce: string;
+  setUserIntroduce: (e: InputType) => void;
 }
 
 export interface IUserPlan {

@@ -2,10 +2,10 @@ import { useUserType } from '../store/useUserType';
 import { useUserInfo } from '../store/useUserInfo';
 import { useUserPhoto } from '../store/useUserPhoto';
 import { useUserBlackExam } from '../store/useUserBlackExam';
-import { useUserIntro } from './../store/useUserIntro';
+import { useUserIntroduce } from '../store/useUserIntroduce';
 import { useUserPlan } from '../store/useUserPlan';
 import { IApplicationFooterProps } from '../interface/type';
-import { EditUserInfo, EditUserIntro, EditUserPlan, EditUserType } from '../apis/application';
+import { EditUserInfo, EditUserIntroduce, EditUserPlan, EditUserType } from '../apis/application';
 import { EditUserBlackExam } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';
 
@@ -22,16 +22,16 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const checkUserInfo = isBlackExam ? { ...userInfoParam, ged_average_score } : userInfoParam;
   const blackExam = Number(ged_average_score);
 
-  const { userIntro } = useUserIntro();
+  const { userIntroduce } = useUserIntroduce();
   const { userPlan } = useUserPlan();
-  const checkUserWrite = { userIntro, userPlan };
+  const checkUserWrite = { useUserIntroduce, userPlan };
 
   const checkArray = [checkUserType, checkUserInfo, '1', checkUserWrite, '1', '1', '1'];
 
   const { mutate: patchUserType } = EditUserType();
   const { mutate: patchUserInfo } = EditUserInfo();
   const { mutate: patchBlackExam } = EditUserBlackExam();
-  const { mutate: patchUserIntro } = EditUserIntro();
+  const { mutate: patchUserIntroduce } = EditUserIntroduce();
   const { mutate: patchUserPlan } = EditUserPlan();
 
   const isDisabled = Object.values(checkArray[current]).includes('');
@@ -43,7 +43,7 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
     },
     () => console.log(current),
     () => {
-      patchUserIntro({ content: userIntro }), patchUserPlan({ content: userPlan });
+      patchUserIntroduce({ content: userIntroduce }), patchUserPlan({ content: userPlan });
     },
     () => console.log(current),
     () => console.log(current),

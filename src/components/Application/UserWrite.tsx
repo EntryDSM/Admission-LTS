@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { useUserIntro } from '../../store/useUserIntro';
+import { useUserIntroduce } from '../../store/useUserIntroduce';
 import { useUserPlan } from '../../store/useUserPlan';
 
 const UserWrite = () => {
-  const { userIntro, setUserIntro } = useUserIntro();
+  const { userIntroduce, setUserIntroduce } = useUserIntroduce();
   const { userPlan, setUserPlan } = useUserPlan();
 
   return (
@@ -15,8 +15,8 @@ const UserWrite = () => {
         limit={1600}
         width="100%"
         name="intro"
-        value={userIntro}
-        onChange={setUserIntro}
+        value={userIntroduce}
+        onChange={setUserIntroduce}
       />
       <Textarea
         placeholder="내용을 입력해주세요"

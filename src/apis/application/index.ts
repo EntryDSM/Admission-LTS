@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '../axios';
-import { IPatchUserInfo, IPatchUserIntro, IPatchUserPlan, IPatchUserType } from './types';
+import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPlan, IPatchUserType } from './types';
 
 const router = 'application';
 
@@ -27,9 +27,9 @@ export const EditUserInfo = () => {
 };
 
 /** 자기소개서 입력 */
-export const EditUserIntro = () => {
-  const response = async (params: IPatchUserIntro) => {
-    return instance.patch('intro', params);
+export const EditUserIntroduce = () => {
+  const response = async (params: IPatchUserIntroduce) => {
+    return instance.patch(`${router}/intro`, params);
   };
   return useMutation(response, {
     onError: () => alert('자기소개서 제출에 실패하였습니다.'),
@@ -40,7 +40,7 @@ export const EditUserIntro = () => {
 /** 학업계획서 입력 */
 export const EditUserPlan = () => {
   const response = async (params: IPatchUserPlan) => {
-    return instance.patch('study-plan', params);
+    return instance.patch(`${router}/study-plan`, params);
   };
   return useMutation(response, {
     onError: () => alert('학업계획서 제출에 실패하였습니다.'),
