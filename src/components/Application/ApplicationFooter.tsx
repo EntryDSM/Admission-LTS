@@ -19,7 +19,7 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
         kind="outlined"
         disabled={current === 0}
         onClick={() => {
-          onClickMinus[current - 1](), onClickPatch[current]();
+          onClickMinus[current - 1]();
         }}
       >
         이전

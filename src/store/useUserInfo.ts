@@ -21,6 +21,13 @@ export const useUserInfo = create<IUserInfo>()(
         const { name, value } = e.currentTarget;
         return { userInfo: { ...state.userInfo, [name]: value } };
       }),
+    setTelephone: (e: InputType) => {
+      set((state) => {
+        const { name, value } = e.currentTarget;
+        const text = value.split('-').join('');
+        return { userInfo: { ...state.userInfo, [name]: text } };
+      });
+    },
     setAllValues: <T>(initialForm: T) =>
       set((state) => {
         return { userInfo: { ...state.userInfo, ...initialForm } };

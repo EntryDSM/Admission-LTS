@@ -50,6 +50,7 @@ export interface IUserInfo {
   };
   yearArray: string[];
   setUserInfo: (e: InputType) => void;
+  setTelephone: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
   setDropdown: (index: number, value: string, type: string) => void;
 }
@@ -64,13 +65,14 @@ export interface IUserMiddleSchool {
   setAllValues: <T>(initialForm: T) => void;
 }
 
-export interface IUserWrite {
-  userWrite: {
-    intro: string;
-    study_plan: string;
-  };
-  setUserWrite: (e: InputType) => void;
-  setAllValues: <T>(initialForm: T) => void;
+export interface IUserIntroduce {
+  userIntroduce: string;
+  setUserIntroduce: (e: InputType) => void;
+}
+
+export interface IUserPlan {
+  userPlan: string;
+  setUserPlan: (e: InputType) => void;
 }
 
 export type GradeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';
