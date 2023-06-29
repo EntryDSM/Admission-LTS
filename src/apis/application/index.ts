@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPlan, IPatchUserType } from './types';
-import { IPatchUserMiddleSchool, IUserMiddleSchool } from '../../interface/type';
+import { IPatchUserMiddleSchool } from '../../interface/type';
 
 const router = 'application';
 
