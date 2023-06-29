@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPlan, IPatchUserType } from './types';
+import { IPatchUserMiddleSchool, IUserMiddleSchool } from '../../interface/type';
 
 const router = 'application';
 
@@ -45,6 +46,17 @@ export const EditUserPlan = () => {
   return useMutation(response, {
     onError: () => alert('학업계획서 제출에 실패하였습니다.'),
     onSuccess: () => console.log('success!!'),
+  });
+};
+
+/** 졸업/졸업예정 추가정보 입력 */
+export const EditAdditionalInfo = () => {
+  const response = async (params: IPatchUserMiddleSchool) => {
+    return instance.patch(`${router}/users/graduation`, params);
+  };
+  return useMutation(response, {
+    onSuccess: () => console.log('success'),
+    onError: () => alert('에러'),
   });
 };
 

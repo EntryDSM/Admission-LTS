@@ -5,9 +5,10 @@ import { useUserBlackExam } from '../store/useUserBlackExam';
 import { useUserIntroduce } from '../store/useUserIntroduce';
 import { useUserPlan } from '../store/useUserPlan';
 import { IApplicationFooterProps } from '../interface/type';
-import { EditUserInfo, EditUserIntroduce, EditUserPlan, EditUserType } from '../apis/application';
+import { EditAdditionalInfo, EditUserInfo, EditUserIntroduce, EditUserPlan, EditUserType } from '../apis/application';
 import { EditUserBlackExam } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';
+import { useUserMiddleSchool } from '../store/useUserMiddleSchool';
 
 const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {
   const { userType } = useUserType();
@@ -21,6 +22,7 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const { ged_average_score } = useUserBlackExam();
   const checkUserInfo = isBlackExam ? { ...userInfoParam, ged_average_score } : userInfoParam;
   const blackExam = Number(ged_average_score);
+  const { userMiddleSchool } = useUserMiddleSchool();
 
   const { userIntroduce } = useUserIntroduce();
   const { userPlan } = useUserPlan();
@@ -33,6 +35,7 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const { mutate: patchBlackExam } = EditUserBlackExam();
   const { mutate: patchUserIntroduce } = EditUserIntroduce();
   const { mutate: patchUserPlan } = EditUserPlan();
+  const { mutate: patchGraduate } = EditAdditionalInfo();
 
   const isDisabled = Object.values(checkArray[current]).includes('');
 
@@ -41,7 +44,11 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
     () => {
       patchUserInfo(userInfoParam), isBlackExam && patchBlackExam({ ged_average_score: blackExam });
     },
-    () => console.log(current),
+    () =>
+      patchGraduate({
+        ...userMiddleSchool,
+        school_tel: userMiddleSchool.school_tel?.replace(/-/g, ''),
+      }),
     () => {
       patchUserIntroduce({ content: userIntroduce }), patchUserPlan({ content: userPlan });
     },

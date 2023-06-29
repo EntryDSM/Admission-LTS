@@ -34,7 +34,7 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
           color="orange"
           kind="contained"
           onClick={() => {
-            onClickPlus[current](), onClickPatch[current]();
+            onClickPlus[current](), onClickPatch[current](); 
           }}
           disabled={isDisabled}
         >
