@@ -10,11 +10,11 @@ interface IAllSelect {
 }
 
 const AllSelect = ({ current }: IAllSelect) => {
-  const [grade, setGrade] = useState<GradeType>('A');
+  const [grade, setGrade] = useState<GradeType>('X');
   const { setAllGrade } = useGradeElement();
 
   useEffect(() => {
-    setGrade('A');
+    setGrade('X');
   }, [current]);
 
   return (

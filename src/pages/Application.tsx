@@ -12,40 +12,40 @@ import UserMiddleSchool from '../components/Application/UserMiddleShool';
 const Application = () => {
   const [current, setCurrent] = useState<number>(0);
 
-  const [gradeCurrent, setGradeCurrent] = useState<number>(0);
+  const titles = [
+    '지원자 전형 구분',
+    '지원자 인적사항',
+    '중학교 정보입력',
+    '자기소개서 & 학업 계획서',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+    '지원 원서 미리보기',
+  ];
 
   const elements = [
-    { title: '지원자 전형 구분', component: <UserType /> },
-    {
-      title: '지원자 인적사항',
-      component: <UserInfo />,
-    },
-    {
-      title: '중학교 정보입력',
-      component: <UserMiddleSchool />      
-    },
-    {
-      title: '자기소개서 & 학업 계획서',
-      component: <UserWrite />,
-    },
-    {
-      title: '',
-      component: <GradeProgram current={gradeCurrent} />,
-    },
-    { title: '지원 원서 미리보기', component: <UserPreview /> },
+    <UserType />,
+    <UserInfo />,
+    <UserMiddleSchool />,
+    <UserWrite />,
+    <GradeProgram current={0} />,
+    <GradeProgram current={1} />,
+    <GradeProgram current={2} />,
+    <GradeProgram current={3} />,
+    <GradeProgram current={4} />,
+    <GradeProgram current={5} />,
+    <UserPreview />,
   ];
 
   return (
     <_Container>
       <_Wrapper>
-        {elements[current].title && <ApplicationTitle title={elements[current].title} />}
-        {elements[current].component}
-        <ApplicationFooter
-          current={current}
-          setCurrent={setCurrent}
-          gradeCurrent={gradeCurrent}
-          setGradeCurrent={setGradeCurrent}
-        />
+        {titles[current] && <ApplicationTitle title={titles[current]} />}
+        {elements[current]}
+        <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
     </_Container>
   );

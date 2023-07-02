@@ -3,13 +3,11 @@ import { Button, theme } from '@team-entry/design_system';
 import { IApplicationFooterProps } from '../../interface/type';
 import useClickFooter from '../../hooks/useClickFooter';
 
-const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {
-  const progress = [0, 1, 2, 3, 4, 5];
+const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
+  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8], [9]];
   const { onClickPlus, onClickMinus, onClickPatch, isDisabled } = useClickFooter({
     current,
     setCurrent,
-    gradeCurrent,
-    setGradeCurrent,
   });
 
   return (
@@ -19,24 +17,24 @@ const ApplicationFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent 
         kind="outlined"
         disabled={current === 0}
         onClick={() => {
-          onClickMinus[current - 1]();
+          onClickMinus(current);
         }}
       >
         이전
       </Button>
       <_Progress>
         {progress.map((step) => (
-          <_ProgressStep key={step} isStep={step === current} />
+          <_ProgressStep key={step[0]} isStep={step.includes(current)} />
         ))}
       </_Progress>
-      {current !== 5 ? (
+      {current !== 10 ? (
         <Button
           color="orange"
           kind="contained"
           onClick={() => {
-            onClickPlus[current](), onClickPatch[current]();
+            onClickPlus(current), onClickPatch[current]();
           }}
-          disabled={isDisabled}
+          disabled={isDisabled && false}
         >
           다음
         </Button>

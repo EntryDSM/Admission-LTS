@@ -5,8 +5,6 @@ export type InputType =
 export interface IApplicationFooterProps {
   current: number;
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
-  gradeCurrent: number;
-  setGradeCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IUserTypeParams {

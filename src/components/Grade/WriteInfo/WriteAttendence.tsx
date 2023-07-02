@@ -12,8 +12,8 @@ const WriteAttendence = () => {
           type="number"
           width={230}
           placeholder="결석 횟수"
-          value={gradeElement[3][0]}
-          onChange={(e: InputType) => setWriteValue(e, 3, 0)}
+          value={gradeElement[4][0]}
+          onChange={(e: InputType) => setWriteValue(e, 4, 0)}
           unit="일"
         />
       </GradeWraper>
@@ -22,8 +22,8 @@ const WriteAttendence = () => {
           type="number"
           width={230}
           placeholder="지각 횟수"
-          value={gradeElement[3][1]}
-          onChange={(e: InputType) => setWriteValue(e, 3, 1)}
+          value={gradeElement[4][1]}
+          onChange={(e: InputType) => setWriteValue(e, 4, 1)}
           unit="회"
         />
       </GradeWraper>
@@ -32,8 +32,8 @@ const WriteAttendence = () => {
           type="number"
           width={230}
           placeholder="조퇴 횟수"
-          value={gradeElement[3][2]}
-          onChange={(e: InputType) => setWriteValue(e, 3, 2)}
+          value={gradeElement[4][2]}
+          onChange={(e: InputType) => setWriteValue(e, 4, 2)}
           unit="회"
         />
       </GradeWraper>

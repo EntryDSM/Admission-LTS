@@ -9,11 +9,12 @@ import { EditUserInfo, EditUserIntroduce, EditUserPlan, EditUserType } from '../
 import { EditUserBlackExam } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';
 
-const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: IApplicationFooterProps) => {
+const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const { userType } = useUserType();
   const { application_remark, ...checkUserType } = userType;
 
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
+  const isGraduate = userType.educational_status === 'GRADUATE';
 
   const { userInfo } = useUserInfo();
   const { photo_file_name } = useUserPhoto();
@@ -26,7 +27,7 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
   const { userPlan } = useUserPlan();
   const checkUserWrite = { useUserIntroduce, userPlan };
 
-  const checkArray = [checkUserType, checkUserInfo, '1', checkUserWrite, '1', '1', '1'];
+  const checkArray = [checkUserType, checkUserInfo, '1', checkUserWrite, '1', '1', '1', '1', '1', '1', '1'];
 
   const { mutate: patchUserType } = EditUserType();
   const { mutate: patchUserInfo } = EditUserInfo();
@@ -47,35 +48,39 @@ const useClickFooter = ({ current, setCurrent, gradeCurrent, setGradeCurrent }: 
     },
     () => console.log(current),
     () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
+    () => console.log(current),
   ];
 
-  const onClickPlus = [
-    () => setCurrent(current + 1),
-    () => {
-      isBlackExam ? setCurrent(current + 2) : setCurrent(current + 1);
-    },
-    () => setCurrent(current + 1),
-    () => {
-      isBlackExam ? setCurrent(current + 2) : setCurrent(current + 1);
-    },
-    () => {
-      gradeCurrent == 4 ? setCurrent(current + 1) : setGradeCurrent(gradeCurrent + 1);
-    },
-  ];
+  const onClickPlus = (current: number) => {
+    switch (current) {
+      case 1:
+        return isBlackExam ? setCurrent(3) : setCurrent(current + 1);
+      case 3:
+        return isBlackExam ? setCurrent(8) : setCurrent(current + 1);
+      case 6:
+        return isGraduate ? setCurrent(current + 1) : setCurrent(8);
+      default:
+        return setCurrent(current + 1);
+    }
+  };
 
-  const onClickMinus = [
-    () => setCurrent(current - 1),
-    () => setCurrent(current - 1),
-    () => {
-      isBlackExam ? setCurrent(current - 2) : setCurrent(current - 1);
-    },
-    () => {
-      gradeCurrent === 0 ? setCurrent(current - 1) : setGradeCurrent(gradeCurrent - 1);
-    },
-    () => {
-      isBlackExam ? setCurrent(current - 2) : setCurrent(current - 1);
-    },
-  ];
+  const onClickMinus = (current: number) => {
+    switch (current) {
+      case 3:
+        return isBlackExam ? setCurrent(1) : setCurrent(current - 1);
+      case 8:
+        if (isBlackExam) {
+          return setCurrent(3);
+        }
+        return isGraduate ? setCurrent(current - 1) : setCurrent(6);
+      default:
+        return setCurrent(current - 1);
+    }
+  };
 
   return { onClickPlus, onClickMinus, onClickPatch, isDisabled };
 };
