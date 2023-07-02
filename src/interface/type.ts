@@ -55,14 +55,21 @@ export interface IUserInfo {
   setDropdown: (index: number, value: string, type: string) => void;
 }
 
+export interface IPatchUserMiddleSchool {
+  student_number: string;
+  school_code: string;
+  school_tel: string;
+}
+
 export interface IUserMiddleSchool {
-  userMiddleSchool: {
-    name: string;
-    studentId: number | undefined;
-    telephoneNumber: number | undefined;
-  };
+  userMiddleSchool: IPatchUserMiddleSchool;
   setUserMiddleSchool: (e: InputType) => void;
   setAllValues: <T>(initialForm: T) => void;
+}
+
+export interface IUserMiddleSchoolName {
+  schoolName: string;
+  setSchoolName: (name: string) => void;
 }
 
 export interface IUserIntroduce {
@@ -84,9 +91,20 @@ export interface IGradeElement {
   setWriteValue: (e: InputType, current: number, index: number) => void;
 }
 
-export type ModalType = '' | 'CANCEL_SUBMIT' | 'SIGN_OUT' | 'SEARCH_ADDRESS';
+export type ModalType = '' | 'CANCEL_SUBMIT' | 'SIGN_OUT' | 'SEARCH_ADDRESS' | 'SEARCH_SCHOOL';
 
 export interface IModalState {
   modalState: ModalType;
   setModalState: (modalState: ModalType) => void;
+}
+
+export interface ISearchSchools {
+  content: ISearchSchool[];
+}
+
+export interface ISearchSchool {
+  code: string;
+  name: string;
+  information: string;
+  address: string;
 }
