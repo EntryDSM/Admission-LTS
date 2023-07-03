@@ -45,13 +45,13 @@ const UserType = () => {
               (key) => applicationTypeSelector[key as applicationType] === userType.application_remark,
             )}
             disabled={userType.application_type !== 'SOCIAL'}
-            onChange={(e) => {
+            onChange={(application) => {
               setAllValues(
                 {
                   ...userType,
-                  application_remark: applicationTypeSelector[e as applicationType],
+                  application_remark: applicationTypeSelector[application as applicationType],
                 },
-                applicationTypeSelector[e as applicationType],
+                applicationTypeSelector[application as applicationType],
               );
             }}
             options={[
@@ -115,7 +115,7 @@ const UserType = () => {
           className="graduated_at"
           width={85}
           value={graduatedAtArray[0]}
-          onChange={(e) => setDropdown(0, e, 'graduated_at')}
+          onChange={(year) => setDropdown(0, year, 'graduated_at')}
           options={generateNumberArray(2020, 2030)}
           unit="년"
         />
@@ -123,7 +123,7 @@ const UserType = () => {
           className="graduated_at"
           width={85}
           value={graduatedAtArray[1]}
-          onChange={(e) => setDropdown(1, e, 'graduated_at')}
+          onChange={(month) => setDropdown(1, month, 'graduated_at')}
           options={generateNumberArray(1, 12)}
           unit="월"
         />

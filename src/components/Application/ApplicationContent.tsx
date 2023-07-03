@@ -24,7 +24,7 @@ const ApplicationContent = ({
       <_ApplicationGridbox grid={grid}>
         <_ApplicationTitle color={required ? 'black900' : 'black600'} size="body2">
           {title}
-          <sup style={{ color: theme.color.error }}> *</sup>
+          {required && <_RequiredStar> *</_RequiredStar>}
         </_ApplicationTitle>
         {children}
       </_ApplicationGridbox>
@@ -61,4 +61,8 @@ const _ApplicationGridbox = styled.div<{ grid: number }>`
 const _ApplicationTitle = styled(Text)`
   justify-self: center;
   margin-right: 20px;
+`;
+
+const _RequiredStar = styled.sup`
+  color: ${theme.color.error};
 `;

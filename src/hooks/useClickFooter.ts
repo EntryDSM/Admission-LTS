@@ -77,11 +77,11 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
     () => {
       patchUserIntroduce({ content: userIntroduce }), patchUserPlan({ content: userPlan });
     },
-    () => console.log(''),
-    () => console.log(''),
-    () => console.log(''),
-    () => console.log(''),
-    () => console.log(''),
+    () => {},
+    () => {},
+    () => {},
+    () => {},
+    () => {},
     () => patchUserGraduation(graduation),
   ];
 

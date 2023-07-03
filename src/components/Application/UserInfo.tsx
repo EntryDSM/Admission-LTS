@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
@@ -10,22 +10,14 @@ import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
 import { generateNumberArray } from '../../utils/GenerateNumberArray';
-import { instance } from '../../apis/axios';
+import { GetUserInfos } from '../../apis/application';
 
 const UserInfo = () => {
-  const [data, setData] = useState({ name: '', telephone_number: '' });
+  const { data } = GetUserInfos();
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
   const { photo_file_name, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
-  
-  const response = async () => {
-    const { data } = await instance.get<{ name: string; telephone_number: string }>('application/users/info');
-    setData({ name: data.name, telephone_number: data.telephone_number });
-  };
-  useEffect(() => {
-    response();
-  }, []);
 
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const { close, modalState, setModalState } = useModal();
@@ -70,7 +62,7 @@ const UserInfo = () => {
       </label>
 
       <ApplicationContent grid={1} title="이름" width={40}>
-        <Input type="text" placeholder="이름" width={230} name="name" value={data.name} disabled />
+        <Input type="text" placeholder="이름" width={230} name="name" value={data && data.name} disabled />
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
@@ -81,21 +73,21 @@ const UserInfo = () => {
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) => setDropdown(0, e, 'birthday')}
+          onChange={(year) => setDropdown(0, year, 'birthday')}
           options={generateNumberArray(2000, 2024)}
           unit="년"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) => setDropdown(1, e, 'birthday')}
+          onChange={(month) => setDropdown(1, month, 'birthday')}
           options={generateNumberArray(1, 12)}
           unit="월"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) => setDropdown(2, e, 'birthday')}
+          onChange={(date) => setDropdown(2, date, 'birthday')}
           options={generateNumberArray(1, 31)}
           unit="일"
         />
@@ -118,7 +110,7 @@ const UserInfo = () => {
           placeholder="본인 연락처"
           width={230}
           name="telephone_number"
-          value={data.telephone_number}
+          value={data && data.telephone_number}
           disabled
         />
       </ApplicationContent>
