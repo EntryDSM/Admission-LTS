@@ -55,6 +55,7 @@ const ModalContainer = styled.div`
   min-height: 300px;
   background-color: ${theme.color.realWhite};
   border-radius: 10px;
+  overflow: hidden;
   @media screen and (max-width: 769px) {
     width: 320px;
   }
