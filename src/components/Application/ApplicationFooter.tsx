@@ -39,7 +39,7 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
           다음
         </Button>
       ) : (
-        <Button color="orange" kind="contained" onClick={() => console.log('asdf')}>
+        <Button color="orange" kind="contained" onClick={() => console.log('완료')}>
           완료
         </Button>
       )}
