@@ -51,7 +51,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
     tech_and_home_grade:
       (isGraduate ? gradeElement[0][5] : 'X') + gradeElement[1][5] + gradeElement[2][5] + gradeElement[3][5],
   };
-  console.log(graduation);
+  
   const checkArray = [checkUserType, checkUserInfo, '1', checkUserWrite, '1', '1', '1', '1', graduation, '1', '1'];
 
   const { mutate: patchUserType } = EditUserType();

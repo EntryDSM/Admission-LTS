@@ -34,7 +34,7 @@ const UserMiddleSchool = () => {
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={2} title="중학교 이름">
-        <Input type="text" placeholder="중학교 이름" name="name" value={schoolName} width={230} />
+        <Input type="text" placeholder="중학교 이름" name="name" value={schoolName} width={230} disabled />
         <Stack margin={['left', 20]} width={70}>
           <Button color="black" kind="outlined" onClick={() => setModalState('SEARCH_SCHOOL')}>
             검색
