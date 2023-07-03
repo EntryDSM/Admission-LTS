@@ -25,10 +25,10 @@ const Program = ({ current }: ProgramProps) => {
         { step: 5, title: '봉사 점수' },
       ]
     : [
+        { step: 0, title: '' },
         { step: 1, title: '3학년 1학기' },
         { step: 2, title: '직전 학기' },
         { step: 3, title: '직전전 학기' },
-        { step: 0, title: '' },
         { step: 4, title: '출석 점수' },
         { step: 4, title: '봉사 점수' },
       ];

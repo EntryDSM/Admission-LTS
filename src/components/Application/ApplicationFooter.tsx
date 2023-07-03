@@ -34,7 +34,7 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
           onClick={() => {
             onClickPlus(current), onClickPatch[current]();
           }}
-          disabled={isDisabled && false}
+          disabled={isDisabled}
         >
           다음
         </Button>

@@ -6,8 +6,7 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 import { applicationType, applicationTypeSelector } from '../../constant/translate';
 
 const UserType = () => {
-  const { userType, setUserType, setAllValues, setDropdown, graduatedAtArray } = useUserType();
-
+  const { userType, dropboxTmp, setUserType, setAllValues, setDropdown, graduatedAtArray } = useUserType();
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
@@ -34,7 +33,7 @@ const UserType = () => {
               setAllValues({
                 ...userType,
                 application_type: 'SOCIAL',
-                application_remark: applicationTypeSelector['기초생활수급자'],
+                application_remark: dropboxTmp,
               });
             }}
             isChecked={userType.application_type === 'SOCIAL'}
@@ -47,7 +46,13 @@ const UserType = () => {
             )}
             disabled={userType.application_type !== 'SOCIAL'}
             onChange={(e) => {
-              setAllValues({ ...userType, application_remark: applicationTypeSelector[e as applicationType] });
+              setAllValues(
+                {
+                  ...userType,
+                  application_remark: applicationTypeSelector[e as applicationType],
+                },
+                applicationTypeSelector[e as applicationType],
+              );
             }}
             options={[
               '기초생활수급자',

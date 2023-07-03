@@ -24,6 +24,7 @@ const ApplicationContent = ({
       <_ApplicationGridbox grid={grid}>
         <_ApplicationTitle color={required ? 'black900' : 'black600'} size="body2">
           {title}
+          <sup style={{ color: theme.color.error }}> *</sup>
         </_ApplicationTitle>
         {children}
       </_ApplicationGridbox>

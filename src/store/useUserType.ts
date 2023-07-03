@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { IUserType, InputType } from '../interface/type';
+import { applicationTypeSelector } from '../constant/translate';
 
 export const useUserType = create<IUserType>()(
   devtools((set) => ({
@@ -13,6 +14,7 @@ export const useUserType = create<IUserType>()(
       is_out_of_headcount: false,
     },
     graduatedAtArray: ['2020', '01'],
+    dropboxTmp: applicationTypeSelector['기초생활수급자'],
     setUserType: (e: InputType) =>
       set((state) => {
         const { name, value } = e.currentTarget;
@@ -23,9 +25,9 @@ export const useUserType = create<IUserType>()(
         }
         return { userType: { ...state.userType, [name]: value } };
       }),
-    setAllValues: <T>(initialForm: T) =>
+    setAllValues: <T>(initialForm: T, tmp?: string) =>
       set((state) => {
-        return { userType: { ...state.userType, ...initialForm } };
+        return { userType: { ...state.userType, ...initialForm }, dropboxTmp: tmp || state.dropboxTmp };
       }),
     setDropdown: (index: number, value: string, type: string) =>
       set((state) => {

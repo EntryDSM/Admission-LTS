@@ -19,8 +19,9 @@ export interface IUserTypeParams {
 export interface IUserType {
   userType: IUserTypeParams;
   graduatedAtArray: string[];
+  dropboxTmp: string;
   setUserType: (e: InputType) => void;
-  setAllValues: <T>(initialForm: T) => void;
+  setAllValues: <T>(initialForm: T, tmp?: string) => void;
   setDropdown: (index: number, value: string, type: string) => void;
 }
 
