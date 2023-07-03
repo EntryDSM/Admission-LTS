@@ -30,7 +30,7 @@ export const EditUserInfo = () => {
 /** 유저 이름, 전화번호 조회 */
 export const GetUserInfos = () => {
   const response = async () => {
-    const { data } = await instance.get<{ name: string; telephone_number: string }>('application/users/info');
+    const { data } = await instance.get<{ name: string; telephone_number: string }>(`${router}/users/info`);
     return data;
   };
   return useQuery(['userInfos'], response);
