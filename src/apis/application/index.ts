@@ -50,6 +50,4 @@ export const EditUserPlan = () => {
 
 /*
 졸업 /졸업 예정자 입력
-자기소개
-학업 계획서
 */

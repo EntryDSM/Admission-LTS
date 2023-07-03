@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
@@ -10,12 +10,23 @@ import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
 import { generateNumberArray } from '../../utils/GenerateNumberArray';
+import { instance } from '../../apis/axios';
 
 const UserInfo = () => {
+  const [data, setData] = useState({ name: '', telephone_number: '' });
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
   const { photo_file_name, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
+  
+  const response = async () => {
+    const { data } = await instance.get<{ name: string; telephone_number: string }>('application/users/info');
+    setData({ name: data.name, telephone_number: data.telephone_number });
+  };
+  useEffect(() => {
+    response();
+  }, []);
+
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const { close, modalState, setModalState } = useModal();
 
@@ -42,7 +53,7 @@ const UserInfo = () => {
       post_code: data?.zonecode,
     });
   };
-  
+
   return (
     <_ApplicationWrapper>
       <label>
@@ -59,7 +70,7 @@ const UserInfo = () => {
       </label>
 
       <ApplicationContent grid={1} title="이름" width={40}>
-        <Input type="text" placeholder="이름" width={230} name="name" onChange={setUserInfo} value={userInfo.name} />
+        <Input type="text" placeholder="이름" width={230} name="name" value={data.name} disabled />
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
@@ -107,8 +118,8 @@ const UserInfo = () => {
           placeholder="본인 연락처"
           width={230}
           name="telephone_number"
-          value={userInfo.telephone_number}
-          onChange={setTelephone}
+          value={data.telephone_number}
+          disabled
         />
       </ApplicationContent>
 
@@ -140,8 +151,15 @@ const UserInfo = () => {
       <ApplicationContent grid={1} title="주소">
         <VStack margin={[30, 0]} gap={10}>
           <HStack gap={20}>
-            <Input name="post_code" type="text" width={125} placeholder="우편번호" value={userInfo.post_code} />
-            <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} />
+            <Input
+              name="post_code"
+              type="text"
+              width={125}
+              placeholder="우편번호"
+              value={userInfo.post_code}
+              disabled
+            />
+            <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} disabled />
             <Button
               kind="outlined"
               onClick={() => {
