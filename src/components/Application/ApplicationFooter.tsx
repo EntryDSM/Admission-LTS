@@ -4,7 +4,7 @@ import { IApplicationFooterProps } from '../../interface/type';
 import useClickFooter from '../../hooks/useClickFooter';
 
 const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
-  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8], [9]];
+  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8, 9], [10]];
   const { onClickPlus, onClickMinus, onClickPatch, isDisabled } = useClickFooter({
     current,
     setCurrent,

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Stack, Text, theme } from '@team-entry/design_system';
+import { Text, theme } from '@team-entry/design_system';
 import { useUserType } from '../../store/useUserType';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
@@ -34,11 +34,9 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
   return (
     <>
       <_Wrapper>
-        <Stack justify="space-between" align="center" style={{ paddingLeft: '5px' }}>
-          {progess.map((res) => {
-            return res.element;
-          })}
-        </Stack>
+        {progess.map((res) => {
+          return res.element;
+        })}
       </_Wrapper>
       <_Texts>
         {title.map((item) => (
@@ -56,9 +54,9 @@ export default ProgressBar;
 const _Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-  margin: 0.5rem 0;
+  margin: 8px 0;
 `;
 
 const _Texts = styled.div`
