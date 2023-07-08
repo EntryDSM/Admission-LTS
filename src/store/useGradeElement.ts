@@ -6,9 +6,10 @@ export const useGradeElement = create<IGradeElement>()(
   persist(
     devtools((set) => ({
       gradeElement: [
-        ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
-        ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
-        ['A', 'A', 'A', 'A', 'A', 'A', 'A'],
+        ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
         ['', '', '', '', ''],
         ['', '', ''],
       ],

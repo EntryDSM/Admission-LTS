@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPlan, IPatchUserType } from './types';
 import { IPatchUserMiddleSchool } from '../../interface/type';
@@ -25,6 +25,15 @@ export const EditUserInfo = () => {
     onError: () => alert('인적사항 제출에 실패하였습니다.'),
     onSuccess: () => console.log('success!'),
   });
+};
+
+/** 유저 이름, 전화번호 조회 */
+export const GetUserInfos = () => {
+  const response = async () => {
+    const { data } = await instance.get<{ name: string; telephone_number: string }>(`${router}/users/info`);
+    return data;
+  };
+  return useQuery(['userInfos'], response);
 };
 
 /** 자기소개서 입력 */
@@ -62,6 +71,4 @@ export const EditAdditionalInfo = () => {
 
 /*
 졸업 /졸업 예정자 입력
-자기소개
-학업 계획서
 */

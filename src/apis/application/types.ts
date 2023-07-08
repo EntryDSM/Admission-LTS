@@ -23,12 +23,10 @@ export interface IPatchUserType {
 }
 
 export interface IPatchUserInfo {
-  name: string;
   sex: string;
   birthday: string;
   parent_name: string;
   parent_tel: string;
-  telephone_number: string;
   address: string;
   detail_address: string;
   post_code: string;

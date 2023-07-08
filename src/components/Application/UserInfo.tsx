@@ -10,12 +10,15 @@ import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
 import { generateNumberArray } from '../../utils/GenerateNumberArray';
+import { GetUserInfos } from '../../apis/application';
 
 const UserInfo = () => {
+  const { data } = GetUserInfos();
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
   const { photo_file_name, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
+
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const { close, modalState, setModalState } = useModal();
 
@@ -42,7 +45,7 @@ const UserInfo = () => {
       post_code: data?.zonecode,
     });
   };
-  
+
   return (
     <_ApplicationWrapper>
       <label>
@@ -59,7 +62,7 @@ const UserInfo = () => {
       </label>
 
       <ApplicationContent grid={1} title="이름" width={40}>
-        <Input type="text" placeholder="이름" width={230} name="name" onChange={setUserInfo} value={userInfo.name} />
+        <Input type="text" placeholder="이름" width={230} name="name" value={data && data.name} disabled />
       </ApplicationContent>
 
       <ApplicationContent grid={2} title="성별" width={40}>
@@ -70,21 +73,21 @@ const UserInfo = () => {
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) => setDropdown(0, e, 'birthday')}
+          onChange={(year) => setDropdown(0, year, 'birthday')}
           options={generateNumberArray(2000, 2024)}
           unit="년"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) => setDropdown(1, e, 'birthday')}
+          onChange={(month) => setDropdown(1, month, 'birthday')}
           options={generateNumberArray(1, 12)}
           unit="월"
         />
         <Dropdown
           className="birthday"
           width={85}
-          onChange={(e) => setDropdown(2, e, 'birthday')}
+          onChange={(date) => setDropdown(2, date, 'birthday')}
           options={generateNumberArray(1, 31)}
           unit="일"
         />
@@ -107,8 +110,8 @@ const UserInfo = () => {
           placeholder="본인 연락처"
           width={230}
           name="telephone_number"
-          value={userInfo.telephone_number}
-          onChange={setTelephone}
+          value={data && data.telephone_number}
+          disabled
         />
       </ApplicationContent>
 
@@ -140,8 +143,15 @@ const UserInfo = () => {
       <ApplicationContent grid={1} title="주소">
         <VStack margin={[30, 0]} gap={10}>
           <HStack gap={20}>
-            <Input name="post_code" type="text" width={125} placeholder="우편번호" value={userInfo.post_code} />
-            <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} />
+            <Input
+              name="post_code"
+              type="text"
+              width={125}
+              placeholder="우편번호"
+              value={userInfo.post_code}
+              disabled
+            />
+            <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} disabled />
             <Button
               kind="outlined"
               onClick={() => {

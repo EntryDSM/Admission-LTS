@@ -6,8 +6,7 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 import { applicationType, applicationTypeSelector } from '../../constant/translate';
 
 const UserType = () => {
-  const { userType, setUserType, setAllValues, setDropdown, graduatedAtArray } = useUserType();
-
+  const { userType, dropboxTmp, setUserType, setAllValues, setDropdown, graduatedAtArray } = useUserType();
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={3} title="전형 선택">
@@ -34,7 +33,7 @@ const UserType = () => {
               setAllValues({
                 ...userType,
                 application_type: 'SOCIAL',
-                application_remark: applicationTypeSelector['기초생활수급자'],
+                application_remark: dropboxTmp,
               });
             }}
             isChecked={userType.application_type === 'SOCIAL'}
@@ -46,8 +45,14 @@ const UserType = () => {
               (key) => applicationTypeSelector[key as applicationType] === userType.application_remark,
             )}
             disabled={userType.application_type !== 'SOCIAL'}
-            onChange={(e) => {
-              setAllValues({ ...userType, application_remark: applicationTypeSelector[e as applicationType] });
+            onChange={(application) => {
+              setAllValues(
+                {
+                  ...userType,
+                  application_remark: applicationTypeSelector[application as applicationType],
+                },
+                applicationTypeSelector[application as applicationType],
+              );
             }}
             options={[
               '기초생활수급자',
@@ -110,7 +115,7 @@ const UserType = () => {
           className="graduated_at"
           width={85}
           value={graduatedAtArray[0]}
-          onChange={(e) => setDropdown(0, e, 'graduated_at')}
+          onChange={(year) => setDropdown(0, year, 'graduated_at')}
           options={generateNumberArray(2020, 2030)}
           unit="년"
         />
@@ -118,7 +123,7 @@ const UserType = () => {
           className="graduated_at"
           width={85}
           value={graduatedAtArray[1]}
-          onChange={(e) => setDropdown(1, e, 'graduated_at')}
+          onChange={(month) => setDropdown(1, month, 'graduated_at')}
           options={generateNumberArray(1, 12)}
           unit="월"
         />

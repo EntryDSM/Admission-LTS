@@ -12,8 +12,8 @@ const WriteVolunteer = () => {
           type="number"
           width={230}
           placeholder="봉사 시간"
-          value={gradeElement[4][0]}
-          onChange={(e: InputType) => setWriteValue(e, 4, 0)}
+          value={gradeElement[5][0]}
+          onChange={(e: InputType) => setWriteValue(e, 5, 0)}
           unit="시간"
         />
       </GradeWraper>
@@ -22,8 +22,8 @@ const WriteVolunteer = () => {
           type="number"
           width={230}
           placeholder="봉사 시간"
-          value={gradeElement[4][1]}
-          onChange={(e: InputType) => setWriteValue(e, 4, 1)}
+          value={gradeElement[5][1]}
+          onChange={(e: InputType) => setWriteValue(e, 5, 1)}
           unit="시간"
         />
       </GradeWraper>
@@ -32,8 +32,8 @@ const WriteVolunteer = () => {
           type="number"
           width={230}
           placeholder="봉사 시간"
-          value={gradeElement[4][2]}
-          onChange={(e: InputType) => setWriteValue(e, 4, 2)}
+          value={gradeElement[5][2]}
+          onChange={(e: InputType) => setWriteValue(e, 5, 2)}
           unit="시간"
         />
       </GradeWraper>

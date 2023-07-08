@@ -5,8 +5,6 @@ export type InputType =
 export interface IApplicationFooterProps {
   current: number;
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
-  gradeCurrent: number;
-  setGradeCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export interface IUserTypeParams {
@@ -21,8 +19,9 @@ export interface IUserTypeParams {
 export interface IUserType {
   userType: IUserTypeParams;
   graduatedAtArray: string[];
+  dropboxTmp: string;
   setUserType: (e: InputType) => void;
-  setAllValues: <T>(initialForm: T) => void;
+  setAllValues: <T>(initialForm: T, tmp?: string) => void;
   setDropdown: (index: number, value: string, type: string) => void;
 }
 
@@ -38,12 +37,10 @@ export interface IUserBlackExam {
 
 export interface IUserInfo {
   userInfo: {
-    name: string;
     sex: string;
     birthday: string;
     parent_name: string;
     parent_tel: string;
-    telephone_number: string;
     address: string;
     detail_address: string;
     post_code: string;

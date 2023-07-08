@@ -1,16 +1,35 @@
 import styled from '@emotion/styled';
 import { Text, theme } from '@team-entry/design_system';
+import { useUserType } from '../../store/useUserType';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
-  const progess = [
-    { element: <_Circle key={1} isNow={1 <= step} /> },
-    { element: <_Line key={2} isNow={2 <= step} /> },
-    { element: <_Circle key={3} isNow={2 <= step} /> },
-    { element: <_Line key={4} isNow={3 <= step} /> },
-    { element: <_Circle key={5} isNow={3 <= step} /> },
-    { element: <_Line key={6} isNow={4 <= step} /> },
-    { element: <_Circle key={7} isNow={4 <= step} /> },
-  ];
+  const { userType } = useUserType();
+  const isGraduate = userType.educational_status === 'GRADUATE';
+  const progess = isGraduate
+    ? [
+        { element: <_Circle key={1} isNow={1 <= step} /> },
+        { element: <_Line key={2} isNow={2 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={3} isNow={2 <= step} /> },
+        { element: <_Line key={4} isNow={3 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={5} isNow={3 <= step} /> },
+        { element: <_Line key={6} isNow={4 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={7} isNow={4 <= step} /> },
+        { element: <_Line key={8} isNow={5 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={9} isNow={5 <= step} /> },
+      ]
+    : [
+        { element: <_Circle key={1} isNow={1 <= step} /> },
+        { element: <_Line key={2} isNow={2 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={3} isNow={2 <= step} /> },
+        { element: <_Line key={4} isNow={3 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={5} isNow={3 <= step} /> },
+        { element: <_Line key={6} isNow={4 <= step} isGraduate={isGraduate} /> },
+        { element: <_Circle key={7} isNow={4 <= step} /> },
+      ];
+
+  const title = isGraduate
+    ? ['3학년 2학기', '3학년 1학기', '2학년 2학기', '2학년 1학기', '성적 산출']
+    : ['3학년 1학기', '직전 학기', '직전전 학기', '성적 산출'];
 
   return (
     <>
@@ -20,18 +39,11 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
         })}
       </_Wrapper>
       <_Texts>
-        <Text color="black800" size="body5">
-          3학년 1학기
-        </Text>
-        <Text color="black800" size="body5">
-          직전 학기
-        </Text>
-        <Text color="black800" size="body5">
-          직전전 학기
-        </Text>
-        <Text color="black800" size="body5">
-          성적 산출
-        </Text>
+        {title.map((item) => (
+          <Text color="black800" size="body5">
+            {item}
+          </Text>
+        ))}
       </_Texts>
     </>
   );
@@ -42,9 +54,9 @@ export default ProgressBar;
 const _Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
-  margin: 0.5rem 0;
+  margin: 8px 0;
 `;
 
 const _Texts = styled.div`
@@ -63,8 +75,8 @@ const _Circle = styled.div<{ isNow?: boolean }>`
   margin: 0 0.9rem;
 `;
 
-const _Line = styled.div<{ isNow?: boolean }>`
-  width: 26%;
+const _Line = styled.div<{ isNow?: boolean; isGraduate?: boolean }>`
+  width: ${({ isGraduate }) => (isGraduate ? 18.4 : 26)}%;
   height: 0.15rem;
   border-radius: 5px;
   background-color: ${({ isNow }) => (isNow ? theme.color.orange500 : theme.color.black100)};
