@@ -38,11 +38,11 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
         </_PDF>
         {!isLoading && (
           <_PDFButtonWrapper>
-            <_PDFButton onClick={() => setPageNumber((prev) => prev + -1)} disabled={pageNumber <= 1}>
+            <_PDFButton onClick={() => setPageNumber((prev) => prev - 1)} disabled={pageNumber <= 1}>
               <Icon icon="LeftArrow" color={pageNumber <= 1 ? 'black300' : 'realBlack'} cursor="pointer" />
             </_PDFButton>
             {pageNumber} of {numPages}
-            <_PDFButton onClick={() => setPageNumber((prev) => prev + +1)} disabled={pageNumber >= numPages}>
+            <_PDFButton onClick={() => setPageNumber((prev) => prev + 1)} disabled={pageNumber >= numPages}>
               <Icon icon="RightArrow" color={pageNumber >= numPages ? 'black300' : 'realBlack'} cursor="pointer" />
             </_PDFButton>
           </_PDFButtonWrapper>
