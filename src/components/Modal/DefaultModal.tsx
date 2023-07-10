@@ -33,7 +33,7 @@ const DefaultModal = ({ color, title, subTitle, button, onClick }: IDefaultModal
 export default DefaultModal;
 
 const _ModalLine = styled.div`
-  width: 100px;
+  width: 150px;
   height: 1px;
   background-color: ${theme.color.black100};
 `;

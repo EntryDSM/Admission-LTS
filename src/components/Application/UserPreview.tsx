@@ -25,10 +25,6 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
     setPageNumber(1);
   };
 
-  const ErrorClose = () => {
-    setCurrent(0);
-    close();
-  };
   return (
     <_Wrapper>
       <_Title>
@@ -65,15 +61,25 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
       )}
       {modalState === 'SUCCESS' && (
         <Modal onClose={close} closeAble={true}>
-          <DefaultModal color="check" title="완료 !" subTitle={'원서 접수에 성공했습니다 \n 지원해주셔서 감사합니다'} />
+          <DefaultModal
+            color="check"
+            title="완료 !"
+            subTitle={
+              '원서 접수에 성공했습니다 \n 지원해주셔서 감사합니다 \n\n pdf 다운로드는 마이페이지를 확인해주세요'
+            }
+            button="확인"
+            onClick={() => alert('마이페이지로 가기 추가')}
+          />
         </Modal>
       )}
       {modalState === 'ERROR' && (
-        <Modal onClose={ErrorClose} closeAble={true}>
+        <Modal onClose={close} closeAble={true}>
           <DefaultModal
             color="error"
             title="오류"
             subTitle={'원서 제출 중 오류가 발생했습니다 \n 관리자에게 문의 바랍니다'}
+            button="확인"
+            onClick={() => setCurrent(0)}
           />
         </Modal>
       )}
