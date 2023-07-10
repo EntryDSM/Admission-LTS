@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Button, theme } from '@team-entry/design_system';
 import { IApplicationFooterProps } from '../../interface/type';
 import useClickFooter from '../../hooks/useClickFooter';
+import { useModal } from '../../hooks/useModal';
 
 const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8, 9], [10]];
@@ -9,6 +10,7 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
     current,
     setCurrent,
   });
+  const { setModalState } = useModal();
 
   return (
     <_Footer>
@@ -39,7 +41,7 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
           다음
         </Button>
       ) : (
-        <Button color="orange" kind="contained" onClick={() => console.log('완료')}>
+        <Button color="orange" kind="contained" onClick={() => setModalState('SUBMIT_MODAL')}>
           완료
         </Button>
       )}

@@ -4,7 +4,7 @@ import { devtools } from 'zustand/middleware';
 
 export const useUserPhoto = create<IUserPhoto>()(
   devtools((set) => ({
-    photo_file_name: '',
+    photo_file_name: null,
     setUserPhoto: (photo_file_name) => set(() => ({ photo_file_name })),
   })),
 );

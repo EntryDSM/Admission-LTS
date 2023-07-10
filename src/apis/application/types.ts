@@ -30,7 +30,10 @@ export interface IPatchUserInfo {
   address: string;
   detail_address: string;
   post_code: string;
-  photo_file_name: string;
+}
+
+export interface IPatchUserPhoto {
+  photo: File;
 }
 
 export interface IPatchUserIntroduce {

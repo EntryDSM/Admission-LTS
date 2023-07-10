@@ -26,8 +26,8 @@ export interface IUserType {
 }
 
 export interface IUserPhoto {
-  photo_file_name: string;
-  setUserPhoto: (photo_file_name: string) => void;
+  photo_file_name: File | null;
+  setUserPhoto: (photo_file_name: File) => void;
 }
 
 export interface IUserBlackExam {
@@ -88,7 +88,15 @@ export interface IGradeElement {
   setWriteValue: (e: InputType, current: number, index: number) => void;
 }
 
-export type ModalType = '' | 'CANCEL_SUBMIT' | 'SIGN_OUT' | 'SEARCH_ADDRESS' | 'SEARCH_SCHOOL';
+export type ModalType =
+  | ''
+  | 'CANCEL_SUBMIT'
+  | 'SIGN_OUT'
+  | 'SEARCH_ADDRESS'
+  | 'SEARCH_SCHOOL'
+  | 'SUBMIT_MODAL'
+  | 'ERROR'
+  | 'SUCCESS';
 
 export interface IModalState {
   modalState: ModalType;

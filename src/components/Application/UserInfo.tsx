@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
@@ -13,10 +13,12 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 import { GetUserInfos } from '../../apis/application';
 
 const UserInfo = () => {
+  const [photo, setPhoto] = useState('');
+
   const { data } = GetUserInfos();
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
-  const { photo_file_name, setUserPhoto } = useUserPhoto();
+  const { setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
 
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
@@ -31,7 +33,8 @@ const UserInfo = () => {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
-          setUserPhoto(reader.result as string);
+          setPhoto(reader.result as string);
+          setUserPhoto(files[0]);
         };
       }
     }
@@ -50,15 +53,15 @@ const UserInfo = () => {
     <_ApplicationWrapper>
       <label>
         <_ApplicationImg>
-          {photo_file_name ? (
-            <Img src={photo_file_name} alt="userImg" />
+          {photo ? (
+            <Img src={photo} alt="userImg" />
           ) : (
             <Text color="black700" size="body3">
               원서 사진을 등록해주세요
             </Text>
           )}
         </_ApplicationImg>
-        <_ApplicationImgInput type="file" accept=".png, .jpeg" name="img" onChange={saveImgFile} />
+        <_ApplicationImgInput type="file" accept="image/png" name="img" onChange={saveImgFile} />
       </label>
 
       <ApplicationContent grid={1} title="이름" width={40}>

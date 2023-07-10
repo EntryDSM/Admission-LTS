@@ -37,7 +37,7 @@ const Application = () => {
     <GradeProgram current={3} />,
     <GradeProgram current={4} />,
     <GradeProgram current={5} />,
-    <UserPreview />,
+    <UserPreview setCurrent={setCurrent} />,
   ];
 
   return (

@@ -51,10 +51,10 @@ instance.interceptors.response.use(
             .catch(() => {
               cookie.remove('access_token');
               cookie.remove('refresh_token');
-              window.location.href = '/login';
+              window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=localhost:3000');
             });
         } else {
-          window.location.href = '/login';
+          window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=localhost:3000');
         }
       } else return Promise.reject(error);
     }
