@@ -28,6 +28,23 @@ export const EditUserInfo = () => {
   });
 };
 
+/** 증명사진 입력 */
+export const EditUserPhto = () => {
+  const response = async (params: IPatchUserPhoto) => {
+    const form = new FormData();
+    form.append('photo', params.photo);
+    return instance.post(`${router}/users/photo `, form, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  };
+  return useMutation(response, {
+    onError: () => alert('증명사진 제출에 실패하였습니다.'),
+    onSuccess: () => console.log('success!'),
+  });
+};
+
 /** 유저 이름, 전화번호 조회 */
 export const GetUserInfos = () => {
   const response = async () => {
@@ -44,7 +61,7 @@ export const EditUserIntroduce = () => {
   };
   return useMutation(response, {
     onError: () => alert('자기소개서 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!!'),
+    onSuccess: () => console.log('success!!!'),
   });
 };
 

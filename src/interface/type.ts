@@ -26,8 +26,10 @@ export interface IUserType {
 }
 
 export interface IUserPhoto {
-  photo_file_name: string;
-  setUserPhoto: (photo_file_name: string) => void;
+  photo: string;
+  photo_file_name: File | null;
+  setUserPhoto: (photo_file_name: File) => void;
+  setPhoto: (photo: string) => void;
 }
 
 export interface IUserBlackExam {

@@ -5,7 +5,14 @@ import { useUserBlackExam } from '../store/useUserBlackExam';
 import { useUserIntroduce } from '../store/useUserIntroduce';
 import { useUserPlan } from '../store/useUserPlan';
 import { IApplicationFooterProps } from '../interface/type';
-import { EditAdditionalInfo, EditUserInfo, EditUserIntroduce, EditUserPlan, EditUserType } from '../apis/application';
+import {
+  EditAdditionalInfo,
+  EditUserInfo,
+  EditUserIntroduce,
+  EditUserPhto,
+  EditUserPlan,
+  EditUserType,
+} from '../apis/application';
 import { EditUserBlackExam, EditUserGraduation } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';
 import { useGradeElement } from '../store/useGradeElement';
@@ -51,11 +58,12 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
     tech_and_home_grade:
       (isGraduate ? gradeElement[0][5] : 'X') + gradeElement[1][5] + gradeElement[2][5] + gradeElement[3][5],
   };
-  
+
   const checkArray = [checkUserType, checkUserInfo, '1', checkUserWrite, '1', '1', '1', '1', graduation, '1', '1'];
 
   const { mutate: patchUserType } = EditUserType();
   const { mutate: patchUserInfo } = EditUserInfo();
+  const { mutate: patchUserPhoto } = EditUserPhto();
   const { mutate: patchBlackExam } = EditUserBlackExam();
   const { mutate: patchUserIntroduce } = EditUserIntroduce();
   const { mutate: patchUserPlan } = EditUserPlan();
