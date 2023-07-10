@@ -1,7 +1,8 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
-import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPlan, IPatchUserType } from './types';
+import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPhoto, IPatchUserPlan, IPatchUserType } from './types';
 import { IPatchUserMiddleSchool } from '../../interface/type';
+import { useModal } from '../../hooks/useModal';
 
 const router = 'application';
 
@@ -69,6 +70,14 @@ export const EditAdditionalInfo = () => {
   });
 };
 
-/*
-졸업 /졸업 예정자 입력
-*/
+/** 최종제출 */
+export const SubmitPdf = () => {
+  const { setModalState } = useModal();
+  const response = async () => {
+    return instance.post(`${router}`);
+  };
+  return useMutation(response, {
+    onSuccess: () => setModalState('SUCCESS'),
+    onError: () => setModalState('ERROR'),
+  });
+};

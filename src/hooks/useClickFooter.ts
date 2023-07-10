@@ -67,15 +67,19 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const onClickPatch = [
     () => patchUserType(userType as IPatchUserType),
     () => {
-      patchUserInfo(userInfoParam), isBlackExam && patchBlackExam({ ged_average_score: blackExam });
+      patchUserInfo(userInfo),
+        patchUserPhoto({ photo: photo_file_name as File }),
+        isBlackExam && patchBlackExam({ ged_average_score: blackExam });
     },
-    () =>
+    () => {
       patchGraduate({
         ...userMiddleSchool,
         school_tel: userMiddleSchool.school_tel?.replace(/-/g, ''),
-      }),
+      });
+    },
     () => {
-      patchUserIntroduce({ content: userIntroduce }), patchUserPlan({ content: userPlan });
+      patchUserIntroduce({ content: userIntroduce });
+      patchUserPlan({ content: userPlan });
     },
     () => {},
     () => {},
