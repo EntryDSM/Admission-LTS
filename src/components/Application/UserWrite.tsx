@@ -1,36 +1,31 @@
-import React, { SetStateAction } from 'react';
 import styled from '@emotion/styled';
-import { Textarea, theme } from '@team-entry/design_system';
-import { useInput } from '../../hooks/useInput';
-import { UserWriteValue } from '../../interface/type';
+import { Textarea } from '@team-entry/design_system';
+import { useUserIntroduce } from '../../store/useUserIntroduce';
+import { useUserPlan } from '../../store/useUserPlan';
 
-interface UserTypeProps {
-  userWriteValues: UserWriteValue;
-  setUserWriteValues: React.Dispatch<SetStateAction<UserWriteValue>>;
-}
+const UserWrite = () => {
+  const { userIntroduce, setUserIntroduce } = useUserIntroduce();
+  const { userPlan, setUserPlan } = useUserPlan();
 
-const UserWrite = ({ userWriteValues, setUserWriteValues }: UserTypeProps) => {
-  const { form: inputValues, onChange: changeInputValues } = useInput(userWriteValues);
-  setUserWriteValues(inputValues);
   return (
     <_Wrapper>
       <Textarea
         placeholder="내용을 입력해주세요"
         label="자기소개서"
-        limit={2000}
+        limit={1600}
         width="100%"
         name="intro"
-        value={inputValues.intro}
-        onChange={changeInputValues}
+        value={userIntroduce}
+        onChange={setUserIntroduce}
       />
       <Textarea
         placeholder="내용을 입력해주세요"
         label="학업계획서"
-        limit={2000}
+        limit={1600}
         width="100%"
         name="study_plan"
-        value={inputValues.study_plan}
-        onChange={changeInputValues}
+        value={userPlan}
+        onChange={setUserPlan}
       />
     </_Wrapper>
   );

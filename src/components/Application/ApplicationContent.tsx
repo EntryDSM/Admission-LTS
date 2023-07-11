@@ -24,6 +24,7 @@ const ApplicationContent = ({
       <_ApplicationGridbox grid={grid}>
         <_ApplicationTitle color={required ? 'black900' : 'black600'} size="body2">
           {title}
+          {required && <_RequiredStar> *</_RequiredStar>}
         </_ApplicationTitle>
         {children}
       </_ApplicationGridbox>
@@ -43,7 +44,7 @@ const _ApplicationContent = styled.div<{ width?: number }>`
   align-items: center;
   justify-content: space-between;
   width: ${({ width }) => (width ? `${width}rem` : '100%')};
-  height: 85px;
+  min-height: 85px;
   padding: 0px 32px 0px 16px;
   border-bottom: 1px solid ${theme.color.black100};
   &:last-child {
@@ -60,4 +61,8 @@ const _ApplicationGridbox = styled.div<{ grid: number }>`
 const _ApplicationTitle = styled(Text)`
   justify-self: center;
   margin-right: 20px;
+`;
+
+const _RequiredStar = styled.sup`
+  color: ${theme.color.error};
 `;
