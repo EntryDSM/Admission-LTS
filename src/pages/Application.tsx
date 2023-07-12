@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import ApplicationTitle from '../components/Application/ApplicationTitle';
 import ApplicationFooter from '../components/Application/ApplicationFooter';
@@ -8,9 +8,15 @@ import UserWrite from '../components/Application/UserWrite';
 import UserPreview from '../components/Application/UserPreview';
 import GradeProgram from '../components/Grade/GradeProgram';
 import UserMiddleSchool from '../components/Application/UserMiddleShool';
+import Modal from '../components/Modal/Modal';
+import DefaultModal from '../components/Modal/DefaultModal';
+import { useModal } from '../hooks/useModal';
+import { PostUserEntry } from '../apis/user';
 
 const Application = () => {
   const [current, setCurrent] = useState<number>(0);
+  const { close, modalState, setModalState } = useModal();
+  const { mutate } = PostUserEntry();
 
   const titles = [
     '지원자 전형 구분',
@@ -40,6 +46,7 @@ const Application = () => {
     <UserPreview setCurrent={setCurrent} />,
   ];
 
+  useEffect(() => setModalState('ADMISSION'), []);
   return (
     <_Container>
       <_Wrapper>
@@ -47,6 +54,20 @@ const Application = () => {
         {elements[current]}
         <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
+      {modalState === 'ADMISSION' && (
+        <Modal onClose={close}>
+          <DefaultModal
+            color="black900"
+            title="대덕SW마이스터고등학교"
+            subTitle="입학 원서 접수를 시작하시겠습니까?"
+            button="원서 접수 시작"
+            onClick={() => {
+              mutate();
+              close();
+            }}
+          />
+        </Modal>
+      )}
     </_Container>
   );
 };

@@ -96,7 +96,8 @@ export type ModalType =
   | 'SEARCH_SCHOOL'
   | 'SUBMIT_MODAL'
   | 'ERROR'
-  | 'SUCCESS';
+  | 'SUCCESS'
+  | 'ADMISSION';
 
 export interface IModalState {
   modalState: ModalType;
