@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { createJSONStorage, devtools, persist } from 'zustand/middleware';
+import { devtools } from 'zustand/middleware';
 import { IUserMiddleSchool, IUserMiddleSchoolName, InputType } from '../interface/type';
 
 export const useUserMiddleSchool = create<IUserMiddleSchool>()(
@@ -22,17 +22,11 @@ export const useUserMiddleSchool = create<IUserMiddleSchool>()(
 );
 
 export const useUserMiddleSchoolName = create<IUserMiddleSchoolName>()(
-  persist(
-    devtools((set) => ({
-      schoolName: '',
-      setSchoolName: (schoolName: string) =>
-        set(() => {
-          return { schoolName };
-        }),
-    })),
-    {
-      name: 'school_name',
-      storage: createJSONStorage(() => sessionStorage),
-    },
-  ),
+  devtools((set) => ({
+    schoolName: '',
+    setSchoolName: (schoolName: string) =>
+      set(() => {
+        return { schoolName };
+      }),
+  })),
 );

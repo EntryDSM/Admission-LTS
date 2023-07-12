@@ -18,7 +18,6 @@ export const PostUserEntry = () => {
     return instance.post('user/entry');
   };
   return useMutation(response, {
-    onError: () => alert('원서 생성에 실패하였습니다.'),
     onSuccess: () => console.log('success!!!'),
   });
 };
