@@ -51,7 +51,6 @@ instance.interceptors.response.use(
             .catch(() => {
               cookie.remove('access_token');
               cookie.remove('refresh_token');
-              alert('다시 로그인 해주세요');
               window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
             });
         } else {
