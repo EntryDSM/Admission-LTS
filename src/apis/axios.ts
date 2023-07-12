@@ -52,11 +52,11 @@ instance.interceptors.response.use(
               cookie.remove('access_token');
               cookie.remove('refresh_token');
               alert('다시 로그인 해주세요');
-              window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=localhost:3000');
+              window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
             });
         } else {
           alert('로그인 후 이용해주세요');
-          window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=localhost:3000');
+          window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
         }
       } else return Promise.reject(error);
     }
