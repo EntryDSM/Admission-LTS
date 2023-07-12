@@ -35,7 +35,7 @@ instance.interceptors.response.use(
       } = error;
       const refreshToken = cookie.get('refresh_token');
 
-      if (status == 401 || error.response.data.message === 'Invalid Token' || status == 404) {
+      if (status == 401 || error.response.data.message === 'Invalid Token' || status === 404) {
         const originalRequest = config;
 
         if (refreshToken) {
@@ -51,9 +51,11 @@ instance.interceptors.response.use(
             .catch(() => {
               cookie.remove('access_token');
               cookie.remove('refresh_token');
+              alert('다시 로그인 해주세요');
               window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=localhost:3000');
             });
         } else {
+          alert('로그인 후 이용해주세요');
           window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=localhost:3000');
         }
       } else return Promise.reject(error);
