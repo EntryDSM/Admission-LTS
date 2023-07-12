@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
@@ -13,12 +13,10 @@ import { generateNumberArray } from '../../utils/GenerateNumberArray';
 import { GetUserInfos } from '../../apis/application';
 
 const UserInfo = () => {
-  const [photo, setPhoto] = useState('');
-
   const { data } = GetUserInfos();
   const { userType } = useUserType();
   const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
-  const { setUserPhoto } = useUserPhoto();
+  const { photo, setPhoto, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
 
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';

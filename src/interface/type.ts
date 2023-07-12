@@ -25,9 +25,11 @@ export interface IUserType {
   setDropdown: (index: number, value: string, type: string) => void;
 }
 
-export interface IUserPhoto {
+export interface IUserPhoto { 
+  photo: string;
   photo_file_name: File | null;
   setUserPhoto: (photo_file_name: File) => void;
+  setPhoto: (photo: string) => void
 }
 
 export interface IUserBlackExam {
