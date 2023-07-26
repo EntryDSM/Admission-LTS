@@ -32,7 +32,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const checkUserInfo = isBlackExam ? { ...userInfoParam, ged_average_score } : userInfoParam;
   const blackExam = Number(ged_average_score);
   const { userMiddleSchool } = useUserMiddleSchool();
-
+  
   const { userIntroduce } = useUserIntroduce();
   const { userPlan } = useUserPlan();
   const checkUserWrite = { useUserIntroduce, userPlan };
