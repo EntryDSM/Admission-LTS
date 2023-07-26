@@ -7,7 +7,7 @@ const router = 'pdf';
 export const GetPdfPreview = () => {
   const response = async () => {
     const { data } = await instance.get(`${router}/preview`, {
-      responseType: 'arraybuffer',
+      responseType: 'blob',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/pdf',

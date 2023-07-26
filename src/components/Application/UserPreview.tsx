@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { Icon, Text } from '@team-entry/design_system';
+import { Icon, Skeleton, Text } from '@team-entry/design_system';
 import Pdf from '../Preview';
 import { GetPdfPreview } from '../../apis/pdf';
 import Modal from '../Modal/Modal';
@@ -34,6 +34,7 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
       </_Title>
       <_PDFWrapper>
         <_PDF>
+          <Skeleton width={595} height={842} isLoaded={isLoading} />
           <Pdf preview={data} pageNumber={pageNumber} onDocumentLoadSuccess={onDocumentLoadSuccess} />
         </_PDF>
         {!isLoading && (
@@ -89,7 +90,7 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
 
 export default UserPreview;
 
-const _Wrapper = styled.div`
+export const _Wrapper = styled.div`
   width: 60rem;
   margin: 49px 0;
 `;
