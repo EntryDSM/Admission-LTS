@@ -34,7 +34,7 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
       </_Title>
       <_PDFWrapper>
         <_PDF>
-          <Skeleton width={595} height={842} isLoaded={isLoading} />
+          {/* <Skeleton width={595} height={842} isLoaded={isLoading} /> */}
           <Pdf preview={data} pageNumber={pageNumber} onDocumentLoadSuccess={onDocumentLoadSuccess} />
         </_PDF>
         {!isLoading && (

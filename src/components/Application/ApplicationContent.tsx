@@ -8,6 +8,7 @@ interface ApplicationContentProps {
   required?: boolean;
   title: string;
   placeholder?: string;
+  bottomPlaceholder?: string;
   children: ReactNode;
 }
 
@@ -17,6 +18,7 @@ const ApplicationContent = ({
   required = true,
   title,
   placeholder,
+  bottomPlaceholder,
   children,
 }: ApplicationContentProps) => {
   return (
@@ -28,11 +30,18 @@ const ApplicationContent = ({
         </_ApplicationTitle>
         {children}
       </_ApplicationGridbox>
-      {placeholder && (
-        <Text color="black600" size="body6">
-          {placeholder}
-        </Text>
-      )}
+      <div>
+        {placeholder && (
+          <Text color="black600" size="body6">
+            {placeholder}
+          </Text>
+        )}
+        {bottomPlaceholder && (
+          <Text color="black600" size="body6" margin={['top', 5]}>
+            {bottomPlaceholder}
+          </Text>
+        )}
+      </div>
     </_ApplicationContent>
   );
 };

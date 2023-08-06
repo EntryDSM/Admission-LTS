@@ -41,7 +41,12 @@ const UserMiddleSchool = () => {
           </Button>
         </Stack>
       </ApplicationContent>
-      <ApplicationContent placeholder="5자리로 입력해주세요" grid={1} title="중학교 학번">
+      <ApplicationContent
+        grid={1}
+        title="중학교 학번"
+        placeholder="5자리로 입력해주세요"
+        bottomPlaceholder="Ex) 3학년 1반 1번일 경우 -> 30101"
+      >
         <Input
           type="number"
           name="student_number"
@@ -52,7 +57,7 @@ const UserMiddleSchool = () => {
           maxLength={5}
         />
       </ApplicationContent>
-      <ApplicationContent grid={1} title="중학교 전화번호">
+      <ApplicationContent grid={1} title="중학교 전화번호" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
         <Input
           type="tel"
           name="school_tel"
