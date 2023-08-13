@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { Icon, Skeleton, Text } from '@team-entry/design_system';
+import { Icon, Text } from '@team-entry/design_system';
 import Pdf from '../Preview';
 import { GetPdfPreview } from '../../apis/pdf';
 import Modal from '../Modal/Modal';
