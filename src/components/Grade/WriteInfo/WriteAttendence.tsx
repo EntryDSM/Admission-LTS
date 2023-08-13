@@ -7,7 +7,7 @@ const WriteAttendence = () => {
   const { gradeElement, setWriteValue } = useGradeElement();
   return (
     <>
-      <GradeWraper title="결석">
+      <GradeWraper title="미인정 결석">
         <Input
           type="number"
           width={230}
@@ -17,7 +17,7 @@ const WriteAttendence = () => {
           unit="일"
         />
       </GradeWraper>
-      <GradeWraper title="지각">
+      <GradeWraper title="미인정 지각">
         <Input
           type="number"
           width={230}
@@ -27,7 +27,7 @@ const WriteAttendence = () => {
           unit="회"
         />
       </GradeWraper>
-      <GradeWraper title="조퇴">
+      <GradeWraper title="미인정 조퇴">
         <Input
           type="number"
           width={230}
@@ -37,23 +37,13 @@ const WriteAttendence = () => {
           unit="회"
         />
       </GradeWraper>
-      <GradeWraper title="결과">
+      <GradeWraper title="미인정 결과">
         <Input
           type="number"
           width={230}
           placeholder="결과 횟수"
           value={gradeElement[4][3]}
           onChange={(e: InputType) => setWriteValue(e, 4, 3)}
-          unit="일"
-        />
-      </GradeWraper>
-      <GradeWraper title="미인정 환산 결석">
-        <Input
-          type="number"
-          width={230}
-          placeholder="미인정 환산 결석 횟수"
-          value={gradeElement[4][4]}
-          onChange={(e: InputType) => setWriteValue(e, 4, 4)}
           unit="일"
         />
       </GradeWraper>
