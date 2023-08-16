@@ -12,6 +12,7 @@ import {
   EditUserPhto,
   EditUserPlan,
   EditUserType,
+  GetUserInfos,
 } from '../apis/application';
 import { EditUserBlackExam, EditUserGraduation } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';
@@ -25,6 +26,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const isGraduate = userType.educational_status === 'GRADUATE';
 
+  const { data: getUserInfos } = GetUserInfos();
   const { userInfo } = useUserInfo();
   const { photo_file_name } = useUserPhoto();
   const userInfoParam = { ...userInfo, photo_file_name };
@@ -32,7 +34,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const checkUserInfo = isBlackExam ? { ...userInfoParam, ged_average_score } : userInfoParam;
   const blackExam = Number(ged_average_score);
   const { userMiddleSchool } = useUserMiddleSchool();
-  
+
   const { userIntroduce } = useUserIntroduce();
   const { userPlan } = useUserPlan();
   const checkUserWrite = { useUserIntroduce, userPlan };
@@ -75,7 +77,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const onClickPatch = [
     () => patchUserType(userType as IPatchUserType),
     () => {
-      patchUserInfo(userInfo),
+      patchUserInfo({ ...userInfo, name: getUserInfos!.name, telephone_number: getUserInfos!.telephone_number }),
         patchUserPhoto({ photo: photo_file_name as File }),
         isBlackExam && patchBlackExam({ ged_average_score: blackExam });
     },
