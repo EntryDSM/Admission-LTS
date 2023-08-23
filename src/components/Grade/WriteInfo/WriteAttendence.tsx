@@ -47,6 +47,16 @@ const WriteAttendence = () => {
           unit="일"
         />
       </GradeWraper>
+      <GradeWraper title="봉사활동 시간">
+        <Input
+          type="number"
+          width={230}
+          placeholder="봉사 시간"
+          value={gradeElement[5][0]}
+          onChange={(e: InputType) => setWriteValue(e, 5, 0)}
+          unit="시간"
+        />
+      </GradeWraper>
     </>
   );
 };

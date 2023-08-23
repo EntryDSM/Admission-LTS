@@ -42,7 +42,6 @@ const Application = () => {
     <GradeProgram current={2} />,
     <GradeProgram current={3} />,
     <GradeProgram current={4} />,
-    <GradeProgram current={5} />,
     <UserPreview setCurrent={setCurrent} />,
   ];
 

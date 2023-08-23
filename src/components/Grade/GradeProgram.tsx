@@ -4,7 +4,6 @@ import AllSelect from './SelectGrade/AllSelect';
 import ProgressBar from './ProgressBar';
 import SelectGrade from './SelectGrade/SelectGrade';
 import WriteAttendence from './WriteInfo/WriteAttendence';
-import WriteVolunteer from './WriteInfo/WriteVolunteer';
 import { useUserType } from '../../store/useUserType';
 
 interface ProgramProps {
@@ -21,7 +20,7 @@ const Program = ({ current }: ProgramProps) => {
         { step: 2, title: '3학년 1학기' },
         { step: 3, title: '2학년 2학기' },
         { step: 4, title: '2학년 1학기' },
-        { step: 5, title: '출석 점수' },
+        { step: 5, title: '출석 점수 & 봉사 점수' },
         { step: 5, title: '봉사 점수' },
       ]
     : [
@@ -29,7 +28,7 @@ const Program = ({ current }: ProgramProps) => {
         { step: 1, title: '3학년 1학기' },
         { step: 2, title: '직전 학기' },
         { step: 3, title: '직전전 학기' },
-        { step: 4, title: '출석 점수' },
+        { step: 4, title: '출석 점수 & 봉사 점수' },
         { step: 4, title: '봉사 점수' },
       ];
 
@@ -51,7 +50,6 @@ const Program = ({ current }: ProgramProps) => {
             return <SelectGrade key={item} title={item} current={current} index={index} />;
           })}
         {current === 4 && <WriteAttendence />}
-        {current === 5 && <WriteVolunteer />}
       </_Selects>
     </_Wrapper>
   );
