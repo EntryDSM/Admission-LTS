@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
+import { isAxiosError } from 'axios';
+import { Toast } from '@team-entry/design_system';
 
 const router = 'pdf';
 
@@ -15,5 +17,13 @@ export const GetPdfPreview = () => {
     });
     return data;
   };
-  return useQuery(['PdfPreview'], response);
+  return useQuery(['PdfPreview'], response, {
+    onError: (e) => {
+      let message = 'PDF를 불러오는데 실패하였습니다.';
+      if (isAxiosError(e) && e.response?.status === 400) {
+        message = '성적점수를 입력하였는지 확인해주세요.';
+      }
+      Toast(message, { type: 'error' });
+    },
+  });
 };

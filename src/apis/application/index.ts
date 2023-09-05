@@ -3,6 +3,8 @@ import { instance } from '../axios';
 import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPhoto, IPatchUserPlan, IPatchUserType } from './types';
 import { IPatchUserMiddleSchool } from '../../interface/type';
 import { useModal } from '../../hooks/useModal';
+import { Toast } from '@team-entry/design_system';
+import { isAxiosError } from 'axios';
 
 const router = 'application';
 
@@ -12,8 +14,7 @@ export const EditUserType = () => {
     return instance.patch(`${router}/users/type`, param);
   };
   return useMutation(response, {
-    onError: () => alert('전형구분 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success'),
+    onError: () => Toast('전형구분 제출에 실패하였습니다.', { type: 'error' }),
   });
 };
 
@@ -23,8 +24,25 @@ export const EditUserInfo = () => {
     return instance.patch(`${router}/users`, params);
   };
   return useMutation(response, {
-    onError: () => alert('인적사항 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!'),
+    onError: (e) => {
+      let message = '인적사항 제출에 실패하였습니다.';
+      if (isAxiosError(e)) {
+        switch (e.response?.data?.message) {
+          case 'Education Status is unmatched':
+            message = '자신의 전형상태가 검정고시가 아닌지 확인해보세요.';
+            break;
+          case 'File Extension is invalid':
+            message = '파일은 jpg, jpeg, png만 허용됩니다.';
+            break;
+          case 'Request fail to tmap server.':
+            message = '주소가 잘못되었습니다.';
+            break;
+          default:
+            break;
+        }
+      }
+      Toast(message, { type: 'error' });
+    },
   });
 };
 
@@ -33,6 +51,7 @@ export const EditUserPhto = () => {
   const response = async (params: IPatchUserPhoto) => {
     const form = new FormData();
     form.append('photo', params.photo);
+    console.log(params.photo);
     return instance.post(`${router}/users/photo `, form, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -40,8 +59,13 @@ export const EditUserPhto = () => {
     });
   };
   return useMutation(response, {
-    onError: () => alert('증명사진 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!'),
+    onError: (e) => {
+      let message = '증명사진 업로드에 실패하였습니다.';
+      if (isAxiosError(e) && e.response?.status === 404) {
+        message = '증명사진을 입력해주세요.';
+      }
+      Toast(message, { type: 'error' });
+    },
   });
 };
 
@@ -60,8 +84,7 @@ export const EditUserIntroduce = () => {
     return instance.patch(`${router}/intro`, params);
   };
   return useMutation(response, {
-    onError: () => alert('자기소개서 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!!!'),
+    onError: () => Toast('자기소개서 제출에 실패하였습니다.', { type: 'error' }),
   });
 };
 
@@ -71,8 +94,7 @@ export const EditUserPlan = () => {
     return instance.patch(`${router}/study-plan`, params);
   };
   return useMutation(response, {
-    onError: () => alert('학업계획서 제출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!!'),
+    onError: () => Toast('학업계획서 제출에 실패하였습니다.', { type: 'error' }),
   });
 };
 
@@ -82,8 +104,7 @@ export const EditAdditionalInfo = () => {
     return instance.patch(`${router}/users/graduation`, params);
   };
   return useMutation(response, {
-    onSuccess: () => console.log('success'),
-    onError: () => alert('에러'),
+    onError: () => Toast('중학교 정보 제출에 실패하였습니다.', { type: 'error' }),
   });
 };
 
@@ -95,6 +116,9 @@ export const SubmitPdf = () => {
   };
   return useMutation(response, {
     onSuccess: () => setModalState('SUCCESS'),
-    onError: () => setModalState('ERROR'),
+    // onError: () => setModalState('ERROR'),
+    onError: (e) => {
+      
+    }
   });
 };

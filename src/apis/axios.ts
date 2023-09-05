@@ -29,13 +29,10 @@ instance.interceptors.response.use(
   async (response) => response,
   async (error: AxiosError<AxiosError>) => {
     if (axios.isAxiosError(error) && error.response) {
-      const {
-        config,
-        response: { status },
-      } = error;
+      const { config } = error;
       const refreshToken = cookie.get('refresh_token');
 
-      if (status == 401 || error.response.data.message === 'Invalid Token' || status === 404) {
+      if (error.response.data.message === 'Invalid Token' || error.response.data.message === 'Expired Token') {
         const originalRequest = config;
 
         if (refreshToken) {
