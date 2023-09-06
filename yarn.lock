@@ -1027,15 +1027,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@team-entry/design_system@npm:^1.0.94":
-  version: 1.0.94
-  resolution: "@team-entry/design_system@npm:1.0.94"
+"@team-entry/design_system@npm:^1.0.101":
+  version: 1.0.101
+  resolution: "@team-entry/design_system@npm:1.0.101"
   dependencies:
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
     react: ^18.2.0
     react-dom: ^18.2.0
-  checksum: 045ed2d511e627c542646c928e32bfd2cad4c1203815e3f44aee376ca7ef05bc7e6976e03b0a46212beaeb6d156c76f8c66774fbea441acb641fac0b1a78fcba
+    react-toastify: ^9.1.3
+  checksum: 0a6b39a3997b2c6ade67e81e6ba914cd0f441a7dffde6782ca0222c6a49d1efea6335fdd05afef324a85915c75da163abbee415f1d16c6e9dd19e07090093768
   languageName: node
   linkType: hard
 
@@ -1317,7 +1318,7 @@ __metadata:
     "@emotion/styled": ^11.11.0
     "@react-pdf/renderer": ^3.1.12
     "@tanstack/react-query": ^4.29.13
-    "@team-entry/design_system": ^1.0.94
+    "@team-entry/design_system": ^1.0.101
     "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.11
     "@types/react-pdf": ^7.0.0
@@ -1696,6 +1697,13 @@ __metadata:
   version: 2.1.2
   resolution: "clone@npm:2.1.2"
   checksum: aaf106e9bc025b21333e2f4c12da539b568db4925c0501a1bf4070836c9e848c892fa22c35548ce0d1132b08bbbfa17a00144fe58fccdab6fa900fec4250f67d
+  languageName: node
+  linkType: hard
+
+"clsx@npm:^1.1.1":
+  version: 1.2.1
+  resolution: "clsx@npm:1.2.1"
+  checksum: 30befca8019b2eb7dbad38cff6266cf543091dae2825c856a62a8ccf2c3ab9c2907c4d12b288b73101196767f66812365400a227581484a05f968b0307cfaf12
   languageName: node
   linkType: hard
 
@@ -4135,6 +4143,18 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: 7507bf5732b3a8ddbd901c2061216eebca73e194449bff58acc1445171e22bdda36b455b8af066e467748ebfb5875b3c0a565941c46af65c6f653a6ed0dc4fe4
+  languageName: node
+  linkType: hard
+
+"react-toastify@npm:^9.1.3":
+  version: 9.1.3
+  resolution: "react-toastify@npm:9.1.3"
+  dependencies:
+    clsx: ^1.1.1
+  peerDependencies:
+    react: ">=16"
+    react-dom: ">=16"
+  checksum: e8bd92c5cbf831b43a042644ab9bc69abe6ceb3ce91ba71f5cd2d8b6a2c9885ca52770e1f1ba64c5632607f6df962db344a26c7fba57606faf5aa0e7bfc8535f
   languageName: node
   linkType: hard
 

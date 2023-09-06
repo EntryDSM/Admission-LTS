@@ -39,6 +39,8 @@ export interface IUserBlackExam {
 
 export interface IUserInfo {
   userInfo: {
+    name: string;
+    telephone_number: string;
     sex: string;
     birthday: string;
     parent_name: string;

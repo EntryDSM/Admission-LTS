@@ -5,6 +5,8 @@ import { IUserInfo, InputType } from '../interface/type';
 export const useUserInfo = create<IUserInfo>()(
   devtools((set) => ({
     userInfo: {
+      name: '',
+      telephone_number: '',
       sex: '',
       birthday: '2000-01-01',
       parent_name: '',

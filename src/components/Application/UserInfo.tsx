@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
-import { Button, Dropdown, HStack, Input, Radio, Text, VStack, theme } from '@team-entry/design_system';
+import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useUserType } from '../../store/useUserType';
 import { useUserInfo } from '../../store/useUserInfo';
@@ -18,6 +18,7 @@ const UserInfo = () => {
   const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
   const { photo, setPhoto, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const isBlackExam = userType.educational_status === 'QUALIFICATION_EXAM';
   const { close, modalState, setModalState } = useModal();
@@ -47,30 +48,56 @@ const UserInfo = () => {
     });
   };
 
+  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (inputRef.current) inputRef.current.click();
+    saveImgFile(e);
+  };
+
+  useEffect(() => {
+    setAllValues({
+      ...userInfo,
+      [data?.is_student ? 'name' : 'parent_name']: data?.name,
+      [data?.is_student ? 'telephone_number' : 'parent_tel']: data?.telephone_number,
+    });
+  }, [data]);
+
   return (
     <_ApplicationWrapper>
-      <label>
-        <_ApplicationImg>
-          {photo ? (
-            <Img src={photo} alt="userImg" />
-          ) : (
-            <Text color="black700" size="body3">
-              원서 사진을 등록해주세요
-            </Text>
-          )}
-        </_ApplicationImg>
-        <_ApplicationImgInput type="file" accept="image/png" name="img" onChange={saveImgFile} />
-      </label>
-
-      <ApplicationContent grid={1} title="이름" width={40}>
-        <Input type="text" placeholder="이름" width={230} name="name" value={data && data.name} disabled />
+      <ApplicationContent title="증명사진" grid={1}>
+        <Stack align="center" gap={20}>
+          <_ApplicationImg onClick={handleImage}>
+            {photo ? (
+              <Img src={photo} alt="userImg" />
+            ) : (
+              <Text color="black700" size="body3">
+                원서 사진을 등록해주세요
+              </Text>
+            )}
+            <_ApplicationImgInput ref={inputRef} type="file" accept="image/png" name="img" onChange={saveImgFile} />
+          </_ApplicationImg>
+          <Button icon="Upload" color="orange" onClick={handleImage}>
+            사진 업로드
+          </Button>
+        </Stack>
       </ApplicationContent>
 
-      <ApplicationContent grid={2} title="성별" width={40}>
+      <ApplicationContent grid={1} title="이름">
+        <Input
+          type="text"
+          placeholder="이름"
+          width={230}
+          name="name"
+          value={userInfo.name}
+          onChange={setUserInfo}
+          disabled={data?.is_student}
+        />
+      </ApplicationContent>
+
+      <ApplicationContent grid={2} title="성별">
         <Radio label="남자" name="sex" value="MALE" onClick={setUserInfo} isChecked={userInfo.sex === 'MALE'} />
         <Radio label="여자" name="sex" value="FEMALE" onClick={setUserInfo} isChecked={userInfo.sex === 'FEMALE'} />
       </ApplicationContent>
-      <ApplicationContent grid={3} title="생년월일" width={40}>
+      <ApplicationContent grid={3} title="생년월일">
         <Dropdown
           className="birthday"
           width={85}
@@ -94,7 +121,7 @@ const UserInfo = () => {
         />
       </ApplicationContent>
 
-      <ApplicationContent grid={1} title="보호자명" width={40}>
+      <ApplicationContent grid={1} title="보호자명">
         <Input
           type="text"
           placeholder="보호자명"
@@ -102,6 +129,7 @@ const UserInfo = () => {
           name="parent_name"
           value={userInfo.parent_name}
           onChange={setUserInfo}
+          disabled={!data?.is_student}
         />
       </ApplicationContent>
 
@@ -111,8 +139,10 @@ const UserInfo = () => {
           placeholder="본인 연락처"
           width={230}
           name="telephone_number"
-          value={data && data.telephone_number}
-          disabled
+          maxLength={13}
+          value={userInfo.telephone_number}
+          onChange={setUserInfo}
+          disabled={data?.is_student}
         />
       </ApplicationContent>
 
@@ -121,9 +151,11 @@ const UserInfo = () => {
           type="tel"
           placeholder="보호자 연락처"
           width={230}
+          maxLength={13}
           name="parent_tel"
           value={userInfo.parent_tel}
           onChange={setTelephone}
+          disabled={!data?.is_student}
         />
       </ApplicationContent>
 
@@ -195,14 +227,12 @@ const _ApplicationWrapper = styled.div`
 `;
 
 const _ApplicationImg = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16rem;
-  height: 310px;
+  width: 200px;
+  height: 250px;
+  margin: 30px 0px;
   background-color: ${theme.color.black50};
   border: 1px solid ${theme.color.black100};
   border-radius: 5px;
