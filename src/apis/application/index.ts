@@ -12,8 +12,8 @@ export const EditUserType = () => {
     return instance.patch(`${router}/users/type`, param);
   };
   return useMutation(response, {
-    onError: () => alert('전형구분 제출에 실패하였습니다.'),
     onSuccess: () => console.log('success'),
+    onError: () => alert('전형구분 제출에 실패하였습니다.'),
   });
 };
 
@@ -48,7 +48,9 @@ export const EditUserPhto = () => {
 /** 유저 이름, 전화번호 조회 */
 export const GetUserInfos = () => {
   const response = async () => {
-    const { data } = await instance.get<{ name: string; telephone_number: string }>(`${router}/users/info`);
+    const { data } = await instance.get<{ name: string; telephone_number: string; is_student: boolean }>(
+      `${router}/users/info`,
+    );
     return data;
   };
   return useQuery(['userInfos'], response);
