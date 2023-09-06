@@ -5,7 +5,7 @@ import useClickFooter from '../../hooks/useClickFooter';
 import { useModal } from '../../hooks/useModal';
 
 const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
-  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8, 9], [10]];
+  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8], [9]];
   const { onClickPlus, onClickMinus, onClickPatch, isDisabled } = useClickFooter({
     current,
     setCurrent,
@@ -29,7 +29,7 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
           <_ProgressStep key={step[0]} isStep={step.includes(current)} />
         ))}
       </_Progress>
-      {current !== 10 ? (
+      {current !== 9 ? (
         <Button
           color="orange"
           kind="contained"
