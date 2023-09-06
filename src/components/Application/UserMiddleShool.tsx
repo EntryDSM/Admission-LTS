@@ -16,12 +16,24 @@ const UserMiddleSchool = () => {
   const { form, setForm } = useInput('');
   const [schoolList, setSchoolList] = useState<ISearchSchool[]>([]);
   const { schoolName, setSchoolName } = useUserMiddleSchoolName();
+  const [timer, setTimer] = useState(0); // 디바운싱 타이머
 
   const searchSchool = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
       const data = response.data;
       setSchoolList(data?.content);
+      clearTimeout(timer);
+    } else {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      const newTimer = setTimeout(async () => {
+        const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
+        const data = response.data;
+        setSchoolList(data?.content);
+      }, 500);
+      setTimer(newTimer);
     }
   };
 

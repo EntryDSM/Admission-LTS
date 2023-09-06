@@ -11,7 +11,7 @@ export const useGradeElement = create<IGradeElement>()(
         ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
         ['X', 'X', 'X', 'X', 'X', 'X', 'X'],
         ['', '', '', '', ''],
-        ['', '', ''],
+        [''],
       ],
       setElementValue: (current: number, index: number, value: string) =>
         set((state) => {

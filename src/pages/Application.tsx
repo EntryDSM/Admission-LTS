@@ -14,17 +14,16 @@ import { useModal } from '../hooks/useModal';
 import { PostUserEntry } from '../apis/user';
 
 const titles = [
-  '지원자 전형 구분',
-  '지원자 인적사항',
-  '중학교 정보입력',
-  '자기소개서 & 학업 계획서',
-  '',
-  '',
-  '',
-  '',
-  '',
-  '',
-  '지원 원서 미리보기',
+   '지원자 전형 구분',
+   '지원자 인적사항',
+   '중학교 정보입력',
+   '자기소개서 & 학업 계획서',
+   '',
+   '',
+   '',
+   '',
+   '',
+   '지원 원서 미리보기', 
 ];
 
 const Application = () => {
@@ -42,7 +41,6 @@ const Application = () => {
     <GradeProgram current={2} />,
     <GradeProgram current={3} />,
     <GradeProgram current={4} />,
-    <GradeProgram current={5} />,
     <UserPreview setCurrent={setCurrent} />,
   ];
 
