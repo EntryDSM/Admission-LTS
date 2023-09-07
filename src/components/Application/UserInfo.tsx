@@ -48,9 +48,8 @@ const UserInfo = () => {
     });
   };
 
-  const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImage = () => {
     if (inputRef.current) inputRef.current.click();
-    saveImgFile(e);
   };
 
   useEffect(() => {

@@ -12,7 +12,6 @@ import {
   EditUserPhto,
   EditUserPlan,
   EditUserType,
-  GetUserInfos,
 } from '../apis/application';
 import { EditUserBlackExam, EditUserGraduation } from '../apis/score';
 import { IPatchUserType } from '../apis/application/types';

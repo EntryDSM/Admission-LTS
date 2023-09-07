@@ -11,25 +11,23 @@ import UserMiddleSchool from '../components/Application/UserMiddleShool';
 import Modal from '../components/Modal/Modal';
 import DefaultModal from '../components/Modal/DefaultModal';
 import { useModal } from '../hooks/useModal';
-import { PostUserEntry } from '../apis/user';
 
 const titles = [
-   '지원자 전형 구분',
-   '지원자 인적사항',
-   '중학교 정보입력',
-   '자기소개서 & 학업 계획서',
-   '',
-   '',
-   '',
-   '',
-   '',
-   '지원 원서 미리보기', 
+  '지원자 전형 구분',
+  '지원자 인적사항',
+  '중학교 정보입력',
+  '자기소개서 & 학업 계획서',
+  '',
+  '',
+  '',
+  '',
+  '',
+  '지원 원서 미리보기',
 ];
 
 const Application = () => {
   const [current, setCurrent] = useState<number>(0);
   const { close, modalState, setModalState } = useModal();
-  const { mutate } = PostUserEntry();
 
   const elements = [
     <UserType />,
@@ -45,6 +43,19 @@ const Application = () => {
   ];
 
   useEffect(() => setModalState('ADMISSION'), []);
+
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = ''; //Chrome에서 동작하도록; deprecated
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', preventClose);
+    return () => {
+      window.removeEventListener('beforeunload', preventClose);
+    };
+  }, []);
+
   return (
     <_Container>
       <_Wrapper>
@@ -53,16 +64,13 @@ const Application = () => {
         <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
       {modalState === 'ADMISSION' && (
-        <Modal onClose={close}>
+        <Modal onClose={() => {}}>
           <DefaultModal
             color="black900"
             title="대덕SW마이스터고등학교"
             subTitle="입학 원서 접수를 시작하시겠습니까?"
             button="원서 접수 시작"
-            onClick={() => {
-              mutate();
-              close();
-            }}
+            onClick={close}
           />
         </Modal>
       )}

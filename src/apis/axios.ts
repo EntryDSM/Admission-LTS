@@ -32,7 +32,11 @@ instance.interceptors.response.use(
       const { config } = error;
       const refreshToken = cookie.get('refresh_token');
 
-      if (error.response.data.message === 'Invalid Token' || error.response.data.message === 'Expired Token') {
+      if (
+        error.response.data.message === 'Invalid Token' ||
+        error.response.data.message === 'Expired Token' ||
+        error.response.data.message === 'User Not Found'
+      ) {
         const originalRequest = config;
 
         if (refreshToken) {

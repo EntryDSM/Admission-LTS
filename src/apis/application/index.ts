@@ -118,9 +118,19 @@ export const SubmitPdf = () => {
   };
   return useMutation(response, {
     onSuccess: () => setModalState('SUCCESS'),
-    // onError: () => setModalState('ERROR'),
     onError: (e) => {
-      
-    }
+      let message = '';
+      if (isAxiosError(e)) {
+        switch (e.response?.data.message) {
+          case 'Application process is not completed':
+            message = '완료되지 않은 부분이 존재합니다.';
+            break;
+          case 'Already submit application.':
+            message = '이미 제출된 원서입니다.';
+            break;
+        }
+      }
+      Toast(message, { type: 'error' });
+    },
   });
 };
