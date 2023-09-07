@@ -45,6 +45,19 @@ const Application = () => {
   ];
 
   useEffect(() => setModalState('ADMISSION'), []);
+
+  const preventClose = (e: BeforeUnloadEvent) => {
+    e.preventDefault();
+    e.returnValue = ''; //Chrome에서 동작하도록; deprecated
+  };
+
+  useEffect(() => {
+    window.addEventListener('beforeunload', preventClose);
+    return () => {
+      window.removeEventListener('beforeunload', preventClose);
+    };
+  }, []);
+
   return (
     <_Container>
       <_Wrapper>
@@ -53,16 +66,13 @@ const Application = () => {
         <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
       {modalState === 'ADMISSION' && (
-        <Modal onClose={close}>
+        <Modal onClose={() => {}}>
           <DefaultModal
             color="black900"
             title="대덕SW마이스터고등학교"
             subTitle="입학 원서 접수를 시작하시겠습니까?"
             button="원서 접수 시작"
-            onClick={() => {
-              mutate();
-              close();
-            }}
+            onClick={close}
           />
         </Modal>
       )}
