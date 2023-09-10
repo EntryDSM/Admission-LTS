@@ -7,7 +7,7 @@ import Modal from '../Modal/Modal';
 import { AxiosResponse } from 'axios';
 import { instance } from '../../apis/axios';
 import { useInput } from '../../hooks/useInput';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ISearchSchool, ISearchSchools } from '../../interface/type';
 
 const UserMiddleSchool = () => {
@@ -24,25 +24,26 @@ const UserMiddleSchool = () => {
       const data = response.data;
       setSchoolList(data?.content);
       clearTimeout(timer);
-    } else {
-      if (timer) {
-        clearTimeout(timer);
-      }
-      const newTimer = setTimeout(async () => {
-        const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
-        const data = response.data;
-        setSchoolList(data?.content);
-      }, 500);
-      setTimer(newTimer);
     }
   };
+
+  useEffect(() => {
+    if (timer) {
+      clearTimeout(timer);
+    }
+    const newTimer = setTimeout(async () => {
+      const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
+      const data = response.data;
+      setSchoolList(data?.content);
+    }, 500);
+    setTimer(newTimer);
+  }, [form]);
 
   const confirmSchool = (school_code: string, school_name: string) => {
     setAllValues({ ...userMiddleSchool, school_code });
     setSchoolName(school_name);
     close();
   };
-
   return (
     <_ApplicationWrapper>
       <ApplicationContent grid={2} title="중학교 이름">
