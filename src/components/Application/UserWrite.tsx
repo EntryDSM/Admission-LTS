@@ -11,7 +11,7 @@ const UserWrite = () => {
     <_Wrapper>
       <Textarea
         placeholder="내용을 입력해주세요"
-        label="자기소개"
+        label="자기소개서"
         limit={1600}
         width="100%"
         name="intro"
