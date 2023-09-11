@@ -11,6 +11,7 @@ import UserMiddleSchool from '../components/Application/UserMiddleShool';
 import Modal from '../components/Modal/Modal';
 import DefaultModal from '../components/Modal/DefaultModal';
 import { useModal } from '../hooks/useModal';
+import { PostUserEntry } from '../apis/user';
 
 const titles = [
   '지원자 전형 구분',
@@ -28,6 +29,7 @@ const titles = [
 const Application = () => {
   const [current, setCurrent] = useState<number>(0);
   const { close, modalState, setModalState } = useModal();
+  const { mutate } = PostUserEntry();
 
   useEffect(() => setModalState('ADMISSION'), []);
 
@@ -58,7 +60,10 @@ const Application = () => {
             title="대덕SW마이스터고등학교"
             subTitle="입학 원서 접수를 시작하시겠습니까?"
             button="원서 접수 시작"
-            onClick={close}
+            onClick={() => {
+              mutate();
+              close();
+            }}
           />
         </Modal>
       )}
