@@ -75,7 +75,11 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
   const onClickPatch = [
     () => patchUserType(userType as IPatchUserType),
     () => {
-      patchUserInfo({ ...userInfo }),
+      patchUserInfo({
+        ...userInfo,
+        telephone_number: userInfo.telephone_number.replace(/-/g, ''),
+        parent_tel: userInfo.parent_tel.replace(/-/g, ''),
+      }),
         patchUserPhoto({ photo: photo_file_name as File }),
         isBlackExam && patchBlackExam({ ged_average_score: blackExam });
     },
