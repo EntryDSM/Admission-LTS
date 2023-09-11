@@ -97,7 +97,6 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
     () => {},
     () => {},
     () => {},
-    () => {},
     () => patchUserGraduation(graduation),
   ];
 
