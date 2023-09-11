@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import ApplicationTitle from '../components/Application/ApplicationTitle';
 import ApplicationFooter from '../components/Application/ApplicationFooter';
@@ -28,6 +28,8 @@ const titles = [
 const Application = () => {
   const [current, setCurrent] = useState<number>(0);
   const { close, modalState, setModalState } = useModal();
+
+  useEffect(() => setModalState('ADMISSION'), []);
 
   const elements = [
     <UserType />,
