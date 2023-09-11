@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import ApplicationTitle from '../components/Application/ApplicationTitle';
 import ApplicationFooter from '../components/Application/ApplicationFooter';
@@ -41,20 +41,6 @@ const Application = () => {
     <GradeProgram current={4} />,
     <UserPreview setCurrent={setCurrent} />,
   ];
-
-  useEffect(() => setModalState('ADMISSION'), []);
-
-  const preventClose = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-    e.returnValue = ''; //Chrome에서 동작하도록; deprecated
-  };
-
-  useEffect(() => {
-    window.addEventListener('beforeunload', preventClose);
-    return () => {
-      window.removeEventListener('beforeunload', preventClose);
-    };
-  }, []);
 
   return (
     <_Container>
