@@ -106,7 +106,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
         return isBlackExam ? setCurrent(3) : setCurrent(current + 1);
       case 3:
         if (isBlackExam) {
-          return setCurrent(10);
+          return setCurrent(9);
         }
         return isGraduate ? setCurrent(current + 1) : setCurrent(5);
       default:
@@ -120,7 +120,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
         return isBlackExam ? setCurrent(1) : setCurrent(current - 1);
       case 5:
         return isGraduate ? setCurrent(current - 1) : setCurrent(3);
-      case 10:
+      case 9:
         return isBlackExam ? setCurrent(3) : setCurrent(current - 1);
       default:
         return setCurrent(current - 1);

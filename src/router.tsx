@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ApplicationPage from './pages/Application';
 import NotFound from './pages/NotFound';
 import { Cookies } from 'react-cookie';
+import Header from './components/Header';
 
 export const Router = () => {
   const cookie = new Cookies();
@@ -17,6 +18,7 @@ export const Router = () => {
 
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/*" element={<NotFound />} />
         <Route path="/" element={<ApplicationPage />} />
