@@ -39,7 +39,7 @@ const useClickFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
 
   const { gradeElement } = useGradeElement();
   const graduation = {
-    volunteer_time: Number(gradeElement[5][0]) + Number(gradeElement[5][1]) + Number(gradeElement[5][2]),
+    volunteer_time: Number(gradeElement[5][0]),
     day_absence_count: Number(gradeElement[4][0]),
     lecture_absence_count: Number(gradeElement[4][3]),
     lateness_count: Number(gradeElement[4][1]),
