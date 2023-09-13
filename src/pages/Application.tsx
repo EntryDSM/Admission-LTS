@@ -12,6 +12,7 @@ import Modal from '../components/Modal/Modal';
 import DefaultModal from '../components/Modal/DefaultModal';
 import { useModal } from '../hooks/useModal';
 import { PostUserEntry } from '../apis/user';
+import { Cookies } from 'react-cookie';
 
 const titles = [
   '지원자 전형 구분',
@@ -30,7 +31,9 @@ const Application = () => {
   const [current, setCurrent] = useState<number>(0);
   const { close, modalState, setModalState } = useModal();
   const { mutate } = PostUserEntry();
-
+  const cookie = new Cookies();
+  const access_token = cookie.get('access_token');
+  const refresh_token = cookie.get('refresh_token');
   useEffect(() => setModalState('ADMISSION'), []);
 
   const elements = [
@@ -53,7 +56,7 @@ const Application = () => {
         {elements[current]}
         <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
-      {modalState === 'ADMISSION' && (
+      {modalState === 'ADMISSION' && !!access_token && !!refresh_token && (
         <Modal onClose={() => {}}>
           <DefaultModal
             color="black900"
