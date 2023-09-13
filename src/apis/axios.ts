@@ -31,6 +31,7 @@ instance.interceptors.response.use(
     if (axios.isAxiosError(error) && error.response) {
       const { config } = error;
       const refreshToken = cookie.get('refresh_token');
+      const authority = cookie.get('authority');
 
       if (
         error.response.data.message === 'Invalid Token' ||
@@ -44,6 +45,7 @@ instance.interceptors.response.use(
             .then((res) => {
               cookie.set('access_token', res.access_token, { path: '/' });
               cookie.set('refresh_token', res.refresh_token, { path: '/' });
+              cookie.set('authority', authority == 'admin' ? 'admin' : 'user', { path: '/' });
               if (originalRequest) {
                 if (originalRequest.headers) originalRequest.headers['Authorization'] = `Bearer ${res.access_token}`;
                 return axios(originalRequest);
@@ -52,6 +54,7 @@ instance.interceptors.response.use(
             .catch(() => {
               cookie.remove('access_token');
               cookie.remove('refresh_token');
+              cookie.remove('authority');
               window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
             });
         } else {
