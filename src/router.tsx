@@ -11,7 +11,6 @@ export const Router = () => {
   const refreshToken = cookie.get('refresh_token');
   useEffect(() => {
     if (!accessToken || !refreshToken) {
-      alert('로그인 후 이용 가능합니다');
       window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
     }
   }, [accessToken, refreshToken]);
