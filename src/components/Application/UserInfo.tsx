@@ -15,7 +15,7 @@ import { GetUserInfos } from '../../apis/application';
 const UserInfo = () => {
   const { data } = GetUserInfos();
   const { userType } = useUserType();
-  const { userInfo, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
+  const { userInfo, yearArray, setUserInfo, setTelephone, setAllValues, setDropdown } = useUserInfo();
   const { photo, setPhoto, setUserPhoto } = useUserPhoto();
   const { ged_average_score, setUserGedAverageScore } = useUserBlackExam();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -100,6 +100,7 @@ const UserInfo = () => {
         <Dropdown
           className="birthday"
           width={85}
+          value={yearArray[0]}
           onChange={(year) => setDropdown(0, year, 'birthday')}
           options={generateNumberArray(2000, 2024)}
           unit="년"
@@ -107,6 +108,7 @@ const UserInfo = () => {
         <Dropdown
           className="birthday"
           width={85}
+          value={yearArray[1]}
           onChange={(month) => setDropdown(1, month, 'birthday')}
           options={generateNumberArray(1, 12)}
           unit="월"
@@ -114,6 +116,7 @@ const UserInfo = () => {
         <Dropdown
           className="birthday"
           width={85}
+          value={yearArray[2]}
           onChange={(date) => setDropdown(2, date, 'birthday')}
           options={generateNumberArray(1, 31)}
           unit="일"
