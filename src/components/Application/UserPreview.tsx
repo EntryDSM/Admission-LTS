@@ -69,7 +69,7 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
               '원서 접수에 성공했습니다 \n 지원해주셔서 감사합니다 \n\n pdf 다운로드는 마이페이지를 확인해주세요'
             }
             button="확인"
-            onClick={() => alert('마이페이지로 가기 추가')}
+            onClick={() => (window.location.href = 'https://www.entrydsm.hs.kr/mypage')}
           />
         </Modal>
       )}
