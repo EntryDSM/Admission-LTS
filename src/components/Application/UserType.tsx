@@ -116,7 +116,7 @@ const UserType = () => {
           width={85}
           value={graduatedAtArray[0]}
           onChange={(year) => setDropdown(0, year, 'graduated_at')}
-          options={generateNumberArray(2020, 2030)}
+          options={generateNumberArray(2010, 2030)}
           unit="년"
         />
         <Dropdown

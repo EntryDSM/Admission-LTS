@@ -9,11 +9,11 @@ export const useUserType = create<IUserType>()(
       application_type: '',
       is_daejeon: undefined,
       educational_status: '',
-      graduated_at: '202001',
+      graduated_at: '202401',
       application_remark: null,
       is_out_of_headcount: false,
     },
-    graduatedAtArray: ['2020', '01'],
+    graduatedAtArray: ['2024', '01'],
     dropboxTmp: applicationTypeSelector['기초생활수급자'],
     setUserType: (e: InputType) =>
       set((state) => {

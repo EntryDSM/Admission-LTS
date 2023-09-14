@@ -123,18 +123,6 @@ const UserInfo = () => {
         />
       </ApplicationContent>
 
-      <ApplicationContent grid={1} title="보호자명">
-        <Input
-          type="text"
-          placeholder="보호자명"
-          width={230}
-          name="parent_name"
-          value={userInfo.parent_name}
-          onChange={setUserInfo}
-          disabled={!data?.is_student}
-        />
-      </ApplicationContent>
-
       <ApplicationContent grid={1} title="본인 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
         <Input
           type="tel"
@@ -145,6 +133,18 @@ const UserInfo = () => {
           value={userInfo.telephone_number}
           onChange={setUserInfo}
           disabled={data?.is_student}
+        />
+      </ApplicationContent>
+
+      <ApplicationContent grid={1} title="보호자명">
+        <Input
+          type="text"
+          placeholder="보호자명"
+          width={230}
+          name="parent_name"
+          value={userInfo.parent_name}
+          onChange={setUserInfo}
+          disabled={!data?.is_student}
         />
       </ApplicationContent>
 
