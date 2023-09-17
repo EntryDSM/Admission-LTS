@@ -96,7 +96,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
 
   const onClickNext = () => {
     patchUserInfo({ ...userInfo, birthday: userInfo.birthday.join('-') });
-    patchUserPhoto({ photo: userPhoto.photo_file_name });
+    patchUserPhoto({ photo: userPhoto.photo_file_name as File });
     if (isBlackExam) patchBlackExam({ ged_average_score: Number(blackExam.ged_average_score) });
   };
 

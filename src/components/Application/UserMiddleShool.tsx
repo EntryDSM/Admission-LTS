@@ -9,7 +9,7 @@ import { useInput } from '../../hooks/useInput';
 import { useEffect, useState } from 'react';
 import { ICurrnettype, IPatchUserMiddleSchool, ISearchSchool, ISearchSchools } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
-import { GetAdditionalInfo } from '../../apis/application';
+import { EditAdditionalInfo, GetAdditionalInfo } from '../../apis/application';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const {
@@ -26,6 +26,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const { setModalState, modalState, close } = useModal();
 
   const { data } = GetAdditionalInfo();
+  const { mutate } = EditAdditionalInfo();
 
   useEffect(() => {
     data &&
@@ -130,7 +131,12 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
           </Modal>
         )}
       </_ApplicationWrapper>
-      <ApplicationFooter current={current} isDisabled={false} />
+      <ApplicationFooter
+        current={current}
+        isDisabled={false}
+        prevClick={() => setCurrent(current - 1)}
+        nextClick={() => mutate({ ...userMiddleSchool })}
+      />
     </>
   );
 };
