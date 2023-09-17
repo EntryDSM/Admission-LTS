@@ -55,7 +55,6 @@ export interface IUserMiddleSchool {
 
 export interface IUserMiddleSchoolName {
   schoolName: string;
-  setSchoolName: (name: string) => void;
 }
 
 export interface IUserIntroduce {

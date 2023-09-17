@@ -39,6 +39,23 @@ export interface IPatchUserPhoto {
   photo: File;
 }
 
+export interface IUserMiddleSchool {
+  name: string;
+  sex: string;
+  birthday: string;
+  school_code: string;
+  school_tel: string;
+  school_name: string;
+  student_number: string;
+  parent_name: string;
+  telephone_number: string;
+  parent_tel: string;
+  address: string;
+  detail_address: string;
+  post_code: string;
+  photo_file_name: string;
+}
+
 export interface IPatchUserIntroduce {
   content: string;
 }
