@@ -35,7 +35,7 @@ export interface IPatchUserInfo {
 }
 
 export interface IPatchUserPhoto {
-  photo: string | File;
+  photo: File;
 }
 
 export interface IPatchUserIntroduce {
