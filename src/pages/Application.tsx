@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import ApplicationTitle from '../components/Application/ApplicationTitle';
-import ApplicationFooter from '../components/Application/ApplicationFooter';
 import UserType from '../components/Application/UserType';
 import UserInfo from '../components/Application/UserInfo';
 import UserWrite from '../components/Application/UserWrite';
@@ -37,15 +36,15 @@ const Application = () => {
   useEffect(() => setModalState('ADMISSION'), []);
 
   const elements = [
-    <UserType />,
-    <UserInfo />,
-    <UserMiddleSchool />,
-    <UserWrite />,
-    <GradeProgram current={0} />,
-    <GradeProgram current={1} />,
-    <GradeProgram current={2} />,
-    <GradeProgram current={3} />,
-    <GradeProgram current={4} />,
+    <UserType current={current} setCurrent={setCurrent} />,
+    <UserInfo current={current} setCurrent={setCurrent} />,
+    <UserMiddleSchool current={current} setCurrent={setCurrent} />,
+    <UserWrite current={current} setCurrent={setCurrent} />,
+    <GradeProgram current={0} setCurrent={setCurrent} />,
+    <GradeProgram current={1} setCurrent={setCurrent} />,
+    <GradeProgram current={2} setCurrent={setCurrent} />,
+    <GradeProgram current={3} setCurrent={setCurrent} />,
+    <GradeProgram current={4} setCurrent={setCurrent} />,
     <UserPreview setCurrent={setCurrent} />,
   ];
 
@@ -54,7 +53,6 @@ const Application = () => {
       <_Wrapper>
         {titles[current] && <ApplicationTitle title={titles[current]} />}
         {elements[current]}
-        <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
       {modalState === 'ADMISSION' && !!access_token && !!refresh_token && (
         <Modal onClose={() => {}}>

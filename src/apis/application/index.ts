@@ -18,6 +18,14 @@ export const EditUserType = () => {
   });
 };
 
+export const GetUserType = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchUserType>(`${router}/users/type`);
+    return data;
+  };
+  return useQuery(['userType'], response);
+};
+
 /** 인적사항 입력 */
 export const EditUserInfo = () => {
   const response = async (params: IPatchUserInfo) => {
@@ -46,6 +54,15 @@ export const EditUserInfo = () => {
   });
 };
 
+/** 유저 이름, 전화번호 조회 */
+export const GetUserInfo = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchUserInfo>(`${router}/users`);
+    return data;
+  };
+  return useQuery(['userInfos'], response);
+};
+
 /** 증명사진 입력 */
 export const EditUserPhto = () => {
   const response = async (params: IPatchUserPhoto) => {
@@ -70,14 +87,14 @@ export const EditUserPhto = () => {
 };
 
 /** 유저 이름, 전화번호 조회 */
-export const GetUserInfos = () => {
+export const GetUserProfile = () => {
   const response = async () => {
     const { data } = await instance.get<{ name: string; telephone_number: string; is_student: boolean }>(
       `${router}/users/info`,
     );
     return data;
   };
-  return useQuery(['userInfos'], response);
+  return useQuery(['userProfile'], response);
 };
 
 /** 자기소개서 입력 */
