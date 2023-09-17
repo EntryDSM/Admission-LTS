@@ -9,7 +9,7 @@ import { EditUserType, GetUserType } from '../../apis/application';
 import { useEffect } from 'react';
 import { sliceString } from '../../utils/SliceString';
 
-const UserType = ({ current, setCurrent }: ICurrnettype) => {
+const UserType = ({ current }: ICurrnettype) => {
   const {
     form: userType,
     onChange: changeUserType,

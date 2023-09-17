@@ -9,11 +9,11 @@ import ApplicationFooter from '../Application/ApplicationFooter';
 import { useInput } from '../../hooks/useInput';
 import { ISelectGradeElement, IWriteGradeElement } from '../../apis/score/type';
 import { GetUserType } from '../../apis/application';
-import { EditUserGraduation, GetUserGraduation } from '../../apis/score';
+import { GetUserGraduation } from '../../apis/score';
 import { subject } from '../../constant/grade';
 import { useEffect } from 'react';
 
-const Program = ({ current, setCurrent }: ICurrnettype) => {
+const Program = ({ current }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({
     korean_grade: ['X', 'X', 'X', 'X'],
     social_grade: ['X', 'X', 'X', 'X'],
@@ -78,7 +78,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
       }));
   }, [userGraduation]);
 
-  const { mutate } = EditUserGraduation();
+  // const { mutate } = EditUserGraduation();
 
   return (
     <>
