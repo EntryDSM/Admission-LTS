@@ -18,6 +18,7 @@ export const EditUserType = () => {
   });
 };
 
+/** 전형 구분 조회 */
 export const GetUserType = () => {
   const response = async () => {
     const { data } = await instance.get<IPatchUserType>(`${router}/users/type`);
@@ -54,7 +55,7 @@ export const EditUserInfo = () => {
   });
 };
 
-/** 유저 이름, 전화번호 조회 */
+/** 인적사항 조회 */
 export const GetUserInfo = () => {
   const response = async () => {
     const { data } = await instance.get<IPatchUserInfo>(`${router}/users`);

@@ -1,3 +1,5 @@
+import { IPatchUserType } from '../apis/application/types';
+
 export type InputType =
   | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   | React.MouseEvent<HTMLInputElement, MouseEvent>;
@@ -14,13 +16,8 @@ export interface ICurrnettype {
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface IUserTypeParams {
-  application_type: string;
-  is_daejeon: boolean | undefined;
-  educational_status: string;
+export interface IUserTypeParams extends Omit<IPatchUserType, 'graduated_at'> {
   graduated_at: string[];
-  application_remark: string | null;
-  is_out_of_headcount: boolean;
 }
 
 export interface IUserPhoto {

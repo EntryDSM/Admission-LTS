@@ -11,7 +11,8 @@ export type ApplicationRemark =
   | 'TEEN_HOUSEHOLDER'
   | 'PRIVILEGED_ADMISSION'
   | 'NATIONAL_MERIT'
-  | 'PROTECTED_CHILDREN';
+  | 'PROTECTED_CHILDREN'
+  | '';
 
 export interface IPatchUserType {
   application_type: ApplicationType | '';
