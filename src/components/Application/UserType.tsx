@@ -118,7 +118,7 @@ const UserType = ({ current }: ICurrnettype) => {
             unit="월"
           />
         </ApplicationContent>
-        <ApplicationContent grid={2} title="특기사항">
+        <ApplicationContent grid={3} title="특기사항">
           <Radio
             label="해당없음"
             name="application_remark"
