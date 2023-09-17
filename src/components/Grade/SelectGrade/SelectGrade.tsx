@@ -1,35 +1,38 @@
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
 import { GradeType } from '../../../interface/type';
-import { useGradeElement } from '../../../store/useGradeElement';
 import { gradeArr } from '../../../constant/grade';
+import { ISelectGradeElement } from '../../../apis/score/type';
 
 interface ISelectGrade {
   title: string;
+  keyyy: keyof ISelectGradeElement;
+  selectGradeElement: ISelectGradeElement;
+  setSelectGradeElement: React.Dispatch<React.SetStateAction<ISelectGradeElement>>;
   current: number;
-  index: number;
 }
 
-const SelectGrade = ({ title, current, index }: ISelectGrade) => {
-  const { gradeElement, setElementValue } = useGradeElement();
+const SelectGrade = ({ title, keyyy, selectGradeElement, setSelectGradeElement, current }: ISelectGrade) => {
+  const onClick = (grade: GradeType) => {
+    const oldArray = selectGradeElement[keyyy];
+    oldArray[current] = grade;
+    setSelectGradeElement({ ...selectGradeElement, [keyyy]: oldArray });
+  };
   return (
     <_Wrapper>
       <_Texts>
         <Text color="black900" size="title1">
           {title}
         </Text>
-        {title === '사회' && (
-          <Text margin={['left', 10]} color="black500" size="body3">
-            (과목이 없을 경우 X로 기입해주세요)
-          </Text>
-        )}
       </_Texts>
       <_Buttons>
         {gradeArr.map((grade: GradeType) => (
           <_Button
             key={grade}
-            onClick={() => setElementValue(current, index, grade)}
-            isClick={grade === gradeElement[current][index]}
+            onClick={() => {
+              onClick(grade);
+            }}
+            isClick={grade === selectGradeElement[keyyy][current]}
           >
             {grade}
           </_Button>
