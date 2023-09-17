@@ -7,12 +7,10 @@ import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
 import { SubmitPdf } from '../../apis/application';
 import DefaultModal from '../Modal/DefaultModal';
+import ApplicationFooter from './ApplicationFooter';
+import { ICurrnettype } from '../../interface/type';
 
-interface IUserPreview {
-  setCurrent: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const UserPreview = ({ setCurrent }: IUserPreview) => {
+const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { data, isLoading } = GetPdfPreview();
   const [numPages, setNumPages] = useState(0);
   const [pageNumber, setPageNumber] = useState(1);
@@ -26,65 +24,68 @@ const UserPreview = ({ setCurrent }: IUserPreview) => {
   };
 
   return (
-    <_Wrapper>
-      <_Title>
-        <Text size="body1" color="realWhite">
-          입학원서 미리보기
-        </Text>
-      </_Title>
-      <_PDFWrapper>
-        <_PDF>
-          <Skeleton width={595} height={842} isLoaded={isLoading} />
-          <Pdf preview={data} pageNumber={pageNumber} onDocumentLoadSuccess={onDocumentLoadSuccess} />
-        </_PDF>
-        {!isLoading && (
-          <_PDFButtonWrapper>
-            <_PDFButton onClick={() => setPageNumber((prev) => prev - 1)} disabled={pageNumber <= 1}>
-              <Icon icon="LeftArrow" color={pageNumber <= 1 ? 'black300' : 'realBlack'} cursor="pointer" />
-            </_PDFButton>
-            {pageNumber} of {numPages}
-            <_PDFButton onClick={() => setPageNumber((prev) => prev + 1)} disabled={pageNumber >= numPages}>
-              <Icon icon="RightArrow" color={pageNumber >= numPages ? 'black300' : 'realBlack'} cursor="pointer" />
-            </_PDFButton>
-          </_PDFButtonWrapper>
+    <>
+      <_Wrapper>
+        <_Title>
+          <Text size="body1" color="realWhite">
+            입학원서 미리보기
+          </Text>
+        </_Title>
+        <_PDFWrapper>
+          <_PDF>
+            <Skeleton width={595} height={842} isLoaded={isLoading} />
+            <Pdf preview={data} pageNumber={pageNumber} onDocumentLoadSuccess={onDocumentLoadSuccess} />
+          </_PDF>
+          {!isLoading && (
+            <_PDFButtonWrapper>
+              <_PDFButton onClick={() => setPageNumber((prev) => prev - 1)} disabled={pageNumber <= 1}>
+                <Icon icon="LeftArrow" color={pageNumber <= 1 ? 'black300' : 'realBlack'} cursor="pointer" />
+              </_PDFButton>
+              {pageNumber} of {numPages}
+              <_PDFButton onClick={() => setPageNumber((prev) => prev + 1)} disabled={pageNumber >= numPages}>
+                <Icon icon="RightArrow" color={pageNumber >= numPages ? 'black300' : 'realBlack'} cursor="pointer" />
+              </_PDFButton>
+            </_PDFButtonWrapper>
+          )}
+        </_PDFWrapper>
+        {modalState === 'SUBMIT_MODAL' && (
+          <Modal onClose={close} closeAble={true}>
+            <DefaultModal
+              color="black900"
+              title="제출"
+              subTitle={'원서를 제출하면 수정이 불가합니다 \n 제출하시겠습니까?'}
+              button="제출"
+              onClick={mutate}
+            />
+          </Modal>
         )}
-      </_PDFWrapper>
-      {modalState === 'SUBMIT_MODAL' && (
-        <Modal onClose={close} closeAble={true}>
-          <DefaultModal
-            color="black900"
-            title="제출"
-            subTitle={'원서를 제출하면 수정이 불가합니다 \n 제출하시겠습니까?'}
-            button="제출"
-            onClick={mutate}
-          />
-        </Modal>
-      )}
-      {modalState === 'SUCCESS' && (
-        <Modal onClose={close} closeAble={true}>
-          <DefaultModal
-            color="check"
-            title="완료 !"
-            subTitle={
-              '원서 접수에 성공했습니다 \n 지원해주셔서 감사합니다 \n\n pdf 다운로드는 마이페이지를 확인해주세요'
-            }
-            button="확인"
-            onClick={() => (window.location.href = 'https://www.entrydsm.hs.kr/mypage')}
-          />
-        </Modal>
-      )}
-      {modalState === 'ERROR' && (
-        <Modal onClose={close} closeAble={true}>
-          <DefaultModal
-            color="error"
-            title="오류"
-            subTitle={'원서 제출 중 오류가 발생했습니다 \n 관리자에게 문의 바랍니다'}
-            button="확인"
-            onClick={() => setCurrent(0)}
-          />
-        </Modal>
-      )}
-    </_Wrapper>
+        {modalState === 'SUCCESS' && (
+          <Modal onClose={close} closeAble={true}>
+            <DefaultModal
+              color="check"
+              title="완료 !"
+              subTitle={
+                '원서 접수에 성공했습니다 \n 지원해주셔서 감사합니다 \n\n pdf 다운로드는 마이페이지를 확인해주세요'
+              }
+              button="확인"
+              onClick={() => (window.location.href = 'https://www.entrydsm.hs.kr/mypage')}
+            />
+          </Modal>
+        )}
+        {modalState === 'ERROR' && (
+          <Modal onClose={close} closeAble={true}>
+            <DefaultModal
+              color="error"
+              title="오류"
+              subTitle={'원서 제출 중 오류가 발생했습니다 \n 관리자에게 문의 바랍니다'}
+              button="확인"
+              onClick={() => setCurrent(0)}
+            />
+          </Modal>
+        )}
+      </_Wrapper>
+      <ApplicationFooter current={current} isDisabled={false} />
+    </>
   );
 };
 

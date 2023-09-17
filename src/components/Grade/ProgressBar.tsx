@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Text, theme } from '@team-entry/design_system';
-import { useUserType } from '../../store/useUserType';
+import { GetUserType } from '../../apis/application';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
-  const { userType } = useUserType();
-  const isGraduate = userType.educational_status === 'GRADUATE';
+  const { data: userType } = GetUserType();
+  const isGraduate = userType?.educational_status === 'GRADUATE';
   const progess = isGraduate
     ? [
         { element: <_Circle key={1} isNow={1 <= step} /> },
