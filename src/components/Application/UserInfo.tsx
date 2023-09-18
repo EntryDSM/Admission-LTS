@@ -123,7 +123,12 @@ const UserInfo = () => {
         />
       </ApplicationContent>
 
-      <ApplicationContent grid={1} title="본인 연락처" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
+      <ApplicationContent
+        grid={1}
+        title="본인 연락처"
+        placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요"
+        required={false}
+      >
         <Input
           type="tel"
           placeholder="본인 연락처"
