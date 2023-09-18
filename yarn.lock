@@ -744,10 +744,10 @@
     "@tanstack/query-core" "4.35.3"
     use-sync-external-store "^1.2.0"
 
-"@team-entry/design_system@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@team-entry/design_system/-/design_system-1.1.0.tgz#c552ffcf663240afa4e941420ded91e17907c488"
-  integrity sha512-2RbeITmOB96JSdHaql/UsTo9xOHMYgeCABECf93uyLM0pskQQHi+sLH62HcTM/09vwfpMGJvhgNugVU4+1p0dA==
+"@team-entry/design_system@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@team-entry/design_system/-/design_system-1.1.1.tgz#ecfd37c389ac128e74d5e66e21bd9c2560dc0960"
+  integrity sha512-P4dtVnrHmIbh5gR6Go375ywyT4RsjqCMVIAKN2Kj3DMfXJd3aGGk75ZgMV3hU9Sj8hrPxNX75NwvScSDG+rG4w==
   dependencies:
     "@emotion/react" "^11.10.5"
     "@emotion/styled" "^11.10.5"

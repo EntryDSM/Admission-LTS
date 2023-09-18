@@ -6,17 +6,17 @@ import { ISelectGradeElement } from '../../../apis/score/type';
 
 interface ISelectGrade {
   title: string;
-  keyyy: keyof ISelectGradeElement;
+  gradesKey: keyof ISelectGradeElement;
   selectGradeElement: ISelectGradeElement;
   setSelectGradeElement: React.Dispatch<React.SetStateAction<ISelectGradeElement>>;
   current: number;
 }
 
-const SelectGrade = ({ title, keyyy, selectGradeElement, setSelectGradeElement, current }: ISelectGrade) => {
+const SelectGrade = ({ title, gradesKey, selectGradeElement, setSelectGradeElement, current }: ISelectGrade) => {
   const onClick = (grade: GradeType) => {
-    const oldArray = selectGradeElement[keyyy];
+    const oldArray = selectGradeElement[gradesKey];
     oldArray[current] = grade;
-    setSelectGradeElement({ ...selectGradeElement, [keyyy]: oldArray });
+    setSelectGradeElement({ ...selectGradeElement, [gradesKey]: oldArray });
   };
   return (
     <_Wrapper>
@@ -32,7 +32,7 @@ const SelectGrade = ({ title, keyyy, selectGradeElement, setSelectGradeElement, 
             onClick={() => {
               onClick(grade);
             }}
-            isClick={grade === selectGradeElement[keyyy][current]}
+            isClick={grade === selectGradeElement[gradesKey][current]}
           >
             {grade}
           </_Button>

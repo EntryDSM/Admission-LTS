@@ -103,7 +103,7 @@ const Program = ({ current }: ICurrnettype) => {
                 <SelectGrade
                   key={item[0]}
                   title={item[0]}
-                  keyyy={item[1] as keyof ISelectGradeElement}
+                  gradesKey={item[1] as keyof ISelectGradeElement}
                   selectGradeElement={selectGradeElement}
                   setSelectGradeElement={setSelectGradeElement}
                   current={current}
