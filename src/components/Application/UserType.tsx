@@ -105,7 +105,7 @@ const UserType = ({ current }: ICurrnettype) => {
             className="graduated_at"
             width={85}
             value={userType.graduated_at[0]}
-            onChange={(year) => setUserType({ ...userType, graduated_at: [year, userType.graduated_at[0]] })}
+            onChange={(year) => setUserType({ ...userType, graduated_at: [year, userType.graduated_at[1]] })}
             options={generateNumberArray(2010, 2030)}
             unit="년"
           />
