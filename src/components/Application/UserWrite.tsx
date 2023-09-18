@@ -21,7 +21,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
         <Textarea
           placeholder="내용을 입력해주세요"
           label="자기소개서"
-          limit={TextAreaMaxLength.INTRODUCE}
+          maxLength={TextAreaMaxLength.INTRODUCE}
           width="100%"
           name="intro"
           value={userWrite.userIntroduce}
@@ -30,7 +30,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
         <Textarea
           placeholder="내용을 입력해주세요"
           label="학업계획서"
-          limit={TextAreaMaxLength.STUDY_PLAN}
+          maxLength={TextAreaMaxLength.STUDY_PLAN}
           width="100%"
           name="study_plan"
           value={userWrite.userPlan}
