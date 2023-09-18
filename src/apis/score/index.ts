@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IPatchGraduation, IPatchUserBlackExam } from './type';
 
@@ -24,4 +24,13 @@ export const EditUserGraduation = () => {
     onError: () => alert('성적산출에 실패하였습니다.'),
     onSuccess: () => console.log('success!!!'),
   });
+};
+
+/** 미졸업자/졸업자 정보입력 */
+export const GetUserGraduation = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchGraduation>(`${router}/graduation`);
+    return data;
+  };
+  return useQuery(['userGraduation'], response);
 };

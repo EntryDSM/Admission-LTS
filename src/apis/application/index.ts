@@ -1,6 +1,13 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
-import { IPatchUserInfo, IPatchUserIntroduce, IPatchUserPhoto, IPatchUserPlan, IPatchUserType } from './types';
+import {
+  IPatchUserInfo,
+  IPatchUserIntroduce,
+  IPatchUserPhoto,
+  IPatchUserPlan,
+  IPatchUserType,
+  IUserMiddleSchool,
+} from './types';
 import { IPatchUserMiddleSchool } from '../../interface/type';
 import { useModal } from '../../hooks/useModal';
 import { Toast } from '@team-entry/design_system';
@@ -16,6 +23,15 @@ export const EditUserType = () => {
   return useMutation(response, {
     onError: () => Toast('전형구분 제출에 실패하였습니다.', { type: 'error' }),
   });
+};
+
+/** 전형 구분 조회 */
+export const GetUserType = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchUserType>(`${router}/users/type`);
+    return data;
+  };
+  return useQuery(['userType'], response);
 };
 
 /** 인적사항 입력 */
@@ -46,6 +62,15 @@ export const EditUserInfo = () => {
   });
 };
 
+/** 인적사항 조회 */
+export const GetUserInfo = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchUserInfo>(`${router}/users`);
+    return data;
+  };
+  return useQuery(['userInfos'], response);
+};
+
 /** 증명사진 입력 */
 export const EditUserPhto = () => {
   const response = async (params: IPatchUserPhoto) => {
@@ -70,14 +95,33 @@ export const EditUserPhto = () => {
 };
 
 /** 유저 이름, 전화번호 조회 */
-export const GetUserInfos = () => {
+export const GetUserProfile = () => {
   const response = async () => {
     const { data } = await instance.get<{ name: string; telephone_number: string; is_student: boolean }>(
       `${router}/users/info`,
     );
     return data;
   };
-  return useQuery(['userInfos'], response);
+  return useQuery(['userProfile'], response);
+};
+
+/** 졸업/졸업예정 추가정보 입력 */
+export const EditAdditionalInfo = () => {
+  const response = async (params: IPatchUserMiddleSchool) => {
+    return instance.patch(`${router}/users/graduation`, params);
+  };
+  return useMutation(response, {
+    onError: () => Toast('중학교 정보 제출에 실패하였습니다.', { type: 'error' }),
+  });
+};
+
+/** 졸업/졸업예정 추가정보 조회 */
+export const GetAdditionalInfo = () => {
+  const response = async () => {
+    const { data } = await instance.get<IUserMiddleSchool>(`${router}/users/graduation`);
+    return data;
+  };
+  return useQuery(['userMiddleSchool'], response);
 };
 
 /** 자기소개서 입력 */
@@ -97,16 +141,6 @@ export const EditUserPlan = () => {
   };
   return useMutation(response, {
     onError: () => Toast('학업계획서 제출에 실패하였습니다.', { type: 'error' }),
-  });
-};
-
-/** 졸업/졸업예정 추가정보 입력 */
-export const EditAdditionalInfo = () => {
-  const response = async (params: IPatchUserMiddleSchool) => {
-    return instance.patch(`${router}/users/graduation`, params);
-  };
-  return useMutation(response, {
-    onError: () => Toast('중학교 정보 제출에 실패하였습니다.', { type: 'error' }),
   });
 };
 

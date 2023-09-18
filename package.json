@@ -16,7 +16,7 @@
     "@emotion/styled": "^11.11.0",
     "@react-pdf/renderer": "^3.1.12",
     "@tanstack/react-query": "^4.29.13",
-    "@team-entry/design_system": "^1.0.102",
+    "@team-entry/design_system": "^1.1.1",
     "@vitejs/plugin-react-refresh": "^1.3.6",
     "axios": "^1.4.0",
     "dotenv": "^16.0.3",
