@@ -1,26 +1,16 @@
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
 import { TextAreaMaxLength } from '../../utils/TextAreaMaxLength';
-import { ICurrnettype, InputType } from '../../interface/type';
+import { ICurrnettype } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
 import { EditUserIntroduce, EditUserPlan } from '../../apis/application';
-import { useInput } from '../../hooks/useInput';
+import { useTextArea } from '../../hooks/useTextarea';
 
 const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
-  const { form: userIntroduce, setForm: setUserIntroduce } = useInput('');
-  const { form: userPlan, setForm: setUserPlan } = useInput('');
-
-  const changeUserIntroduce = (e: InputType) => {
-    if (Number(e.currentTarget.value) >= TextAreaMaxLength.INTRODUCE) {
-      setUserIntroduce(e.currentTarget.value.slice(0, TextAreaMaxLength.INTRODUCE));
-    } else setUserIntroduce(e.currentTarget.value);
-  };
-
-  const changeUserPlan = (e: InputType) => {
-    if (Number(e.currentTarget.value) >= TextAreaMaxLength.INTRODUCE) {
-      setUserPlan(e.currentTarget.value.slice(0, TextAreaMaxLength.INTRODUCE));
-    } else setUserPlan(e.currentTarget.value);
-  };
+  const { form: userWrite, onChange: changeUserWrite } = useTextArea({
+    userIntroduce: '',
+    userPlan: '',
+  });
 
   const {} = EditUserIntroduce();
   const {} = EditUserPlan();
@@ -34,8 +24,8 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
           limit={TextAreaMaxLength.INTRODUCE}
           width="100%"
           name="intro"
-          value={userIntroduce}
-          onChange={changeUserIntroduce}
+          value={userWrite.userIntroduce}
+          onChange={changeUserWrite}
         />
         <Textarea
           placeholder="내용을 입력해주세요"
@@ -43,8 +33,8 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
           limit={TextAreaMaxLength.STUDY_PLAN}
           width="100%"
           name="study_plan"
-          value={userPlan}
-          onChange={changeUserPlan}
+          value={userWrite.userPlan}
+          onChange={changeUserWrite}
         />
       </_Wrapper>
       <ApplicationFooter current={current} isDisabled={false} prevClick={() => setCurrent(current - 1)} />
