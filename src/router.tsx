@@ -10,7 +10,7 @@ export const Router = () => {
   const accessToken = cookie.get('access_token');
   const refreshToken = cookie.get('refresh_token');
   useEffect(() => {
-    if (!accessToken || !refreshToken) {
+    if (!accessToken && !refreshToken) {
       window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
     }
   }, [accessToken, refreshToken]);

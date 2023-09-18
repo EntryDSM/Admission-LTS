@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from 'react-cookie';
 import { ReissueToken } from './user';
+import { COOKIE_DOMAIN } from '../constant/env';
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -43,19 +44,31 @@ instance.interceptors.response.use(
         if (refreshToken) {
           ReissueToken(refreshToken)
             .then((res) => {
-              cookie.set('access_token', res.access_token, { path: '/' });
-              cookie.set('refresh_token', res.refresh_token, { path: '/' });
+              cookie.set('access_token', res.access_token, {
+                path: '/',
+                secure: true,
+                sameSite: 'none',
+                domain: COOKIE_DOMAIN,
+              });
+              cookie.set('refresh_token', res.refresh_token, {
+                path: '/',
+                secure: true,
+                sameSite: 'none',
+                domain: COOKIE_DOMAIN,
+              });
               cookie.set('authority', authority == 'admin' ? 'admin' : 'user', { path: '/' });
               if (originalRequest) {
                 if (originalRequest.headers) originalRequest.headers['Authorization'] = `Bearer ${res.access_token}`;
                 return axios(originalRequest);
               }
             })
-            .catch(() => {
-              cookie.remove('access_token');
-              cookie.remove('refresh_token');
-              cookie.remove('authority');
-              window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
+            .catch((res: AxiosError<AxiosError>) => {
+              if (res?.response?.data.status === 404 || res.response?.data.status === 403) {
+                cookie.remove('access_token');
+                cookie.remove('refresh_token');
+                cookie.remove('authority');
+                window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
+              }
             });
         } else {
           window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');

@@ -31,11 +31,13 @@ const UserMiddleSchool = () => {
     if (timer) {
       clearTimeout(timer);
     }
-    const newTimer = setTimeout(async () => {
-      const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
-      const data = response.data;
-      setSchoolList(data?.content);
-    }, 500);
+    const newTimer = Number(
+      setTimeout(async () => {
+        const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
+        const data = response.data;
+        setSchoolList(data?.content);
+      }, 500),
+    );
     setTimer(newTimer);
   }, [form]);
 

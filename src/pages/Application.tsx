@@ -56,7 +56,7 @@ const Application = () => {
         {elements[current]}
         <ApplicationFooter current={current} setCurrent={setCurrent} />
       </_Wrapper>
-      {modalState === 'ADMISSION' && !!access_token && !!refresh_token && (
+      {modalState === 'ADMISSION' && !!refresh_token && (
         <Modal onClose={() => {}}>
           <DefaultModal
             color="black900"
