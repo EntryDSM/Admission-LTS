@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
-import { IPatchGraduation, IPatchUserBlackExam } from './type';
+import { IGetUserBlackExam, IPatchGraduation, IPatchUserBlackExam } from './type';
+import { Toast } from '@team-entry/design_system';
 
 const router = 'score';
 
@@ -10,9 +11,18 @@ export const EditUserBlackExam = () => {
     return instance.patch(`${router}/qualification`, params);
   };
   return useMutation(response, {
-    onError: () => alert('검정고시 제출에 실패하였습니다.'),
+    onError: () => Toast('검정고시 점수를 확인해주세요', { type: 'error' }),
     onSuccess: () => console.log('success!!'),
   });
+};
+
+/** 검정고시 조회 */
+export const GetUserBlackExam = () => {
+  const response = async () => {
+    const { data } = await instance.get<IGetUserBlackExam>(`${router}/qualification`);
+    return data;
+  };
+  return useQuery(['userBlackExam'], response);
 };
 
 /** 미졸업자/졸업자 정보입력 */

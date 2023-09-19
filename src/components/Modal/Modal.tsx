@@ -36,7 +36,7 @@ const Background = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  z-index: 99;
+  z-index: 101;
 `;
 
 const _CloseIcon = styled(Icon)`

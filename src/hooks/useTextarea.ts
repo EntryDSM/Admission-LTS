@@ -5,9 +5,9 @@ export const useTextArea = <T>(initialForm: T) => {
   const onChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value, maxLength } = e.currentTarget;
     if (value.length >= maxLength) {
-      return { ...form, [name]: value.slice(0, maxLength) };
+      return setForm((prev) => ({ ...prev, [name]: value.slice(0, maxLength) }));
     }
-    return setForm({ ...form, [name]: value });
+    return setForm((prev) => ({ ...prev, [name]: value }));
   }, []);
   return { form, onChange, setForm };
 };

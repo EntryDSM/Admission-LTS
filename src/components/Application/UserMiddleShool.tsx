@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import { ICurrnettype, IPatchUserMiddleSchool, ISearchSchool, ISearchSchools } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
 import { EditAdditionalInfo, GetAdditionalInfo } from '../../apis/application';
+import { useCombineMutation } from '../../hooks/useCombineMutation';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const {
@@ -24,17 +25,20 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const [schoolList, setSchoolList] = useState<ISearchSchool[]>([]);
   const [timer, setTimer] = useState(0); // 디바운싱 타이머
   const { setModalState, modalState, close } = useModal();
+  const { combinedMutations } = useCombineMutation();
 
   const { data } = GetAdditionalInfo();
-  const { mutate } = EditAdditionalInfo();
+  const { mutateAsync } = EditAdditionalInfo();
 
   useEffect(() => {
-    data &&
+    if (data) {
       setUserMiddleSchool({
         student_number: data.student_number,
         school_code: data.school_code,
         school_tel: data.school_tel,
       });
+      setSchoolName(data.school_name);
+    }
   }, [data]);
 
   const searchSchool = async (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -137,7 +141,12 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
         current={current}
         isDisabled={false}
         prevClick={() => setCurrent(current - 1)}
-        nextClick={() => mutate({ ...userMiddleSchool })}
+        nextClick={() =>
+          combinedMutations(
+            [() => mutateAsync({ ...userMiddleSchool, school_tel: userMiddleSchool.school_tel.replace(/-/g, '') })],
+            () => setCurrent(current + 1),
+          )
+        }
       />
     </>
   );

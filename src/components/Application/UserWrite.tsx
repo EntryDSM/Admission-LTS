@@ -1,19 +1,41 @@
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { TextAreaMaxLength } from '../../utils/TextAreaMaxLength';
 import { ICurrnettype } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
-import { EditUserIntroduce, EditUserPlan } from '../../apis/application';
+import {
+  EditUserIntroduce,
+  EditUserPlan,
+  GetUserIntroduce,
+  GetUserStudyPlan,
+  GetUserType,
+} from '../../apis/application';
 import { useTextArea } from '../../hooks/useTextarea';
+import { useCombineMutation } from '../../hooks/useCombineMutation';
+import { useEffect } from 'react';
 
 const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
-  const { form: userWrite, onChange: changeUserWrite } = useTextArea({
+  const {
+    form: userWrite,
+    onChange: changeUserWrite,
+    setForm: setUserWrite,
+  } = useTextArea({
     userIntroduce: '',
     userPlan: '',
   });
 
-  const {} = EditUserIntroduce();
-  const {} = EditUserPlan();
+  const { mutateAsync: editUserIntroduce } = EditUserIntroduce();
+  const { mutateAsync: editUserPlan } = EditUserPlan();
+  const { combinedMutations } = useCombineMutation();
+  const { data: getUserIntroduce } = GetUserIntroduce();
+  const { data: getUserStudyPlan } = GetUserStudyPlan();
+  const { data: getUserType } = GetUserType();
+
+  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+
+  useEffect(() => {
+    getUserIntroduce && setUserWrite((prev) => ({ ...prev, userIntroduce: getUserIntroduce.content }));
+    getUserStudyPlan && setUserWrite((prev) => ({ ...prev, userPlan: getUserStudyPlan.content }));
+  }, [getUserIntroduce, getUserStudyPlan]);
 
   return (
     <>
@@ -21,23 +43,36 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
         <Textarea
           placeholder="내용을 입력해주세요"
           label="자기소개서"
-          maxLength={TextAreaMaxLength.INTRODUCE}
+          maxLength={1600}
           width="100%"
-          name="intro"
+          name="userIntroduce"
           value={userWrite.userIntroduce}
           onChange={changeUserWrite}
         />
         <Textarea
           placeholder="내용을 입력해주세요"
           label="학업계획서"
-          maxLength={TextAreaMaxLength.STUDY_PLAN}
+          maxLength={1600}
           width="100%"
-          name="study_plan"
+          name="userPlan"
           value={userWrite.userPlan}
           onChange={changeUserWrite}
         />
       </_Wrapper>
-      <ApplicationFooter current={current} isDisabled={false} prevClick={() => setCurrent(current - 1)} />
+      <ApplicationFooter
+        current={current}
+        isDisabled={!userWrite.userPlan || !userWrite.userIntroduce}
+        prevClick={isBlackExam ? () => setCurrent(current - 2) : () => setCurrent(current - 1)}
+        nextClick={() =>
+          combinedMutations(
+            [
+              () => editUserIntroduce({ content: userWrite.userIntroduce }),
+              () => editUserPlan({ content: userWrite.userPlan }),
+            ],
+            isBlackExam ? () => setCurrent(current + 6) : () => setCurrent(current + 1),
+          )
+        }
+      />
     </>
   );
 };

@@ -9,6 +9,7 @@ import { EditUserType, GetUserType } from '../../apis/application';
 import { useEffect } from 'react';
 import { sliceString } from '../../utils/SliceString';
 import { applicationTypeGenerator } from '../../constant/translate';
+import { useCombineMutation } from '../../hooks/useCombineMutation';
 
 const UserType = ({ current, setCurrent }: ICurrnettype) => {
   const {
@@ -25,7 +26,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
   });
 
   const { data } = GetUserType();
-  const { mutate } = EditUserType();
+  const { mutateAsync } = EditUserType();
 
   useEffect(() => {
     data &&
@@ -39,7 +40,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
       });
   }, [data]);
 
-  console.log(data, userType);
+  const { combinedMutations } = useCombineMutation();
 
   return (
     <>
@@ -157,15 +158,20 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
         current={current}
         isDisabled={false}
         nextClick={() => {
-          mutate({
-            application_type: userType.application_type,
-            is_daejeon: userType.is_daejeon === 'true',
-            educational_status: userType.educational_status,
-            is_out_of_headcount: false,
-            graduated_at: userType.graduated_at.join(''),
-            application_remark: userType.application_remark || null,
-          }),
-            setCurrent(current + 1);
+          combinedMutations(
+            [
+              () =>
+                mutateAsync({
+                  application_type: userType.application_type,
+                  is_daejeon: userType.is_daejeon === 'true',
+                  educational_status: userType.educational_status,
+                  is_out_of_headcount: false,
+                  graduated_at: userType.graduated_at.join(''),
+                  application_remark: userType.application_remark || null,
+                }),
+            ],
+            () => setCurrent(current + 1),
+          );
         }}
       />
     </>

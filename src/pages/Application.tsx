@@ -39,11 +39,11 @@ const Application = () => {
     <UserInfo current={current} setCurrent={setCurrent} />,
     <UserMiddleSchool current={current} setCurrent={setCurrent} />,
     <UserWrite current={current} setCurrent={setCurrent} />,
-    <GradeProgram current={0} setCurrent={setCurrent} />,
-    <GradeProgram current={1} setCurrent={setCurrent} />,
-    <GradeProgram current={2} setCurrent={setCurrent} />,
-    <GradeProgram current={3} setCurrent={setCurrent} />,
-    <GradeProgram current={4} setCurrent={setCurrent} />,
+    <GradeProgram current={current} setCurrent={setCurrent} />,
+    <GradeProgram current={current} setCurrent={setCurrent} />,
+    <GradeProgram current={current} setCurrent={setCurrent} />,
+    <GradeProgram current={current} setCurrent={setCurrent} />,
+    <GradeProgram current={current} setCurrent={setCurrent} />,
     <UserPreview current={current} setCurrent={setCurrent} />,
   ];
 

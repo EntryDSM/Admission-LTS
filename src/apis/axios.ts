@@ -63,7 +63,11 @@ instance.interceptors.response.use(
               }
             })
             .catch((res: AxiosError<AxiosError>) => {
-              if (res?.response?.data.status === 404 || res.response?.data.status === 403) {
+              if (
+                res?.response?.data.status === 404 ||
+                res.response?.data.status === 403 ||
+                res.response?.data.message === 'Expired Token'
+              ) {
                 cookie.remove('access_token');
                 cookie.remove('refresh_token');
                 cookie.remove('authority');

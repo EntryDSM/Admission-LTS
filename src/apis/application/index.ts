@@ -125,6 +125,15 @@ export const GetAdditionalInfo = () => {
   return useQuery(['userMiddleSchool'], response);
 };
 
+/** 자기소개서 조회 */
+export const GetUserIntroduce = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchUserIntroduce>(`${router}/intro`);
+    return data;
+  };
+  return useQuery(['userIntroduce'], response);
+};
+
 /** 자기소개서 입력 */
 export const EditUserIntroduce = () => {
   const response = async (params: IPatchUserIntroduce) => {
@@ -133,6 +142,15 @@ export const EditUserIntroduce = () => {
   return useMutation(response, {
     onError: () => Toast('자기소개서 제출에 실패하였습니다.', { type: 'error' }),
   });
+};
+
+/** 자기소개서 조회 */
+export const GetUserStudyPlan = () => {
+  const response = async () => {
+    const { data } = await instance.get<IPatchUserPlan>(`${router}/study-plan`);
+    return data;
+  };
+  return useQuery(['userStudyPlan'], response);
 };
 
 /** 학업계획서 입력 */
