@@ -11,7 +11,7 @@ export const _HeaderContainer = styled.div`
   height: 4rem;
   border-bottom: 1px solid #e6e6e6;
   background-color: #ffffff;
-  z-index: 50;
+  z-index: 100;
 `;
 
 export const _LogoButton = styled.div`

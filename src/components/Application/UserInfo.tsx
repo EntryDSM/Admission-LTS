@@ -6,11 +6,19 @@ import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
 import Modal from '../Modal/Modal';
 import { generateNumberArray } from '../../utils/GenerateNumberArray';
-import { EditUserInfo, EditUserPhto, GetUserInfo, GetUserProfile, GetUserType } from '../../apis/application';
+import {
+  EditUserInfo,
+  EditUserPhto,
+  GetAdditionalInfo,
+  GetUserInfo,
+  GetUserProfile,
+  GetUserType,
+} from '../../apis/application';
 import { ICurrnettype, IUserBlackExam, IUserInfo, IUserPhoto } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
-import { EditUserBlackExam } from '../../apis/score';
+import { EditUserBlackExam, GetUserBlackExam } from '../../apis/score';
 import { useInput } from '../../hooks/useInput';
+import { useCombineMutation } from '../../hooks/useCombineMutation';
 
 const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const {
@@ -32,21 +40,28 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     photo: '',
     photo_file_name: '',
   });
-  const { form: blackExam, onChange: changeBlackExam } = useInput<IUserBlackExam>({
+  const {
+    form: blackExam,
+    setForm: setBlackExam,
+    onChange: changeBlackExam,
+  } = useInput<IUserBlackExam>({
     ged_average_score: '',
   });
 
+  const { data: getAddionalInfo } = GetAdditionalInfo();
   const { data: userProfile } = GetUserProfile();
   const { data: getUserInfo } = GetUserInfo();
   const { data: getUserType } = GetUserType();
+  const { data: getUserBlackExam } = GetUserBlackExam();
 
   const isBlackExam = getUserType?.educational_status === 'QUALIFICATION_EXAM';
   const inputRef = useRef<HTMLInputElement>(null);
   const { close, modalState, setModalState } = useModal();
 
-  const { mutate: patchUserPhoto } = EditUserPhto();
-  const { mutate: patchUserInfo } = EditUserInfo();
-  const { mutate: patchBlackExam } = EditUserBlackExam();
+  const { mutateAsync: patchUserPhoto } = EditUserPhto();
+  const { mutateAsync: patchUserInfo } = EditUserInfo();
+  const { mutateAsync: patchBlackExam } = EditUserBlackExam();
+  const { combinedMutations } = useCombineMutation();
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -57,8 +72,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
-          setUserPhoto({ ...userPhoto, photo: reader.result as string });
-          setUserPhoto({ ...userPhoto, photo_file_name: files[0] });
+          setUserPhoto({ photo: reader.result as string, photo_file_name: files[0] });
         };
       }
     }
@@ -81,23 +95,42 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     setUserInfo({
       ...userInfo,
       [userProfile?.is_student ? 'name' : 'parent_name']: userProfile?.name,
-      [userProfile?.is_student ? 'telephone_number' : 'parent_tel']: userProfile?.telephone_number,
+      [userProfile?.is_student ? 'telephone_number' : 'parent_tel']: userProfile?.telephone_number.replace(/-/g, ''),
     });
   }, [userProfile]);
 
   useEffect(() => {
     getUserInfo && setUserInfo({ ...getUserInfo, birthday: getUserInfo.birthday.split('-') });
-  }, [getUserInfo]);
+    getAddionalInfo &&
+      setUserPhoto({
+        photo: getAddionalInfo.photo_file_name,
+        photo_file_name: getAddionalInfo.photo_file_name,
+      });
+    getUserBlackExam &&
+      setBlackExam({
+        ged_average_score: getUserBlackExam.average_score,
+      });
+  }, [getUserInfo, getAddionalInfo, getUserBlackExam]);
 
   const isDisabled =
     Object.values(userInfo).some((item) => !!item === false) &&
     !!userPhoto.photo_file_name &&
     isBlackExam === !!blackExam.ged_average_score;
 
-  const onClickNext = () => {
-    patchUserInfo({ ...userInfo, birthday: userInfo.birthday.join('-') });
-    patchUserPhoto({ photo: userPhoto.photo_file_name as File });
-    if (isBlackExam) patchBlackExam({ ged_average_score: Number(blackExam.ged_average_score) });
+  const onNextClick = () => {
+    combinedMutations(
+      isBlackExam
+        ? [
+            () => patchUserInfo({ ...userInfo, birthday: userInfo.birthday.join('-') }),
+            () => patchUserPhoto({ photo: userPhoto.photo_file_name as File }),
+            () => patchBlackExam({ ged_average_score: Number(blackExam.ged_average_score) }),
+          ]
+        : [
+            () => patchUserInfo({ ...userInfo, birthday: userInfo.birthday.join('-') }),
+            () => patchUserPhoto({ photo: userPhoto.photo_file_name as File }),
+          ],
+      isBlackExam ? () => setCurrent(current + 2) : () => setCurrent(current + 1),
+    );
   };
 
   return (
@@ -214,7 +247,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
               type="number"
               placeholder="검정고시 평균"
               width={230}
-              name="blackExam"
+              name="ged_average_score"
               value={blackExam.ged_average_score}
               onChange={changeBlackExam}
               unit="점"
@@ -265,7 +298,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         current={current}
         isDisabled={isDisabled}
         prevClick={() => setCurrent(0)}
-        nextClick={onClickNext}
+        nextClick={onNextClick}
       />
     </>
   );

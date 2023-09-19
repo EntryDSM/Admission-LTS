@@ -5,7 +5,7 @@ import Pdf from '../Preview';
 import { GetPdfPreview } from '../../apis/pdf';
 import Modal from '../Modal/Modal';
 import { useModal } from '../../hooks/useModal';
-import { SubmitPdf } from '../../apis/application';
+import { GetUserType, SubmitPdf } from '../../apis/application';
 import DefaultModal from '../Modal/DefaultModal';
 import ApplicationFooter from './ApplicationFooter';
 import { ICurrnettype } from '../../interface/type';
@@ -17,6 +17,9 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { modalState, close } = useModal();
 
   const { mutate } = SubmitPdf();
+  const { data: getUserType } = GetUserType();
+
+  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -84,7 +87,11 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
           </Modal>
         )}
       </_Wrapper>
-      <ApplicationFooter current={current} isDisabled={false} />
+      <ApplicationFooter
+        current={current}
+        isDisabled={false}
+        prevClick={isBlackExam ? () => setCurrent(current - 6) : () => setCurrent(current - 1)}
+      />
     </>
   );
 };

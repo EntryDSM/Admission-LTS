@@ -2,6 +2,10 @@ export interface IPatchUserBlackExam {
   ged_average_score: number;
 }
 
+export interface IGetUserBlackExam {
+  average_score: string;
+}
+
 export interface IPatchGraduation {
   volunteer_time: number;
   day_absence_count: number;

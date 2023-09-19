@@ -9,11 +9,12 @@ import ApplicationFooter from '../Application/ApplicationFooter';
 import { useInput } from '../../hooks/useInput';
 import { ISelectGradeElement, IWriteGradeElement } from '../../apis/score/type';
 import { GetUserType } from '../../apis/application';
-import { GetUserGraduation } from '../../apis/score';
+import { EditUserGraduation, GetUserGraduation } from '../../apis/score';
 import { subject } from '../../constant/grade';
 import { useEffect } from 'react';
+import { useCombineMutation } from '../../hooks/useCombineMutation';
 
-const Program = ({ current }: ICurrnettype) => {
+const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({
     korean_grade: ['X', 'X', 'X', 'X'],
     social_grade: ['X', 'X', 'X', 'X'],
@@ -38,8 +39,11 @@ const Program = ({ current }: ICurrnettype) => {
 
   const { data: userType } = GetUserType();
   const { data: userGraduation } = GetUserGraduation();
+  const { combinedMutations } = useCombineMutation();
+  const { mutateAsync } = EditUserGraduation();
 
   const isGraduate = userType?.educational_status === 'GRADUATE';
+  const gradeCurrent = current - 4;
   const titles = isGraduate
     ? [
         { step: 1, title: '3학년 2학기' },
@@ -47,15 +51,14 @@ const Program = ({ current }: ICurrnettype) => {
         { step: 3, title: '2학년 2학기' },
         { step: 4, title: '2학년 1학기' },
         { step: 5, title: '출석 점수 & 봉사 점수' },
-        { step: 5, title: '봉사 점수' },
+        { step: 5, title: '' },
       ]
     : [
-        { step: 0, title: '' },
         { step: 1, title: '3학년 1학기' },
         { step: 2, title: '직전 학기' },
         { step: 3, title: '직전전 학기' },
         { step: 4, title: '출석 점수 & 봉사 점수' },
-        { step: 4, title: '봉사 점수' },
+        { step: 4, title: '' },
       ];
 
   useEffect(() => {
@@ -78,26 +81,46 @@ const Program = ({ current }: ICurrnettype) => {
       }));
   }, [userGraduation]);
 
-  // const { mutate } = EditUserGraduation();
+  const onNextClick = () => {
+    gradeCurrent === 4
+      ? combinedMutations(
+          [
+            () =>
+              mutateAsync({
+                ...selectGradeElement,
+                ...writeGradeElement,
+                korean_grade: selectGradeElement.korean_grade.join(''),
+                social_grade: selectGradeElement.social_grade.join(''),
+                history_grade: selectGradeElement.history_grade.join(''),
+                math_grade: selectGradeElement.math_grade.join(''),
+                science_grade: selectGradeElement.science_grade.join(''),
+                english_grade: selectGradeElement.english_grade.join(''),
+                tech_and_home_grade: selectGradeElement.tech_and_home_grade.join(''),
+              }),
+          ],
+          () => setCurrent(current + 1),
+        )
+      : setCurrent(current + 1);
+  };
 
   return (
     <>
       <_Wrapper>
         <Title>
           <Text color="black900" size="header1">
-            {titles[current].title}
+            {titles[gradeCurrent].title}
           </Text>
-          {current < 4 && (
+          {gradeCurrent < 4 && (
             <AllSelect
               selectGradeElement={selectGradeElement}
               setSelectGradeElement={setSelectGradeElement}
-              current={current}
+              current={gradeCurrent}
             />
           )}
         </Title>
-        <ProgressBar step={titles[current].step} />
+        <ProgressBar step={titles[gradeCurrent].step} />
         <_Selects>
-          {current < 4 &&
+          {gradeCurrent < 4 &&
             Object.entries(subject).map((item) => {
               return (
                 <SelectGrade
@@ -106,16 +129,21 @@ const Program = ({ current }: ICurrnettype) => {
                   gradesKey={item[1] as keyof ISelectGradeElement}
                   selectGradeElement={selectGradeElement}
                   setSelectGradeElement={setSelectGradeElement}
-                  current={current}
+                  current={gradeCurrent}
                 />
               );
             })}
-          {current === 4 && (
+          {gradeCurrent === 4 && (
             <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
           )}
         </_Selects>
       </_Wrapper>
-      <ApplicationFooter current={current} isDisabled={false} />
+      <ApplicationFooter
+        current={current}
+        isDisabled={false}
+        prevClick={() => setCurrent(current - 1)}
+        nextClick={onNextClick}
+      />
     </>
   );
 };
