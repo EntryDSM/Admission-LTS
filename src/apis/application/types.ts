@@ -1,4 +1,4 @@
-type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM';
+export type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM' | '';
 
 export type ApplicationType = 'COMMON' | 'MEISTER' | 'SOCIAL';
 

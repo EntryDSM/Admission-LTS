@@ -8,7 +8,7 @@ import { useInput } from '../../hooks/useInput';
 import { EditUserType, GetUserType } from '../../apis/application';
 import { useEffect } from 'react';
 import { sliceString } from '../../utils/SliceString';
-import { applicationTypeGenerator } from '../../constant/translate';
+import { applicationTypeDateText, applicationTypeGenerator } from '../../constant/translate';
 import { useCombineMutation } from '../../hooks/useCombineMutation';
 
 const UserType = ({ current, setCurrent }: ICurrnettype) => {
@@ -58,7 +58,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
       () => setCurrent(current + 1),
     );
   };
-
+  
   return (
     <>
       <_ApplicationWrapper>
@@ -129,7 +129,11 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
           />
         </ApplicationContent>
 
-        <ApplicationContent grid={2} title="졸업 연월" placeholder="졸업 예정자의 경우 졸업 예정월만 선택해주세요">
+        <ApplicationContent
+          grid={2}
+          title={applicationTypeDateText[userType.educational_status]}
+          placeholder="졸업 예정자의 경우 졸업 예정월만 선택해주세요"
+        >
           <Dropdown
             className="graduated_at"
             width={85}

@@ -49,9 +49,9 @@ export interface IPatchUserMiddleSchool {
 }
 
 export interface IUserMiddleSchool {
-  userMiddleSchool: IPatchUserMiddleSchool;
-  setUserMiddleSchool: (e: InputType) => void;
-  setAllValues: <T>(initialForm: T) => void;
+  student_number: string[];
+  school_code: string;
+  school_tel: string;
 }
 
 export interface IUserMiddleSchoolName {

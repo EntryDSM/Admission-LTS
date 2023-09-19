@@ -27,7 +27,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     onChange: changeUserInfo,
   } = useInput<IUserInfo>({
     name: '',
-    telephone_number: '',
+    telephone_number: '00000000000',
     sex: '',
     birthday: ['2000', '1', '1'],
     parent_name: '',
@@ -52,9 +52,9 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const { data: userProfile } = GetUserProfile();
   const { data: getUserInfo } = GetUserInfo();
   const { data: getUserType } = GetUserType();
-  const { data: getUserBlackExam } = GetUserBlackExam();
-
   const isBlackExam = getUserType?.educational_status === 'QUALIFICATION_EXAM';
+  const { data: getUserBlackExam } = GetUserBlackExam(isBlackExam);
+  
   const inputRef = useRef<HTMLInputElement>(null);
   const { close, modalState, setModalState } = useModal();
 

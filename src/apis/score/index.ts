@@ -18,12 +18,14 @@ export const EditUserBlackExam = () => {
 };
 
 /** 검정고시 조회 */
-export const GetUserBlackExam = () => {
+export const GetUserBlackExam = (isBlackExam: boolean) => {
   const response = async () => {
     const { data } = await instance.get<IGetUserBlackExam>(`${router}/qualification`);
     return data;
   };
-  return useQuery(['userBlackExam'], response);
+  return useQuery(['userBlackExam'], response, {
+    enabled: isBlackExam,
+  });
 };
 
 /** 미졸업자/졸업자 정보입력 */

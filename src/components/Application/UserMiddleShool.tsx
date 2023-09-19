@@ -7,17 +7,18 @@ import { AxiosResponse } from 'axios';
 import { instance } from '../../apis/axios';
 import { useInput } from '../../hooks/useInput';
 import { useEffect, useState } from 'react';
-import { ICurrnettype, IPatchUserMiddleSchool, ISearchSchool, ISearchSchools } from '../../interface/type';
+import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
 import { EditAdditionalInfo, GetAdditionalInfo } from '../../apis/application';
 import { useCombineMutation } from '../../hooks/useCombineMutation';
+import { sliceString } from '../../utils/SliceString';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const {
     form: userMiddleSchool,
     setForm: setUserMiddleSchool,
     onChange: changeUserMiddleSchool,
-  } = useInput<IPatchUserMiddleSchool>({ student_number: '', school_code: '', school_tel: '' });
+  } = useInput<IUserMiddleSchool>({ student_number: ['', '', ''], school_code: '', school_tel: '' });
   const { form: schoolName, setForm: setSchoolName } = useInput('');
 
   /** 중학교 겁색을 위한 form */
@@ -33,7 +34,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   useEffect(() => {
     if (data) {
       setUserMiddleSchool({
-        student_number: data.student_number,
+        student_number: sliceString(data.student_number, [1, 2, 2]),
         school_code: data.school_code,
         school_tel: data.school_tel,
       });
@@ -70,9 +71,31 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     close();
   };
 
+  const onChangeStudentNumber = (e: InputType, index: number, maxLength: number) => {
+    const oldArray = userMiddleSchool.student_number;
+    if (e.currentTarget.value.length >= maxLength) {
+      oldArray[index] = e.currentTarget.value.slice(0, maxLength);
+    } else {
+      oldArray[index] = e.currentTarget.value;
+    }
+    setUserMiddleSchool((prev) => ({ ...prev, student_number: oldArray }));
+  };
+
+  const isDisabled = Object.values(userMiddleSchool).some((item) => !!item === false);
+
   const onNextClick = () => {
     combinedMutations(
-      [() => mutateAsync({ ...userMiddleSchool, school_tel: userMiddleSchool.school_tel.replace(/-/g, '') })],
+      [
+        () =>
+          mutateAsync({
+            ...userMiddleSchool,
+            student_number: userMiddleSchool.student_number
+              .map((item) => String(item.padStart(2, '0')))
+              .join('')
+              .slice(1),
+            school_tel: userMiddleSchool.school_tel.replace(/-/g, ''),
+          }),
+      ],
       () => setCurrent(current + 1),
     );
   };
@@ -89,19 +112,37 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
           </Stack>
         </ApplicationContent>
         <ApplicationContent
-          grid={1}
+          grid={3}
           title="중학교 학번"
           placeholder="5자리로 입력해주세요"
           bottomPlaceholder="Ex) 3학년 1반 1번일 경우 -> 30101"
         >
           <Input
             type="number"
-            name="student_number"
-            value={userMiddleSchool.student_number}
-            onChange={changeUserMiddleSchool}
-            placeholder="중학교 학번"
-            width={230}
-            maxLength={5}
+            value={userMiddleSchool.student_number[0]}
+            onChange={(e) => onChangeStudentNumber(e, 0, 1)}
+            placeholder="중학교 학년"
+            width={150}
+            unit="학년"
+            maxLength={1}
+          />
+          <Input
+            type="number"
+            value={userMiddleSchool.student_number[1]}
+            onChange={(e) => onChangeStudentNumber(e, 1, 2)}
+            placeholder="중학교 반"
+            width={150}
+            unit="반"
+            maxLength={2}
+          />
+          <Input
+            type="number"
+            value={userMiddleSchool.student_number[2]}
+            onChange={(e) => onChangeStudentNumber(e, 2, 2)}
+            placeholder="중학교 번호"
+            width={150}
+            unit="번호"
+            maxLength={2}
           />
         </ApplicationContent>
         <ApplicationContent grid={1} title="중학교 전화번호" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
@@ -147,7 +188,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
       </_ApplicationWrapper>
       <ApplicationFooter
         current={current}
-        isDisabled={false}
+        isDisabled={isDisabled}
         prevClick={() => setCurrent(current - 1)}
         nextClick={onNextClick}
       />
