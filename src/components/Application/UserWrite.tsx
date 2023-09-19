@@ -24,6 +24,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
     userPlan: '',
   });
 
+  const queryClient = useQueryClient();
   const { mutateAsync: editUserIntroduce } = EditUserIntroduce();
   const { mutateAsync: editUserPlan } = EditUserPlan();
   const { combinedMutations } = useCombineMutation();
@@ -39,7 +40,6 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   }, [getUserIntroduce, getUserStudyPlan]);
 
   const onNextClick = () => {
-    const queryClient = useQueryClient();
     combinedMutations(
       [
         () => editUserIntroduce({ content: userWrite.userIntroduce }),
@@ -47,8 +47,8 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
       ],
       isBlackExam
         ? () => {
-            setCurrent(current + 6);
             queryClient.invalidateQueries(['PdfPreview']);
+            setCurrent(current + 6);
           }
         : () => {
             setCurrent(current + 1);
