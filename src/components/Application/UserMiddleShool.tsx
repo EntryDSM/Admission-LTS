@@ -32,9 +32,9 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const { mutateAsync } = EditAdditionalInfo();
 
   useEffect(() => {
-    if (data) {
+    if (!!data) {
       setUserMiddleSchool({
-        student_number: sliceString(data.student_number, [1, 2, 2]),
+        student_number: sliceString(data.student_number ?? '', [1, 2, 2]),
         school_code: data.school_code,
         school_tel: data.school_tel,
       });

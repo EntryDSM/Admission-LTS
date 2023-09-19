@@ -12,8 +12,7 @@ const cookie = new Cookies();
 
 instance.interceptors.request.use(
   (config) => {
-    const accessToken =
-      'eyJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTAzMzA5MzUxOSIsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjk1MTQ3NjIzLCJpYXQiOjE2OTUxNDA0MjN9.KsDMMGvK1Y-3h_sXkSpRMJWz2fjXOksKC1iA9GIA7E4';
+    const accessToken = cookie.get('access_token');
     const returnConfig = {
       ...config,
     };
@@ -32,8 +31,7 @@ instance.interceptors.response.use(
   async (error: AxiosError<AxiosError>) => {
     if (axios.isAxiosError(error) && error.response) {
       const { config } = error;
-      const refreshToken =
-        'eyJ0eXAiOiJyZWZyZXNoX3Rva2VuIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiIwMTAzMzA5MzUxOSIsInJvbGUiOiJVU0VSIiwiZXhwIjoxNjk1MjI2ODIzLCJpYXQiOjE2OTUxNDA0MjN9._4R-TsQ-pXN-LIM6MMe3X0cf3AL5fodH7neWkx__QTE';
+      const refreshToken = cookie.get('refresh_token');
       const authority = cookie.get('authority');
 
       if (

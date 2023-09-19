@@ -22,6 +22,7 @@ const AllSelect = ({ selectGradeElement, setSelectGradeElement, current }: IAllS
     Object.keys(selectGradeElement).map((key) => {
       const oldArray = selectGradeElement[key as keyof ISelectGradeElement];
       oldArray[current] = grade;
+      console.log(oldArray);
       setSelectGradeElement({ ...selectGradeElement, [key]: oldArray });
     });
   };
@@ -37,8 +38,8 @@ const AllSelect = ({ selectGradeElement, setSelectGradeElement, current }: IAllS
           <_Button
             key={item}
             onClick={() => {
-              onClick(grade);
               setGrade(item);
+              onClick(item);
             }}
             backgroundColor={isClick}
           >
