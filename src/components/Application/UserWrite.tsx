@@ -52,7 +52,6 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
           }
         : () => {
             setCurrent(current + 1);
-            queryClient.invalidateQueries(['PdfPreview']);
           },
     );
   };
