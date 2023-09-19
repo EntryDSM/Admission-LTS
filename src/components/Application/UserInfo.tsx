@@ -117,7 +117,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     !!userPhoto.photo_file_name &&
     isBlackExam === !!blackExam.ged_average_score;
 
-  const onClickNext = () => {
+  const onNextClick = () => {
     combinedMutations(
       isBlackExam
         ? [
@@ -298,7 +298,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         current={current}
         isDisabled={isDisabled}
         prevClick={() => setCurrent(0)}
-        nextClick={onClickNext}
+        nextClick={onNextClick}
       />
     </>
   );

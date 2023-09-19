@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IGetUserBlackExam, IPatchGraduation, IPatchUserBlackExam } from './type';
 import { Toast } from '@team-entry/design_system';
@@ -10,9 +10,10 @@ export const EditUserBlackExam = () => {
   const response = async (params: IPatchUserBlackExam) => {
     return instance.patch(`${router}/qualification`, params);
   };
+  const queryClient = useQueryClient();
   return useMutation(response, {
     onError: () => Toast('검정고시 점수를 확인해주세요', { type: 'error' }),
-    onSuccess: () => console.log('success!!'),
+    onSuccess: () => queryClient.invalidateQueries(['PdfPreview']),
   });
 };
 

@@ -42,6 +42,23 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
 
   const { combinedMutations } = useCombineMutation();
 
+  const onNextClick = () => {
+    combinedMutations(
+      [
+        () =>
+          mutateAsync({
+            application_type: userType.application_type,
+            is_daejeon: userType.is_daejeon === 'true',
+            educational_status: userType.educational_status,
+            is_out_of_headcount: false,
+            graduated_at: userType.graduated_at.join(''),
+            application_remark: userType.application_remark || null,
+          }),
+      ],
+      () => setCurrent(current + 1),
+    );
+  };
+
   return (
     <>
       <_ApplicationWrapper>
@@ -154,26 +171,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
           />
         </ApplicationContent>
       </_ApplicationWrapper>
-      <ApplicationFooter
-        current={current}
-        isDisabled={false}
-        nextClick={() => {
-          combinedMutations(
-            [
-              () =>
-                mutateAsync({
-                  application_type: userType.application_type,
-                  is_daejeon: userType.is_daejeon === 'true',
-                  educational_status: userType.educational_status,
-                  is_out_of_headcount: false,
-                  graduated_at: userType.graduated_at.join(''),
-                  application_remark: userType.application_remark || null,
-                }),
-            ],
-            () => setCurrent(current + 1),
-          );
-        }}
-      />
+      <ApplicationFooter current={current} isDisabled={false} nextClick={onNextClick} />
     </>
   );
 };

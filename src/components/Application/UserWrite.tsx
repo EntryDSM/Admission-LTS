@@ -12,6 +12,7 @@ import {
 import { useTextArea } from '../../hooks/useTextarea';
 import { useCombineMutation } from '../../hooks/useCombineMutation';
 import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
 const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   const {
@@ -36,6 +37,25 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
     getUserIntroduce && setUserWrite((prev) => ({ ...prev, userIntroduce: getUserIntroduce.content }));
     getUserStudyPlan && setUserWrite((prev) => ({ ...prev, userPlan: getUserStudyPlan.content }));
   }, [getUserIntroduce, getUserStudyPlan]);
+
+  const onNextClick = () => {
+    const queryClient = useQueryClient();
+    combinedMutations(
+      [
+        () => editUserIntroduce({ content: userWrite.userIntroduce }),
+        () => editUserPlan({ content: userWrite.userPlan }),
+      ],
+      isBlackExam
+        ? () => {
+            setCurrent(current + 6);
+            queryClient.invalidateQueries(['PdfPreview']);
+          }
+        : () => {
+            setCurrent(current + 1);
+            queryClient.invalidateQueries(['PdfPreview']);
+          },
+    );
+  };
 
   return (
     <>
@@ -63,15 +83,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
         current={current}
         isDisabled={!userWrite.userPlan || !userWrite.userIntroduce}
         prevClick={isBlackExam ? () => setCurrent(current - 2) : () => setCurrent(current - 1)}
-        nextClick={() =>
-          combinedMutations(
-            [
-              () => editUserIntroduce({ content: userWrite.userIntroduce }),
-              () => editUserPlan({ content: userWrite.userPlan }),
-            ],
-            isBlackExam ? () => setCurrent(current + 6) : () => setCurrent(current + 1),
-          )
-        }
+        nextClick={onNextClick}
       />
     </>
   );

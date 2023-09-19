@@ -69,6 +69,14 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     setSchoolName(school_name);
     close();
   };
+
+  const onNextClick = () => {
+    combinedMutations(
+      [() => mutateAsync({ ...userMiddleSchool, school_tel: userMiddleSchool.school_tel.replace(/-/g, '') })],
+      () => setCurrent(current + 1),
+    );
+  };
+
   return (
     <>
       <_ApplicationWrapper>
@@ -141,12 +149,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
         current={current}
         isDisabled={false}
         prevClick={() => setCurrent(current - 1)}
-        nextClick={() =>
-          combinedMutations(
-            [() => mutateAsync({ ...userMiddleSchool, school_tel: userMiddleSchool.school_tel.replace(/-/g, '') })],
-            () => setCurrent(current + 1),
-          )
-        }
+        nextClick={onNextClick}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../axios';
 import {
   IGetUSerType,
@@ -21,8 +21,12 @@ export const EditUserType = () => {
   const response = async (param: IPatchUserType) => {
     return instance.patch(`${router}/users/type`, param);
   };
+  const queryClient = useQueryClient();
   return useMutation(response, {
     onError: () => Toast('전형구분 제출에 실패하였습니다.', { type: 'error' }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['userType']);
+    },
   });
 };
 
