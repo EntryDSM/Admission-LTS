@@ -8,8 +8,9 @@ import { useInput } from '../../hooks/useInput';
 import { EditUserType, GetUserType } from '../../apis/application';
 import { useEffect } from 'react';
 import { sliceString } from '../../utils/SliceString';
+import { applicationTypeGenerator } from '../../constant/translate';
 
-const UserType = ({ current }: ICurrnettype) => {
+const UserType = ({ current, setCurrent }: ICurrnettype) => {
   const {
     form: userType,
     onChange: changeUserType,
@@ -27,8 +28,18 @@ const UserType = ({ current }: ICurrnettype) => {
   const { mutate } = EditUserType();
 
   useEffect(() => {
-    data && setUserType({ ...data, graduated_at: sliceString(data.graduated_at, [4, 2]) });
+    data &&
+      setUserType({
+        application_type: applicationTypeGenerator[data.application_type],
+        is_daejeon: String(data.daejeon),
+        educational_status: data.educational_status,
+        graduated_at: sliceString(data.graduated_at, [4, 2]),
+        application_remark: data.application_remark || '',
+        is_out_of_headcount: data.out_of_headcount,
+      });
   }, [data]);
+
+  console.log(data, userType);
 
   return (
     <>
@@ -39,14 +50,14 @@ const UserType = ({ current }: ICurrnettype) => {
             name="application_type"
             value="COMMON"
             onClick={changeUserType}
-            isChecked={userType.application_type === 'COMMON'}
+            checked={userType.application_type === 'COMMON'}
           />
           <Radio
             label="마이스터 인재"
             name="application_type"
             value="MEISTER"
             onClick={changeUserType}
-            isChecked={userType.application_type === 'MEISTER'}
+            checked={userType.application_type === 'MEISTER'}
           />
           <_RadioWrapper>
             <Radio
@@ -54,7 +65,7 @@ const UserType = ({ current }: ICurrnettype) => {
               name="application_type"
               value="SOCIAL"
               onClick={changeUserType}
-              isChecked={userType.application_type === 'SOCIAL'}
+              checked={userType.application_type === 'SOCIAL'}
             />
           </_RadioWrapper>
         </ApplicationContent>
@@ -65,14 +76,14 @@ const UserType = ({ current }: ICurrnettype) => {
             name="is_daejeon"
             value="true"
             onClick={changeUserType}
-            isChecked={userType.is_daejeon === true}
+            checked={userType.is_daejeon === 'true'}
           />
           <Radio
             label="전국"
             name="is_daejeon"
             value="false"
             onClick={changeUserType}
-            isChecked={userType.is_daejeon === false}
+            checked={userType.is_daejeon === 'false'}
           />
         </ApplicationContent>
 
@@ -82,21 +93,21 @@ const UserType = ({ current }: ICurrnettype) => {
             name="educational_status"
             value="PROSPECTIVE_GRADUATE"
             onClick={changeUserType}
-            isChecked={userType.educational_status === 'PROSPECTIVE_GRADUATE'}
+            checked={userType.educational_status === 'PROSPECTIVE_GRADUATE'}
           />
           <Radio
             label="졸업"
             name="educational_status"
             value="GRADUATE"
             onClick={changeUserType}
-            isChecked={userType.educational_status === 'GRADUATE'}
+            checked={userType.educational_status === 'GRADUATE'}
           />
           <Radio
             label="검정고시"
             name="educational_status"
             value="QUALIFICATION_EXAM"
             onClick={changeUserType}
-            isChecked={userType.educational_status === 'QUALIFICATION_EXAM'}
+            checked={userType.educational_status === 'QUALIFICATION_EXAM'}
           />
         </ApplicationContent>
 
@@ -124,21 +135,21 @@ const UserType = ({ current }: ICurrnettype) => {
             name="application_remark"
             value=""
             onClick={changeUserType}
-            isChecked={userType.application_remark === ''}
+            checked={userType.application_remark === ''}
           />
           <Radio
             label="국가 유공자"
             name="application_remark"
             value="NATIONAL_MERIT"
             onClick={changeUserType}
-            isChecked={userType.application_remark === 'NATIONAL_MERIT'}
+            checked={userType.application_remark === 'NATIONAL_MERIT'}
           />
           <Radio
             label="특례 입학 대상"
             name="application_remark"
             value="PRIVILEGED_ADMISSION"
             onClick={changeUserType}
-            isChecked={userType.application_remark === 'PRIVILEGED_ADMISSION'}
+            checked={userType.application_remark === 'PRIVILEGED_ADMISSION'}
           />
         </ApplicationContent>
       </_ApplicationWrapper>
@@ -147,10 +158,14 @@ const UserType = ({ current }: ICurrnettype) => {
         isDisabled={false}
         nextClick={() => {
           mutate({
-            ...userType,
+            application_type: userType.application_type,
+            is_daejeon: userType.is_daejeon === 'true',
+            educational_status: userType.educational_status,
+            is_out_of_headcount: false,
             graduated_at: userType.graduated_at.join(''),
             application_remark: userType.application_remark || null,
-          });
+          }),
+            setCurrent(current + 1);
         }}
       />
     </>

@@ -11,7 +11,7 @@ export const Router = () => {
   const refreshToken = cookie.get('refresh_token');
   useEffect(() => {
     if (!accessToken && !refreshToken) {
-      window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
+      // window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
     }
   }, [accessToken, refreshToken]);
 

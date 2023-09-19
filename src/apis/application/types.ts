@@ -1,6 +1,8 @@
 type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM';
 
-type ApplicationType = 'COMMON' | 'MEISTER' | 'SOCIAL';
+export type ApplicationType = 'COMMON' | 'MEISTER' | 'SOCIAL';
+
+export type getApplicationType = '일반전형' | '마이스터전형' | '사회통합전형';
 
 export type ApplicationRemark =
   | 'ONE_PARENT'
@@ -13,6 +15,16 @@ export type ApplicationRemark =
   | 'NATIONAL_MERIT'
   | 'PROTECTED_CHILDREN'
   | '';
+
+export interface IGetUSerType {
+  educational_status: EducationalStatus;
+  application_type: getApplicationType;
+  application_remark: ApplicationRemark;
+  graduated_at: string;
+  daejeon: boolean;
+  out_of_headcount: boolean;
+  graduated: boolean;
+}
 
 export interface IPatchUserType {
   application_type: ApplicationType | '';

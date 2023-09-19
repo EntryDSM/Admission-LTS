@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { instance } from '../axios';
 import {
+  IGetUSerType,
   IPatchUserInfo,
   IPatchUserIntroduce,
   IPatchUserPhoto,
@@ -28,7 +29,7 @@ export const EditUserType = () => {
 /** 전형 구분 조회 */
 export const GetUserType = () => {
   const response = async () => {
-    const { data } = await instance.get<IPatchUserType>(`${router}/users/type`);
+    const { data } = await instance.get<IGetUSerType>(`${router}/users/type`);
     return data;
   };
   return useQuery(['userType'], response);

@@ -134,14 +134,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         </ApplicationContent>
 
         <ApplicationContent grid={2} title="성별">
-          <Radio label="남자" name="sex" value="MALE" onClick={changeUserInfo} isChecked={userInfo.sex === 'MALE'} />
-          <Radio
-            label="여자"
-            name="sex"
-            value="FEMALE"
-            onClick={changeUserInfo}
-            isChecked={userInfo.sex === 'FEMALE'}
-          />
+          <Radio label="남자" name="sex" value="MALE" onClick={changeUserInfo} checked={userInfo.sex === 'MALE'} />
+          <Radio label="여자" name="sex" value="FEMALE" onClick={changeUserInfo} checked={userInfo.sex === 'FEMALE'} />
         </ApplicationContent>
         <ApplicationContent grid={3} title="생년월일">
           <Dropdown
@@ -270,7 +264,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
       <ApplicationFooter
         current={current}
         isDisabled={isDisabled}
-        prevClick={() => setCurrent(1)}
+        prevClick={() => setCurrent(0)}
         nextClick={onClickNext}
       />
     </>
