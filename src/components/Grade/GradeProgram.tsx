@@ -46,19 +46,18 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
   const gradeCurrent = current - 4;
   const titles = isGraduate
     ? [
-        { step: 1, title: '3학년 2학기' },
-        { step: 2, title: '3학년 1학기' },
-        { step: 3, title: '2학년 2학기' },
-        { step: 4, title: '2학년 1학기' },
+        { step: 1, title: '3학년 2학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 2, title: '3학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 3, title: '2학년 2학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 4, title: '2학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 5, title: '출석 점수 & 봉사 점수' },
-        { step: 5, title: '' },
       ]
     : [
-        { step: 1, title: '3학년 1학기' },
-        { step: 2, title: '직전 학기' },
-        { step: 3, title: '직전전 학기' },
+        { step: 0, title: '' },
+        { step: 1, title: '3학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 2, title: '직전 학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 3, title: '직전전 학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 4, title: '출석 점수 & 봉사 점수' },
-        { step: 4, title: '' },
       ];
 
   useEffect(() => {
@@ -102,14 +101,19 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         )
       : setCurrent(current + 1);
   };
-
+  console.log(selectGradeElement);
   return (
     <>
       <_Wrapper>
         <Title>
-          <Text color="black900" size="header1">
-            {titles[gradeCurrent].title}
-          </Text>
+          <div>
+            <Text color="black900" size="header1">
+              {titles[gradeCurrent].title}
+            </Text>
+            <Text color="black500" size="body3">
+              {titles[gradeCurrent].subTitle && titles[gradeCurrent].subTitle}
+            </Text>
+          </div>
           {gradeCurrent < 4 && (
             <AllSelect
               selectGradeElement={selectGradeElement}
@@ -141,7 +145,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
       <ApplicationFooter
         current={current}
         isDisabled={false}
-        prevClick={() => setCurrent(current - 1)}
+        prevClick={!isGraduate && gradeCurrent === 1 ? () => setCurrent(current - 2) : () => setCurrent(current - 1)}
         nextClick={onNextClick}
       />
     </>

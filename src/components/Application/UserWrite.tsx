@@ -39,20 +39,27 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
     getUserStudyPlan && setUserWrite((prev) => ({ ...prev, userPlan: getUserStudyPlan.content }));
   }, [getUserIntroduce, getUserStudyPlan]);
 
+  const nextCurrentGenerator = () => {
+    switch (getUserType?.educational_status) {
+      case 'PROSPECTIVE_GRADUATE':
+        setCurrent(current + 2);
+        break;
+      case 'QUALIFICATION_EXAM':
+        queryClient.invalidateQueries(['PdfPreview']);
+        setCurrent(current + 6);
+        break;
+      default:
+        setCurrent(current + 1);
+    }
+  };
+
   const onNextClick = () => {
     combinedMutations(
       [
         () => editUserIntroduce({ content: userWrite.userIntroduce }),
         () => editUserPlan({ content: userWrite.userPlan }),
       ],
-      isBlackExam
-        ? () => {
-            queryClient.invalidateQueries(['PdfPreview']);
-            setCurrent(current + 6);
-          }
-        : () => {
-            setCurrent(current + 1);
-          },
+      () => nextCurrentGenerator(),
     );
   };
 
