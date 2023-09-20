@@ -81,27 +81,25 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
   }, [userGraduation]);
 
   const onNextClick = () => {
-    gradeCurrent === 4
-      ? combinedMutations(
-          [
-            () =>
-              mutateAsync({
-                ...selectGradeElement,
-                ...writeGradeElement,
-                korean_grade: selectGradeElement.korean_grade.join(''),
-                social_grade: selectGradeElement.social_grade.join(''),
-                history_grade: selectGradeElement.history_grade.join(''),
-                math_grade: selectGradeElement.math_grade.join(''),
-                science_grade: selectGradeElement.science_grade.join(''),
-                english_grade: selectGradeElement.english_grade.join(''),
-                tech_and_home_grade: selectGradeElement.tech_and_home_grade.join(''),
-              }),
-          ],
-          () => setCurrent(current + 1),
-        )
-      : setCurrent(current + 1);
+    combinedMutations(
+      [
+        () =>
+          mutateAsync({
+            ...selectGradeElement,
+            ...writeGradeElement,
+            korean_grade: selectGradeElement.korean_grade.join(''),
+            social_grade: selectGradeElement.social_grade.join(''),
+            history_grade: selectGradeElement.history_grade.join(''),
+            math_grade: selectGradeElement.math_grade.join(''),
+            science_grade: selectGradeElement.science_grade.join(''),
+            english_grade: selectGradeElement.english_grade.join(''),
+            tech_and_home_grade: selectGradeElement.tech_and_home_grade.join(''),
+          }),
+      ],
+      () => setCurrent(current + 1),
+    );
   };
-  
+
   return (
     <>
       <_Wrapper>

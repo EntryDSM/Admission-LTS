@@ -192,6 +192,7 @@ export const SubmitPdf = () => {
             break;
           case 'Already submit application.':
             message = '이미 제출된 원서입니다.';
+            setModalState('ERROR');
             break;
         }
       }

@@ -80,9 +80,9 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
             <DefaultModal
               color="error"
               title="오류"
-              subTitle={'원서 제출 중 오류가 발생했습니다 \n 관리자에게 문의 바랍니다'}
-              button="확인"
-              onClick={() => setCurrent(0)}
+              subTitle={'원서 제출 중 오류가 발생했습니다\n관리자에게 문의 바랍니다'}
+              button="홈으로"
+              onClick={() => (window.location.href = 'https://www.entrydsm.hs.kr')}
             />
           </Modal>
         )}
