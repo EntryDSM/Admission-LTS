@@ -58,7 +58,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
       () => setCurrent(current + 1),
     );
   };
-  
+
   return (
     <>
       <_ApplicationWrapper>
@@ -129,11 +129,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
           />
         </ApplicationContent>
 
-        <ApplicationContent
-          grid={2}
-          title={applicationTypeDateText[userType.educational_status]}
-          placeholder="졸업 예정자의 경우 졸업 예정월만 선택해주세요"
-        >
+        <ApplicationContent grid={2} title={applicationTypeDateText[userType.educational_status]}>
           <Dropdown
             className="graduated_at"
             width={85}
