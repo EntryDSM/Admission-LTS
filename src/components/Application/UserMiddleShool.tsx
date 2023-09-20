@@ -177,7 +177,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
                       {school.name}
                     </Text>
                     <Text color="black600" size="body6">
-                      {school.information}
+                      {school.address.split(' ')[0] + ' ' + school.address.split(' ')[1]}
                     </Text>
                   </_SearchPreview>
                 );

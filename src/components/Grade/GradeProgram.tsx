@@ -101,7 +101,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         )
       : setCurrent(current + 1);
   };
-  console.log(selectGradeElement);
+  
   return (
     <>
       <_Wrapper>
