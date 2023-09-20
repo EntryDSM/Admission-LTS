@@ -155,8 +155,6 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     );
   };
 
-  console.log(isDisabled, userInfo);
-
   return (
     <>
       <_ApplicationWrapper>
