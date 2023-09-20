@@ -12,7 +12,7 @@ import {
 import { IPatchUserMiddleSchool } from '../../interface/type';
 import { useModal } from '../../hooks/useModal';
 import { Toast } from '@team-entry/design_system';
-import { isAxiosError } from 'axios';
+import { AxiosError, isAxiosError } from 'axios';
 
 const router = 'application';
 
@@ -23,7 +23,15 @@ export const EditUserType = () => {
   };
   const queryClient = useQueryClient();
   return useMutation(response, {
-    onError: () => Toast('전형구분 제출에 실패하였습니다.', { type: 'error' }),
+    onError: (res: AxiosError<AxiosError>) => {
+      console.log(res);
+      switch (res?.response?.data.message) {
+        case 'Invalid graduate at':
+          return Toast('연도를 확인해 주세요.', { type: 'error' });
+        default:
+          return Toast('전형구분 제출에 실패하였습니다.', { type: 'error' });
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries(['userType']);
     },
