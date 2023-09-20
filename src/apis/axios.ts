@@ -44,13 +44,13 @@ instance.interceptors.response.use(
         if (refreshToken) {
           ReissueToken(refreshToken)
             .then((res) => {
-              cookie.set('access_token', res.access_token, {
+              cookie.set('access_token', res?.access_token, {
                 path: '/',
                 secure: true,
                 sameSite: 'none',
                 domain: COOKIE_DOMAIN,
               });
-              cookie.set('refresh_token', res.refresh_token, {
+              cookie.set('refresh_token', res?.refresh_token, {
                 path: '/',
                 secure: true,
                 sameSite: 'none',
@@ -58,7 +58,7 @@ instance.interceptors.response.use(
               });
               cookie.set('authority', authority == 'admin' ? 'admin' : 'user', { path: '/' });
               if (originalRequest) {
-                if (originalRequest.headers) originalRequest.headers['Authorization'] = `Bearer ${res.access_token}`;
+                if (originalRequest.headers) originalRequest.headers['Authorization'] = `Bearer ${res?.access_token}`;
                 return axios(originalRequest);
               }
             })
@@ -66,7 +66,7 @@ instance.interceptors.response.use(
               if (
                 res?.response?.data.status === 404 ||
                 res.response?.data.status === 403 ||
-                res.response?.data.message === 'Expired Token'
+                res.response?.data.status === 401
               ) {
                 cookie.remove('access_token');
                 cookie.remove('refresh_token');

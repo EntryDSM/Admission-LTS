@@ -9,7 +9,7 @@ export const ReissueToken = async (refresh_token: string) => {
     },
   });
 
-  return response.data;
+  return response?.data;
 };
 
 /** 원서 생성 */
