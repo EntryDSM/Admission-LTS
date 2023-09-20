@@ -29,7 +29,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     name: '',
     telephone_number: '00000000000',
     sex: '',
-    birthday: ['2000', '1', '1'],
+    birthday: ['2000', '01', '01'],
     parent_name: '',
     parent_tel: '',
     address: '',
@@ -54,7 +54,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const { data: getUserType } = GetUserType();
   const isBlackExam = getUserType?.educational_status === 'QUALIFICATION_EXAM';
   const { data: getUserBlackExam } = GetUserBlackExam(isBlackExam);
-  
+
   const inputRef = useRef<HTMLInputElement>(null);
   const { close, modalState, setModalState } = useModal();
 
@@ -100,7 +100,19 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   }, [userProfile]);
 
   useEffect(() => {
-    getUserInfo && setUserInfo({ ...getUserInfo, birthday: getUserInfo.birthday.split('-') });
+    getUserInfo &&
+      getUserInfo!.birthday &&
+      setUserInfo({
+        name: getUserInfo.name,
+        parent_name: getUserInfo.parent_name,
+        parent_tel: getUserInfo.parent_tel,
+        post_code: getUserInfo.post_code,
+        detail_address: getUserInfo.detail_address,
+        sex: getUserInfo.sex,
+        address: getUserInfo.address,
+        telephone_number: getUserInfo.telephone_number,
+        birthday: getUserInfo.birthday.split('-'),
+      });
     getAddionalInfo &&
       setUserPhoto({
         photo: getAddionalInfo.photo_file_name,
@@ -121,17 +133,29 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     combinedMutations(
       isBlackExam
         ? [
-            () => patchUserInfo({ ...userInfo, birthday: userInfo.birthday.join('-') }),
+            () =>
+              patchUserInfo({
+                ...userInfo,
+                birthday: userInfo.birthday.join('-'),
+                parent_tel: userInfo.parent_tel.replace(/-/g, ''),
+              }),
             () => patchUserPhoto({ photo: userPhoto.photo_file_name as File }),
             () => patchBlackExam({ ged_average_score: Number(blackExam.ged_average_score) }),
           ]
         : [
-            () => patchUserInfo({ ...userInfo, birthday: userInfo.birthday.join('-') }),
+            () =>
+              patchUserInfo({
+                ...userInfo,
+                birthday: userInfo.birthday.join('-'),
+                parent_tel: userInfo.parent_tel.replace(/-/g, ''),
+              }),
             () => patchUserPhoto({ photo: userPhoto.photo_file_name as File }),
           ],
       isBlackExam ? () => setCurrent(current + 2) : () => setCurrent(current + 1),
     );
   };
+
+  console.log(isDisabled, userInfo);
 
   return (
     <>

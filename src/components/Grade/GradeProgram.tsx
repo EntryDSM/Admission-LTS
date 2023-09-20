@@ -48,8 +48,8 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
     ? [
         { step: 1, title: '3학년 2학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 2, title: '3학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
-        { step: 3, title: '2학년 2학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
-        { step: 4, title: '2학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 3, title: '2학년 2학기(직전학기)', subTitle: '과목이 없는 경우 X로 기입하세요' },
+        { step: 4, title: '2학년 1학기(직전 전학기)', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 5, title: '출석 점수 & 봉사 점수' },
       ]
     : [
