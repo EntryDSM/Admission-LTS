@@ -125,9 +125,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   }, [getUserInfo, getAddionalInfo, getUserBlackExam]);
 
   const isDisabled =
-    Object.values(userInfo).some((item) => !!item === false) &&
-    !!userPhoto.photo_file_name &&
-    isBlackExam === !!blackExam.ged_average_score;
+    Object.values(userInfo).some((item) => !!item === false) ||
+    (!userPhoto.photo_file_name && isBlackExam === !!blackExam.ged_average_score);
 
   const onNextClick = () => {
     combinedMutations(
