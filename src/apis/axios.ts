@@ -66,7 +66,8 @@ instance.interceptors.response.use(
               if (
                 res?.response?.data.status === 404 ||
                 res.response?.data.status === 403 ||
-                res?.response?.data.message === 'Expired Token'
+                res?.response?.data.message === 'Expired Token' ||
+                res.response?.data.message === 'Invalid Token'
               ) {
                 cookie.remove('access_token');
                 cookie.remove('refresh_token');
