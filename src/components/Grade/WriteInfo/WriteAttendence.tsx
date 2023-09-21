@@ -44,6 +44,17 @@ const WriteAttendence = ({ writeGradeElement, changeWriteGradeElement }: IWriteG
           unit="회"
         />
       </GradeWraper>
+      <GradeWraper title="미인정 결과">
+        <Input
+          type="number"
+          width={230}
+          name="lecture_absence_count"
+          placeholder="결과 횟수"
+          value={writeGradeElement.lecture_absence_count}
+          onChange={changeWriteGradeElement}
+          unit="일"
+        />
+      </GradeWraper>
       <GradeWraper title="봉사활동 시간">
         <Input
           type="number"
