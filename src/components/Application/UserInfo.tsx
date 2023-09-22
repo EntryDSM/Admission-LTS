@@ -159,7 +159,11 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   return (
     <>
       <_ApplicationWrapper>
-        <ApplicationContent title="증명사진" grid={1} placeholder="사진크기는 최소 10KB, 최대 220KB까지 허용됩니다.">
+        <ApplicationContent
+          title="증명사진"
+          grid={1}
+          placeholder="사진은 최소 10KB, 최대 220KB까지인 png만 허용됩니다."
+        >
           <Stack align="center" gap={20}>
             <_ApplicationImg onClick={handleImage}>
               {userPhoto.photo ? (
