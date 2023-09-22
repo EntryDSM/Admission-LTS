@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
-import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
+import { Button, Dropdown, HStack, Input, Radio, Stack, Text, Toast, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
@@ -68,6 +68,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     if (files) {
       if (files.length === 0) {
         return;
+      } else if (files[0].size > 220 * 1024 || files[0].size < 10 * 1024) {
+        Toast('사진크기는 최소 10KB, 최대 220KB까지 허용됩니다', { type: 'error' });
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
@@ -157,11 +159,11 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   return (
     <>
       <_ApplicationWrapper>
-        <ApplicationContent title="증명사진" grid={1}>
+        <ApplicationContent title="증명사진" grid={1} placeholder="사진크기는 최소 10KB, 최대 220KB까지 허용됩니다.">
           <Stack align="center" gap={20}>
             <_ApplicationImg onClick={handleImage}>
               {userPhoto.photo ? (
-                <Img src={userPhoto.photo} alt="userImg" />
+                <Img src={userPhoto.photo} alt="사진을 다시 입력해주세요" />
               ) : (
                 <Text color="black700" size="body3">
                   원서 사진을 등록해주세요
