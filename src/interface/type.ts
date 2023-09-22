@@ -58,24 +58,7 @@ export interface IUserMiddleSchoolName {
   schoolName: string;
 }
 
-export interface IUserIntroduce {
-  userIntroduce: string;
-  setUserIntroduce: (e: InputType) => void;
-}
-
-export interface IUserPlan {
-  userPlan: string;
-  setUserPlan: (e: InputType) => void;
-}
-
 export type GradeType = 'A' | 'B' | 'C' | 'D' | 'E' | 'X';
-
-export interface IGradeElement {
-  gradeElement: string[][];
-  setElementValue: (current: number, index: number, value: string) => void;
-  setAllGrade: (current: number, grade: string) => void;
-  setWriteValue: (e: InputType, current: number, index: number) => void;
-}
 
 export type ModalType =
   | ''

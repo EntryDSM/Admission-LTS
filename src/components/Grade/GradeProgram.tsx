@@ -13,6 +13,7 @@ import { EditUserGraduation, GetUserGraduation } from '../../apis/score';
 import { subject } from '../../constant/grade';
 import { useEffect } from 'react';
 import { useCombineMutation } from '../../hooks/useCombineMutation';
+import gradeCalculater from '../../utils/gradeCalculater';
 
 const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({
@@ -59,6 +60,10 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         { step: 3, title: '직전전 학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 4, title: '출석 점수 & 봉사 점수' },
       ];
+  const { maxScore, allScore, selectScore, attendenceScore, volunteerScore } = gradeCalculater({
+    selectGradeElement,
+    writeGradeElement,
+  });
 
   useEffect(() => {
     userGraduation &&
@@ -103,23 +108,39 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
   return (
     <>
       <_Wrapper>
-        <Title>
-          <div>
+        <Header>
+          <Title>
             <Text color="black900" size="header1">
               {titles[gradeCurrent].title}
             </Text>
             <Text color="black500" size="body3">
               {titles[gradeCurrent].subTitle && titles[gradeCurrent].subTitle}
             </Text>
-          </div>
-          {gradeCurrent < 4 && (
-            <AllSelect
-              selectGradeElement={selectGradeElement}
-              setSelectGradeElement={setSelectGradeElement}
-              current={gradeCurrent}
-            />
-          )}
-        </Title>
+          </Title>
+          <GradeWrapper>
+            <CurrentGrades>
+              <Text size="title3" color="black" style={{ fontWeight: 700 }}>
+                총: {allScore}/{maxScore}
+              </Text>
+              <Text size="title3" color="black">
+                성적 점수: {selectScore}/{maxScore - 30}
+              </Text>
+              <Text size="title3" color="black">
+                출석 점수: {attendenceScore}/15
+              </Text>
+              <Text size="title3" color="black">
+                봉사 점수: {volunteerScore}/15
+              </Text>
+            </CurrentGrades>
+            {gradeCurrent < 4 && (
+              <AllSelect
+                selectGradeElement={selectGradeElement}
+                setSelectGradeElement={setSelectGradeElement}
+                current={gradeCurrent}
+              />
+            )}
+          </GradeWrapper>
+        </Header>
         <ProgressBar step={titles[gradeCurrent].step} />
         <_Selects>
           {gradeCurrent < 4 &&
@@ -156,15 +177,30 @@ const _Wrapper = styled.div`
   width: 100%;
 `;
 
+const Header = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
 const Title = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
+`;
+
+const GradeWrapper = styled.div`
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  > div {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
+`;
+
+const CurrentGrades = styled.div`
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
 `;
 
 const _Selects = styled.div`
