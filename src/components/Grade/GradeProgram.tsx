@@ -122,13 +122,13 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
               <Text size="title3" color="black" style={{ fontWeight: 700 }}>
                 총: {allScore}/{maxScore}
               </Text>
-              <Text size="title3" color="black">
+              <Text size="title3" color="black" style={{ fontWeight: 500 }}>
                 성적 점수: {selectScore}/{maxScore - 30}
               </Text>
-              <Text size="title3" color="black">
+              <Text size="title3" color="black" style={{ fontWeight: 500 }}>
                 출석 점수: {attendenceScore}/15
               </Text>
-              <Text size="title3" color="black">
+              <Text size="title3" color="black" style={{ fontWeight: 500 }}>
                 봉사 점수: {volunteerScore}/15
               </Text>
             </CurrentGrades>
