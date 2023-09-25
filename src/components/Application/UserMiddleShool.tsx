@@ -111,18 +111,13 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
             </Button>
           </Stack>
         </ApplicationContent>
-        <ApplicationContent
-          grid={3}
-          title="중학교 학번"
-          placeholder="5자리로 입력해주세요"
-          bottomPlaceholder="Ex) 3학년 1반 1번일 경우 -> 30101"
-        >
+        <ApplicationContent grid={3} title="중학교 학번" placeholder="반, 번호는 최대 2자리수 까지 입력 가능합니다.">
           <Input
             type="number"
             value={userMiddleSchool.student_number[0]}
             onChange={(e) => onChangeStudentNumber(e, 0, 1)}
-            placeholder="중학교 학년"
-            width={150}
+            placeholder="학년"
+            width={120}
             unit="학년"
             maxLength={1}
           />
@@ -130,8 +125,8 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
             type="number"
             value={userMiddleSchool.student_number[1]}
             onChange={(e) => onChangeStudentNumber(e, 1, 2)}
-            placeholder="중학교 반"
-            width={150}
+            placeholder="반"
+            width={120}
             unit="반"
             maxLength={2}
           />
@@ -139,8 +134,8 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
             type="number"
             value={userMiddleSchool.student_number[2]}
             onChange={(e) => onChangeStudentNumber(e, 2, 2)}
-            placeholder="중학교 번호"
-            width={150}
+            placeholder="번호"
+            width={120}
             unit="번호"
             maxLength={2}
           />
