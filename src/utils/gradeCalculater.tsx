@@ -15,6 +15,7 @@ const getWriteGradeScore = (gradeCurrent: number, selectGradeElement: ISelectGra
     .map((item) => {
       return item[gradeCurrent];
     });
+  if (array.length === 0) return 20;
   result = array.reduce((acc, cur) => (acc += gradeToScore[cur]), 0);
   return (result / array.length) * 4;
 };
