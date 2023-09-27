@@ -68,8 +68,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     if (files) {
       if (files.length === 0) {
         return;
-      } else if (files[0].size > 220 * 1024 || files[0].size < 10 * 1024) {
-        Toast('사진크기는 최소 10KB, 최대 220KB까지 허용됩니다', { type: 'error' });
+        // } else if (files[0].size > 220 * 1024 || files[0].size < 10 * 1024) {
+        //   Toast('사진크기는 최소 10KB, 최대 220KB까지 허용됩니다', { type: 'error' });
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
@@ -162,7 +162,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         <ApplicationContent
           title="증명사진"
           grid={1}
-          placeholder="사진은 최소 10KB, 최대 220KB까지인 png만 허용됩니다."
+          // placeholder="사진은 최소 10KB, 최대 220KB까지인 png만 허용됩니다."
         >
           <Stack align="center" gap={20}>
             <_ApplicationImg onClick={handleImage}>
@@ -173,7 +173,13 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
                   원서 사진을 등록해주세요
                 </Text>
               )}
-              <_ApplicationImgInput ref={inputRef} type="file" accept="image/png" name="img" onChange={saveImgFile} />
+              <_ApplicationImgInput
+                ref={inputRef}
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                name="img"
+                onChange={saveImgFile}
+              />
             </_ApplicationImg>
             <Button icon="Upload" color="orange" onClick={handleImage}>
               사진 업로드
