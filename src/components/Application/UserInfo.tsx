@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
-import { Button, Dropdown, HStack, Input, Radio, Stack, Text, Toast, VStack, theme } from '@team-entry/design_system';
+import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
 import ApplicationContent from './ApplicationContent';
 import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
