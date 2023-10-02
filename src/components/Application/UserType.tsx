@@ -12,6 +12,7 @@ import { applicationTypeDateText, applicationTypeGenerator } from '../../constan
 import { useCombineMutation } from '../../hooks/useCombineMutation';
 
 const UserType = ({ current, setCurrent }: ICurrnettype) => {
+  const date = new Date();
   const {
     form: userType,
     onChange: changeUserType,
@@ -20,7 +21,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
     application_type: '',
     is_daejeon: undefined,
     educational_status: '',
-    graduated_at: ['2024', '01'],
+    graduated_at: [(date.getFullYear() + 1).toString(), '01'],
     application_remark: null,
     is_out_of_headcount: false,
   });
@@ -135,7 +136,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
             width={85}
             value={userType.graduated_at[0]}
             onChange={(year) => setUserType({ ...userType, graduated_at: [year, userType.graduated_at[1]] })}
-            options={generateNumberArray(2010, 2030)}
+            options={generateNumberArray(2010, date.getFullYear() + 1)}
             unit="년"
           />
           <Dropdown
