@@ -58,7 +58,7 @@ const Application = () => {
           <DefaultModal
             color="black900"
             title="대덕SW마이스터고등학교"
-            subTitle="입학 원서 접수를 시작하시겠습니까?"
+            subTitle={`지금은 모의접수 기간입니다\n 입학 원서 모의접수를 시작하시겠습니까?`}
             button="원서 접수 시작"
             onClick={() => {
               mutate();
