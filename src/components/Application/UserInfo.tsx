@@ -21,6 +21,7 @@ import { useInput } from '../../hooks/useInput';
 import { useCombineMutation } from '../../hooks/useCombineMutation';
 
 const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
+  const date = new Date();
   const {
     form: userInfo,
     setForm: setUserInfo,
@@ -29,7 +30,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     name: '',
     telephone_number: '00000000000',
     sex: '',
-    birthday: ['2000', '01', '01'],
+    birthday: [(date.getFullYear() - 15).toString(), '01', '01'],
     parent_name: '',
     parent_tel: '',
     address: '',
@@ -211,7 +212,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             onChange={(year) =>
               setUserInfo({ ...userInfo, birthday: [year, userInfo.birthday[1], userInfo.birthday[2]] })
             }
-            options={generateNumberArray(2000, 2024)}
+            options={generateNumberArray(2000, date.getFullYear())}
             unit="년"
           />
           <Dropdown
