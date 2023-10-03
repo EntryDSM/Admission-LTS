@@ -22,7 +22,6 @@ const AllSelect = ({ selectGradeElement, setSelectGradeElement, current }: IAllS
     Object.keys(selectGradeElement).map((key) => {
       const oldArray = selectGradeElement[key as keyof ISelectGradeElement];
       oldArray[current] = grade;
-      console.log(oldArray);
       setSelectGradeElement({ ...selectGradeElement, [key]: oldArray });
     });
   };

@@ -24,7 +24,6 @@ export const EditUserType = () => {
   const queryClient = useQueryClient();
   return useMutation(response, {
     onError: (res: AxiosError<AxiosError>) => {
-      console.log(res);
       switch (res?.response?.data.message) {
         case 'Invalid graduate at':
           return Toast('연도를 확인해 주세요.', { type: 'error' });
@@ -89,7 +88,6 @@ export const EditUserPhto = () => {
   const response = async (params: IPatchUserPhoto) => {
     const form = new FormData();
     form.append('photo', params.photo);
-    console.log(params.photo);
     return instance.post(`${router}/users/photo `, form, {
       headers: {
         'Content-Type': 'multipart/form-data',
