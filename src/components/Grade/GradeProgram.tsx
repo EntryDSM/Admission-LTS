@@ -13,7 +13,7 @@ import { EditUserGraduation, GetUserGraduation } from '../../apis/score';
 import { subject } from '../../constant/grade';
 import { useEffect } from 'react';
 import { useCombineMutation } from '../../hooks/useCombineMutation';
-import gradeCalculater from '../../utils/gradeCalculater';
+import GradePreview from './GradePreview';
 
 const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({
@@ -60,10 +60,6 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         { step: 3, title: '직전전 학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 4, title: '출석 점수 & 봉사 점수' },
       ];
-  const { maxScore, allScore, selectScore, attendenceScore, volunteerScore } = gradeCalculater({
-    selectGradeElement,
-    writeGradeElement,
-  });
 
   useEffect(() => {
     userGraduation &&
@@ -75,13 +71,13 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         volunteer_time: userGraduation.volunteer_time,
       }),
       setSelectGradeElement({
-        korean_grade: userGraduation.korean_grade.split(''),
-        social_grade: userGraduation.social_grade.split(''),
-        history_grade: userGraduation.history_grade.split(''),
-        math_grade: userGraduation.math_grade.split(''),
-        science_grade: userGraduation.science_grade.split(''),
-        english_grade: userGraduation.english_grade.split(''),
-        tech_and_home_grade: userGraduation.tech_and_home_grade.split(''),
+        korean_grade: isGraduate ? userGraduation.korean_grade.split('') : ['X', ...userGraduation.korean_grade.split('').slice(1)],
+        social_grade: isGraduate ? userGraduation.social_grade.split('') : ['X', ...userGraduation.social_grade.split('').slice(1)],
+        history_grade: isGraduate ? userGraduation.history_grade.split('') : ['X', ...userGraduation.history_grade.split('').slice(1)],
+        math_grade: isGraduate ? userGraduation.math_grade.split('') : ['X', ...userGraduation.math_grade.split('').slice(1)],
+        science_grade: isGraduate ? userGraduation.science_grade.split('') : ['X', ...userGraduation.science_grade.split('').slice(1)],
+        english_grade: isGraduate ? userGraduation.english_grade.split('') : ['X', ...userGraduation.english_grade.split('').slice(1)],
+        tech_and_home_grade: isGraduate ? userGraduation.tech_and_home_grade.split('') : ['X', ...userGraduation.tech_and_home_grade.split('').slice(1)],
       }));
   }, [userGraduation]);
 
@@ -118,20 +114,11 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
             </Text>
           </Title>
           <GradeWrapper>
-            <CurrentGrades>
-              <Text size="title3" color="black" style={{ fontWeight: 700 }}>
-                총: {allScore}/{maxScore}
-              </Text>
-              <Text size="title3" color="black" style={{ fontWeight: 500 }}>
-                성적 점수: {selectScore}/{maxScore - 30}
-              </Text>
-              <Text size="title3" color="black" style={{ fontWeight: 500 }}>
-                출석 점수: {attendenceScore}/15
-              </Text>
-              <Text size="title3" color="black" style={{ fontWeight: 500 }}>
-                봉사 점수: {volunteerScore}/15
-              </Text>
-            </CurrentGrades>
+            <GradePreview
+              gradeCurrent={gradeCurrent}
+              selectGradeElement={selectGradeElement}
+              writeGradeElement={writeGradeElement}
+            />
             {gradeCurrent < 4 && (
               <AllSelect
                 selectGradeElement={selectGradeElement}
@@ -193,14 +180,6 @@ const GradeWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const CurrentGrades = styled.div`
-  display: flex;
-  gap: 10px;
-  padding: 12px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
 `;
 
 const _Selects = styled.div`
