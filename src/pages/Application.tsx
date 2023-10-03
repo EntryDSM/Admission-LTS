@@ -12,6 +12,7 @@ import DefaultModal from '../components/Modal/DefaultModal';
 import { useModal } from '../hooks/useModal';
 import { PostUserEntry } from '../apis/user';
 import { Cookies } from 'react-cookie';
+import { theme } from '@team-entry/design_system';
 
 const titles = [
   '지원자 전형 구분',
@@ -58,7 +59,13 @@ const Application = () => {
           <DefaultModal
             color="black900"
             title="대덕SW마이스터고등학교"
-            subTitle={`지금은 모의접수 기간입니다\n 입학 원서 모의접수를 시작하시겠습니까?`}
+            subTitle={
+              <div style={{ lineHeight: '25px' }}>
+                지금은 <strong style={{ color: theme.color.error }}>모의접수 기간</strong>이므로
+                <br />
+                회원정보 및 다른정보가 <strong style={{ color: theme.color.error }}>삭제</strong> 될 수 있습니다
+              </div>
+            }
             button="원서 접수 시작"
             onClick={() => {
               mutate();

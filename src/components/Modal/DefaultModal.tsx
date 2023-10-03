@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 interface IDefaultModal {
   color: colorKeyOfType;
   title: string;
-  subTitle: string;
+  subTitle: ReactNode;
   button?: ReactNode;
   onClick?: () => void;
 }
