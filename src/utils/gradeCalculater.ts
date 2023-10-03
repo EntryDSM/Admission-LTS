@@ -59,7 +59,7 @@ export const getSelectGradeScore = (
   } else if (!allSubjectsGrade[2]) {
     allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1] + allSubjectsGrade[3]) / 3;
   }
-  console.log(selectGradeElement);
+  
   for (let i = 0; i < gradeCurrent; i++) {
     result += allSubjectsGrade[i];
   }
