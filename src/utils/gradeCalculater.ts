@@ -9,10 +9,10 @@ export const getMaxScore = (isCommon: boolean) => {
 /**출석 점수 계산하는 함수 */
 export const getAttendenceScore = (writeGradeElement: IWriteGradeElement) => {
   const { day_absence_count, early_leave_count, lateness_count, lecture_absence_count } = writeGradeElement;
-  const absenceCount = day_absence_count;
-  const unauthorizedThing = early_leave_count + lateness_count + lecture_absence_count;
+  const absenceCount = Number(day_absence_count);
+  const unauthorizedThing = Number(early_leave_count) + Number(lateness_count) + Number(lecture_absence_count);
 
-  return 15 - Math.floor(absenceCount + unauthorizedThing / 3);
+  return Math.max(0, 15 - Math.floor(absenceCount + unauthorizedThing / 3));
 };
 
 /**봉사 점수 */
@@ -59,7 +59,7 @@ export const getSelectGradeScore = (
   } else if (!allSubjectsGrade[2]) {
     allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1] + allSubjectsGrade[3]) / 3;
   }
-  
+
   for (let i = 0; i < gradeCurrent; i++) {
     result += allSubjectsGrade[i];
   }
