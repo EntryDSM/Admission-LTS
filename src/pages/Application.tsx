@@ -61,9 +61,12 @@ const Application = () => {
             title="대덕SW마이스터고등학교"
             subTitle={
               <div style={{ lineHeight: '25px' }}>
-                지금은 <strong style={{ color: theme.color.error }}>모의접수 기간</strong>이므로
-                <br />
-                회원정보 및 다른정보가 <strong style={{ color: theme.color.error }}>삭제</strong> 될 수 있습니다
+                모의접수 기간 동안 제출된 원서는 기간이 끝나면{' '}
+                <strong style={{ color: theme.color.error }}>
+                  모두
+                  <br /> 삭제됩니다.
+                </strong>
+                꼭 <strong style={{ color: theme.color.error }}>실제원서 접수 기간에 다시 접수</strong>해주세요.
               </div>
             }
             button="원서 접수 시작"
