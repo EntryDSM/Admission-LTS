@@ -71,13 +71,27 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         volunteer_time: userGraduation.volunteer_time,
       }),
       setSelectGradeElement({
-        korean_grade: isGraduate ? userGraduation.korean_grade.split('') : ['X', ...userGraduation.korean_grade.split('').slice(1)],
-        social_grade: isGraduate ? userGraduation.social_grade.split('') : ['X', ...userGraduation.social_grade.split('').slice(1)],
-        history_grade: isGraduate ? userGraduation.history_grade.split('') : ['X', ...userGraduation.history_grade.split('').slice(1)],
-        math_grade: isGraduate ? userGraduation.math_grade.split('') : ['X', ...userGraduation.math_grade.split('').slice(1)],
-        science_grade: isGraduate ? userGraduation.science_grade.split('') : ['X', ...userGraduation.science_grade.split('').slice(1)],
-        english_grade: isGraduate ? userGraduation.english_grade.split('') : ['X', ...userGraduation.english_grade.split('').slice(1)],
-        tech_and_home_grade: isGraduate ? userGraduation.tech_and_home_grade.split('') : ['X', ...userGraduation.tech_and_home_grade.split('').slice(1)],
+        korean_grade: isGraduate
+          ? userGraduation.korean_grade.split('')
+          : ['X', ...userGraduation.korean_grade.split('').slice(1)],
+        social_grade: isGraduate
+          ? userGraduation.social_grade.split('')
+          : ['X', ...userGraduation.social_grade.split('').slice(1)],
+        history_grade: isGraduate
+          ? userGraduation.history_grade.split('')
+          : ['X', ...userGraduation.history_grade.split('').slice(1)],
+        math_grade: isGraduate
+          ? userGraduation.math_grade.split('')
+          : ['X', ...userGraduation.math_grade.split('').slice(1)],
+        science_grade: isGraduate
+          ? userGraduation.science_grade.split('')
+          : ['X', ...userGraduation.science_grade.split('').slice(1)],
+        english_grade: isGraduate
+          ? userGraduation.english_grade.split('')
+          : ['X', ...userGraduation.english_grade.split('').slice(1)],
+        tech_and_home_grade: isGraduate
+          ? userGraduation.tech_and_home_grade.split('')
+          : ['X', ...userGraduation.tech_and_home_grade.split('').slice(1)],
       }));
   }, [userGraduation]);
 
@@ -86,8 +100,6 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
       [
         () =>
           mutateAsync({
-            ...selectGradeElement,
-            ...writeGradeElement,
             korean_grade: selectGradeElement.korean_grade.join(''),
             social_grade: selectGradeElement.social_grade.join(''),
             history_grade: selectGradeElement.history_grade.join(''),
@@ -95,6 +107,11 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
             science_grade: selectGradeElement.science_grade.join(''),
             english_grade: selectGradeElement.english_grade.join(''),
             tech_and_home_grade: selectGradeElement.tech_and_home_grade.join(''),
+            day_absence_count: Number(writeGradeElement.day_absence_count),
+            lecture_absence_count: Number(writeGradeElement.lecture_absence_count),
+            lateness_count: Number(writeGradeElement.lateness_count),
+            early_leave_count: Number(writeGradeElement.early_leave_count),
+            volunteer_time: Number(writeGradeElement.volunteer_time),
           }),
       ],
       () => setCurrent(current + 1),
