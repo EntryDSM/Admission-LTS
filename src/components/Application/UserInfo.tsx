@@ -138,6 +138,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             () =>
               patchUserInfo({
                 ...userInfo,
+                telephone_number: userInfo.telephone_number.replace(/-/g, ''),
                 birthday: userInfo.birthday.join('-'),
                 parent_tel: userInfo.parent_tel.replace(/-/g, ''),
               }),
@@ -148,6 +149,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             () =>
               patchUserInfo({
                 ...userInfo,
+                telephone_number: userInfo.telephone_number.replace(/-/g, ''),
                 birthday: userInfo.birthday.join('-'),
                 parent_tel: userInfo.parent_tel.replace(/-/g, ''),
               }),
