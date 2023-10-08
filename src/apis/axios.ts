@@ -72,7 +72,11 @@ instance.interceptors.response.use(
                 cookie.remove('access_token');
                 cookie.remove('refresh_token');
                 cookie.remove('authority');
-                window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
+                if (res.response.data.message !== 'Invalid Token') {
+                  window.location.replace(
+                    'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr',
+                  );
+                }
               }
             });
         } else {
