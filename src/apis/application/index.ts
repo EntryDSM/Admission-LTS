@@ -48,7 +48,7 @@ export const GetUserType = () => {
 
 /** 인적사항 입력 */
 export const EditUserInfo = () => {
-  const response = async (params: IPatchUserInfo) => {
+  const response = async (params: Omit<IPatchUserInfo, 'photo_file_name'>) => {
     return instance.patch(`${router}/users`, params);
   };
   return useMutation(response, {
