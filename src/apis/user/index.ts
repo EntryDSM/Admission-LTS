@@ -17,7 +17,5 @@ export const PostUserEntry = () => {
   const response = async () => {
     return instance.post('user/entry');
   };
-  return useMutation(response, {
-    onSuccess: () => console.log('success!!!'),
-  });
+  return useMutation(response);
 };

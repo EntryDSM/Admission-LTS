@@ -34,8 +34,7 @@ export const EditUserGraduation = () => {
     return instance.patch(`${router}/graduation`, params);
   };
   return useMutation(response, {
-    onError: () => alert('성적산출에 실패하였습니다.'),
-    onSuccess: () => console.log('success!!!'),
+    onError: () => Toast('성적산출에 실패하였습니다.', { type: 'error' }),
   });
 };
 

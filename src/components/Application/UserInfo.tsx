@@ -75,7 +75,6 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
           setUserPhoto({ photo: reader.result as string, photo_file_name: files[0] });
-          console.log(files[0]);
         };
       }
     }
