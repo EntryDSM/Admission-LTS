@@ -58,8 +58,11 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
               title="제출"
               subTitle={
                 <div style={{ lineHeight: '24px' }}>
-                  최종 원서를 출력하여 <strong>서명과 직인</strong>을 찍은 뒤<br /> 반드시{' '}
-                  <strong>본교로 발송 또는 방문 접수</strong>하세요.
+                  최종제출을 하면 <strong>수정이 불가능</strong> 합니다.
+                  <br />
+                  <br />
+                  최종 원서를 출력하여 <strong>서명과 직인</strong>을 찍은 뒤<br /> 반드시
+                  <strong> 본교로 발송</strong> 또는 <strong>방문 접수</strong>하세요.
                 </div>
               }
               button="제출"
