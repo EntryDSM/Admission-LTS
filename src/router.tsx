@@ -7,8 +7,8 @@ import Header from './components/Header';
 
 export const Router = () => {
   const cookie = new Cookies();
-  const accessToken = cookie.get('access_token');
-  const refreshToken = cookie.get('refresh_token');
+  // const accessToken = cookie.get('access_token');
+  // const refreshToken = cookie.get('refresh_token');
 
   useEffect(() => {
     alert('원서접수가 마감되었습니다.');
