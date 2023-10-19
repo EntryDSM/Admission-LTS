@@ -9,11 +9,16 @@ export const Router = () => {
   const cookie = new Cookies();
   const accessToken = cookie.get('access_token');
   const refreshToken = cookie.get('refresh_token');
+
   useEffect(() => {
-    if (!accessToken && !refreshToken) {
-      window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
-    }
-  }, [accessToken, refreshToken]);
+    alert('원서접수가 마감되었습니다.');
+    window.location.href = 'https://www.entrydsm.hs.kr/';
+  }, []);
+  // useEffect(() => {
+  //   window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
+  //   if (!accessToken && !refreshToken) {
+  //   }
+  // }, [accessToken, refreshToken]);
 
   return (
     <BrowserRouter>
