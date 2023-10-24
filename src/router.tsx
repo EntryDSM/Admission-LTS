@@ -5,10 +5,10 @@ import NotFound from './pages/NotFound';
 import Header from './components/Header';
 
 export const Router = () => {
-  useEffect(() => {
-    alert('원서접수가 마감되었습니다.');
-    window.location.href = 'https://www.entrydsm.hs.kr';
-  }, []);
+  // useEffect(() => {
+  //   alert('원서접수가 마감되었습니다.');
+  //   window.location.href = 'https://www.entrydsm.hs.kr';
+  // }, []);
 
   // useEffect(() => {
   //   window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
