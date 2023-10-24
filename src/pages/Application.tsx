@@ -27,7 +27,7 @@ const titles = [
 ];
 
 const Application = () => {
-  const [current, setCurrent] = useState<number>(9);
+  const [current, setCurrent] = useState<number>(0);
   const { close, modalState, setModalState } = useModal();
   const { mutate } = PostUserEntry();
   const cookie = new Cookies();
