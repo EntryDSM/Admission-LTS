@@ -3,23 +3,23 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ApplicationPage from './pages/Application';
 import NotFound from './pages/NotFound';
 import Header from './components/Header';
-import { Cookies } from 'react-cookie';
+// import { Cookies } from 'react-cookie';
 
 export const Router = () => {
-  // useEffect(() => {
-  //   alert('원서접수가 마감되었습니다.');
-  //   window.location.href = 'https://www.entrydsm.hs.kr';
-  // }, []);
-
-  const cookie = new Cookies();
-  const refreshToken = cookie.get('refresh_token');
-  const accessToken = cookie.get('access_token');
-
   useEffect(() => {
-    if (!accessToken && !refreshToken) {
-      window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
-    }
-  }, [accessToken, refreshToken]);
+    alert('원서접수가 마감되었습니다.');
+    window.location.href = 'https://www.entrydsm.hs.kr';
+  }, []);
+
+  // const cookie = new Cookies();
+  // const refreshToken = cookie.get('refresh_token');
+  // const accessToken = cookie.get('access_token');
+
+  // useEffect(() => {
+  //   if (!accessToken && !refreshToken) {
+  //     window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
+  //   }
+  // }, [accessToken, refreshToken]);
 
   return (
     <BrowserRouter>
