@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client';
 import { Global } from '@emotion/react';
-import { StyledProvider } from '@team-entry/design_system';
+import { CustomToastContainer, StyledProvider } from '@team-entry/design_system';
 import App from './App.tsx';
 import { GlobalStyle } from './style/globalstyle.style.ts';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -24,6 +24,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <Global styles={GlobalStyle} />
         <App />
+        <CustomToastContainer />
       </QueryClientProvider>
     </StyledProvider>
   </>,

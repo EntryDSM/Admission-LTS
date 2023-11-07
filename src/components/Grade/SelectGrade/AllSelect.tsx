@@ -1,21 +1,30 @@
-import { useEffect, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
 import { GradeType } from '../../../interface/type';
-import { useGradeElement } from '../../../store/useGradeElement';
 import { gradeArr } from '../../../constant/grade';
+import { ISelectGradeElement } from '../../../apis/score/type';
 
 interface IAllSelect {
+  selectGradeElement: ISelectGradeElement;
+  setSelectGradeElement: React.Dispatch<SetStateAction<ISelectGradeElement>>;
   current: number;
 }
 
-const AllSelect = ({ current }: IAllSelect) => {
+const AllSelect = ({ selectGradeElement, setSelectGradeElement, current }: IAllSelect) => {
   const [grade, setGrade] = useState<GradeType>('X');
-  const { setAllGrade } = useGradeElement();
 
   useEffect(() => {
     setGrade('X');
   }, [current]);
+
+  const onClick = (grade: string) => {
+    Object.keys(selectGradeElement).map((key) => {
+      const oldArray = selectGradeElement[key as keyof ISelectGradeElement];
+      oldArray[current] = grade;
+      setSelectGradeElement({ ...selectGradeElement, [key]: oldArray });
+    });
+  };
 
   return (
     <_Wrapper>
@@ -28,8 +37,8 @@ const AllSelect = ({ current }: IAllSelect) => {
           <_Button
             key={item}
             onClick={() => {
-              setAllGrade(current, item);
               setGrade(item);
+              onClick(item);
             }}
             backgroundColor={isClick}
           >

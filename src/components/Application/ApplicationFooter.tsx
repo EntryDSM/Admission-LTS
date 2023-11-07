@@ -1,15 +1,10 @@
 import styled from '@emotion/styled';
 import { Button, theme } from '@team-entry/design_system';
 import { IApplicationFooterProps } from '../../interface/type';
-import useClickFooter from '../../hooks/useClickFooter';
 import { useModal } from '../../hooks/useModal';
 
-const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => {
-  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8, 9], [10]];
-  const { onClickPlus, onClickMinus, onClickPatch, isDisabled } = useClickFooter({
-    current,
-    setCurrent,
-  });
+const ApplicationFooter = ({ current, isDisabled, prevClick, nextClick }: IApplicationFooterProps) => {
+  const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8], [9]];
   const { setModalState } = useModal();
 
   return (
@@ -19,7 +14,7 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
         kind="outlined"
         disabled={current === 0}
         onClick={() => {
-          onClickMinus(current);
+          !!prevClick && prevClick();
         }}
       >
         이전
@@ -29,12 +24,12 @@ const ApplicationFooter = ({ current, setCurrent }: IApplicationFooterProps) => 
           <_ProgressStep key={step[0]} isStep={step.includes(current)} />
         ))}
       </_Progress>
-      {current !== 10 ? (
+      {current !== 9 ? (
         <Button
           color="orange"
           kind="contained"
           onClick={() => {
-            onClickPlus(current), onClickPatch[current]();
+            !!nextClick && nextClick();
           }}
           disabled={isDisabled}
         >

@@ -1,33 +1,97 @@
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { useUserIntroduce } from '../../store/useUserIntroduce';
-import { useUserPlan } from '../../store/useUserPlan';
+import { ICurrnettype } from '../../interface/type';
+import ApplicationFooter from './ApplicationFooter';
+import {
+  EditUserIntroduce,
+  EditUserPlan,
+  GetUserIntroduce,
+  GetUserStudyPlan,
+  GetUserType,
+} from '../../apis/application';
+import { useTextArea } from '../../hooks/useTextarea';
+import { useCombineMutation } from '../../hooks/useCombineMutation';
+import { useEffect } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 
-const UserWrite = () => {
-  const { userIntroduce, setUserIntroduce } = useUserIntroduce();
-  const { userPlan, setUserPlan } = useUserPlan();
+const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
+  const {
+    form: userWrite,
+    onChange: changeUserWrite,
+    setForm: setUserWrite,
+  } = useTextArea({
+    userIntroduce: '',
+    userPlan: '',
+  });
+
+  const queryClient = useQueryClient();
+  const { mutateAsync: editUserIntroduce } = EditUserIntroduce();
+  const { mutateAsync: editUserPlan } = EditUserPlan();
+  const { combinedMutations } = useCombineMutation();
+  const { data: getUserIntroduce } = GetUserIntroduce();
+  const { data: getUserStudyPlan } = GetUserStudyPlan();
+  const { data: getUserType } = GetUserType();
+
+  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+
+  useEffect(() => {
+    getUserIntroduce && setUserWrite((prev) => ({ ...prev, userIntroduce: getUserIntroduce.content }));
+    getUserStudyPlan && setUserWrite((prev) => ({ ...prev, userPlan: getUserStudyPlan.content }));
+  }, [getUserIntroduce, getUserStudyPlan]);
+
+  const nextCurrentGenerator = () => {
+    switch (getUserType?.educational_status) {
+      case 'PROSPECTIVE_GRADUATE':
+        setCurrent(current + 2);
+        break;
+      case 'QUALIFICATION_EXAM':
+        queryClient.invalidateQueries(['PdfPreview']);
+        setCurrent(current + 6);
+        break;
+      default:
+        setCurrent(current + 1);
+    }
+  };
+
+  const onNextClick = () => {
+    combinedMutations(
+      [
+        () => editUserIntroduce({ content: userWrite.userIntroduce }),
+        () => editUserPlan({ content: userWrite.userPlan }),
+      ],
+      () => nextCurrentGenerator(),
+    );
+  };
 
   return (
-    <_Wrapper>
-      <Textarea
-        placeholder="내용을 입력해주세요"
-        label="자기소개서"
-        limit={1600}
-        width="100%"
-        name="intro"
-        value={userIntroduce}
-        onChange={setUserIntroduce}
+    <>
+      <_Wrapper>
+        <Textarea
+          placeholder="내용을 입력해주세요"
+          label="자기소개서"
+          maxLength={1600}
+          width="100%"
+          name="userIntroduce"
+          value={userWrite.userIntroduce}
+          onChange={changeUserWrite}
+        />
+        <Textarea
+          placeholder="내용을 입력해주세요"
+          label="학업계획서"
+          maxLength={1600}
+          width="100%"
+          name="userPlan"
+          value={userWrite.userPlan}
+          onChange={changeUserWrite}
+        />
+      </_Wrapper>
+      <ApplicationFooter
+        current={current}
+        isDisabled={!userWrite.userPlan || !userWrite.userIntroduce}
+        prevClick={isBlackExam ? () => setCurrent(current - 2) : () => setCurrent(current - 1)}
+        nextClick={onNextClick}
       />
-      <Textarea
-        placeholder="내용을 입력해주세요"
-        label="학업계획서"
-        limit={1600}
-        width="100%"
-        name="study_plan"
-        value={userPlan}
-        onChange={setUserPlan}
-      />
-    </_Wrapper>
+    </>
   );
 };
 

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { Text, theme } from '@team-entry/design_system';
-import { useUserType } from '../../store/useUserType';
+import { GetUserType } from '../../apis/application';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
-  const { userType } = useUserType();
-  const isGraduate = userType.educational_status === 'GRADUATE';
+  const { data: userType } = GetUserType();
+  const isGraduate = userType?.educational_status === 'GRADUATE';
   const progess = isGraduate
     ? [
         { element: <_Circle key={1} isNow={1 <= step} /> },
@@ -28,8 +28,8 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
       ];
 
   const title = isGraduate
-    ? ['3학년 2학기', '3학년 1학기', '2학년 2학기', '2학년 1학기', '성적 산출']
-    : ['3학년 1학기', '직전 학기', '직전전 학기', '성적 산출'];
+    ? ['3학년 2학기', '3학년 1학기', '2학년 2학기', '2학년 1학기', '출석 및 봉사']
+    : ['3학년 1학기', '직전 학기', '직전전 학기', '출석 및 봉사'];
 
   return (
     <>
@@ -54,7 +54,7 @@ export default ProgressBar;
 const _Wrapper = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
   margin: 8px 0;
 `;
@@ -76,7 +76,7 @@ const _Circle = styled.div<{ isNow?: boolean }>`
 `;
 
 const _Line = styled.div<{ isNow?: boolean; isGraduate?: boolean }>`
-  width: ${({ isGraduate }) => (isGraduate ? 18.4 : 26)}%;
+  width: ${({ isGraduate }) => (isGraduate ? 18 : 25)}%;
   height: 0.15rem;
   border-radius: 5px;
   background-color: ${({ isNow }) => (isNow ? theme.color.orange500 : theme.color.black100)};

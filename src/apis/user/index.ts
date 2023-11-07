@@ -1,4 +1,5 @@
 import { instance } from '../axios';
+import { useMutation } from '@tanstack/react-query';
 import { IAuthorizationResponse } from './types';
 
 export const ReissueToken = async (refresh_token: string) => {
@@ -8,5 +9,13 @@ export const ReissueToken = async (refresh_token: string) => {
     },
   });
 
-  return response.data;
+  return response?.data;
+};
+
+/** 원서 생성 */
+export const PostUserEntry = () => {
+  const response = async () => {
+    return instance.post('user/entry');
+  };
+  return useMutation(response);
 };
