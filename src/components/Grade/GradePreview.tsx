@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
-import { ISelectGradeElement, IWriteGradeElement } from '../../apis/score/type';
-import { GetUserType } from '../../apis/application';
-import { getAttendenceScore, getMaxScore, getSelectGradeScore, getVoluntterScore } from '../../utils/gradeCalculater';
-import { useEffect, useState } from 'react';
+import { GetUserType } from '@/apis/application';
+import { ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
+import { getAttendenceScore, getMaxScore, getSelectGradeScore, getVoluntterScore } from '@/utils/gradeCalculater';
 
 export interface IGradePreview {
   gradeCurrent: number;

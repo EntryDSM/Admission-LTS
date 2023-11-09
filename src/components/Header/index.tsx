@@ -1,6 +1,6 @@
 import * as _ from './style';
-import LogoOrange from '../../assets/LogoOrange.svg';
 import { Text } from '@team-entry/design_system';
+import LogoOrange from '@/assets/LogoOrange.svg';
 
 const Header = () => {
   return (

@@ -1,5 +1,5 @@
-import { gradeToScore } from '../constant/grade';
-import { ISelectGradeElement, IWriteGradeElement } from '../apis/score/type';
+import { gradeToScore } from '@/constant/grade';
+import { ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
 
 /**성적산출 최고 점수 */
 export const getMaxScore = (isCommon: boolean) => {

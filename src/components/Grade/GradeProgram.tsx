@@ -1,19 +1,19 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
-import AllSelect from './SelectGrade/AllSelect';
+import { GetUserType } from '@/apis/application';
+import { EditUserGraduation, GetUserGraduation } from '@/apis/score';
+import { ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
 import ProgressBar from './ProgressBar';
-import SelectGrade from './SelectGrade/SelectGrade';
-import WriteAttendence from './WriteInfo/WriteAttendence';
-import { ICurrnettype } from '../../interface/type';
-import ApplicationFooter from '../Application/ApplicationFooter';
-import { useInput } from '../../hooks/useInput';
-import { ISelectGradeElement, IWriteGradeElement } from '../../apis/score/type';
-import { GetUserType } from '../../apis/application';
-import { EditUserGraduation, GetUserGraduation } from '../../apis/score';
-import { subject } from '../../constant/grade';
-import { useEffect } from 'react';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
 import GradePreview from './GradePreview';
+import AllSelect from './SelectGrade/AllSelect';
+import SelectGrade from './SelectGrade/SelectGrade';
+import ApplicationFooter from '../Application/ApplicationFooter';
+import WriteAttendence from './WriteInfo/WriteAttendence';
+import { subject } from '@/constant/grade';
+import { useInput } from '@/hooks/useInput';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { ICurrnettype } from '@/interface/type';
 
 const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({

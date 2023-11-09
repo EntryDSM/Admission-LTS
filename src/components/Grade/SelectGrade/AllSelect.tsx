@@ -1,9 +1,9 @@
 import { SetStateAction, useEffect, useState } from 'react';
-import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
-import { GradeType } from '../../../interface/type';
-import { gradeArr } from '../../../constant/grade';
-import { ISelectGradeElement } from '../../../apis/score/type';
+import { Text, theme } from '@team-entry/design_system';
+import { ISelectGradeElement } from '@/apis/score/type';
+import { gradeArr } from '@/constant/grade';
+import { GradeType } from '@/interface/type';
 
 interface IAllSelect {
   selectGradeElement: ISelectGradeElement;

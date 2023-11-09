@@ -1,5 +1,8 @@
+import { AxiosError, isAxiosError } from 'axios';
+import { Toast } from '@team-entry/design_system';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../axios';
+import { useModal } from '@/hooks/useModal';
 import {
   IGetUSerType,
   IPatchUserInfo,
@@ -9,10 +12,7 @@ import {
   IPatchUserType,
   IUserMiddleSchool,
 } from './types';
-import { IPatchUserMiddleSchool } from '../../interface/type';
-import { useModal } from '../../hooks/useModal';
-import { Toast } from '@team-entry/design_system';
-import { AxiosError, isAxiosError } from 'axios';
+import { IPatchUserMiddleSchool } from '@/interface/type';
 
 const router = 'application';
 

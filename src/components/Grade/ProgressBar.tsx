@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Text, theme } from '@team-entry/design_system';
-import { GetUserType } from '../../apis/application';
+import { GetUserType } from '@/apis/application';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
   const { data: userType } = GetUserType();

@@ -1,18 +1,12 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { ICurrnettype } from '../../interface/type';
-import ApplicationFooter from './ApplicationFooter';
-import {
-  EditUserIntroduce,
-  EditUserPlan,
-  GetUserIntroduce,
-  GetUserStudyPlan,
-  GetUserType,
-} from '../../apis/application';
-import { useTextArea } from '../../hooks/useTextarea';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
-import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { EditUserIntroduce, EditUserPlan, GetUserIntroduce, GetUserStudyPlan, GetUserType } from '@/apis/application';
+import ApplicationFooter from './ApplicationFooter';
+import { useTextArea } from '@/hooks/useTextarea';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { ICurrnettype } from '@/interface/type';
 
 const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   const {

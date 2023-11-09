@@ -1,17 +1,17 @@
+import { useEffect, useState } from 'react';
+import { AxiosResponse } from 'axios';
 import styled from '@emotion/styled';
 import { Button, Input, Stack, Text, theme } from '@team-entry/design_system';
+import { instance } from '@/apis/axios';
+import { EditAdditionalInfo, GetAdditionalInfo } from '@/apis/application';
 import ApplicationContent from './ApplicationContent';
-import { useModal } from '../../hooks/useModal';
-import Modal from '../Modal/Modal';
-import { AxiosResponse } from 'axios';
-import { instance } from '../../apis/axios';
-import { useInput } from '../../hooks/useInput';
-import { useEffect, useState } from 'react';
-import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
-import { EditAdditionalInfo, GetAdditionalInfo } from '../../apis/application';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
-import { sliceString } from '../../utils/SliceString';
+import Modal from '../Modal/Modal';
+import { useModal } from '@/hooks/useModal';
+import { useInput } from '@/hooks/useInput';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { sliceString } from '@/utils/SliceString';
+import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '@/interface/type';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const {

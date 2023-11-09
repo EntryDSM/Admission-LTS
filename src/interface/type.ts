@@ -1,4 +1,4 @@
-import { IPatchUserType } from '../apis/application/types';
+import { IPatchUserType } from '@/apis/application/types';
 
 export type InputType =
   | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

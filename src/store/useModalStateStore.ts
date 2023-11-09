@@ -1,6 +1,6 @@
 import { create } from 'zustand';
-import { IModalState } from '../interface/type';
 import { devtools } from 'zustand/middleware';
+import { IModalState } from '@/interface/type';
 
 export const useModalStateStore = create<IModalState>()(
   devtools((set) => ({

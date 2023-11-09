@@ -1,9 +1,8 @@
-import { useInput } from '../../hooks/useInput';
-import styled from '@emotion/styled';
-import { Button, Text, theme } from '@team-entry/design_system';
-import { colorKeyOfType } from '@team-entry/design_system/build/style/color';
 import { ReactNode } from 'react';
-import { Input } from '@team-entry/design_system';
+import styled from '@emotion/styled';
+import { Button, Text, theme, Input } from '@team-entry/design_system';
+import { colorKeyOfType } from '@team-entry/design_system/build/style/color';
+import { useInput } from '../../hooks/useInput';
 
 interface IDefaultModal {
   color: colorKeyOfType;

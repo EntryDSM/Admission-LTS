@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Icon, Skeleton, Text } from '@team-entry/design_system';
-import Pdf from '../Preview';
-import { GetPdfPreview } from '../../apis/pdf';
-import Modal from '../Modal/Modal';
-import { useModal } from '../../hooks/useModal';
-import { GetUserType, SubmitPdf } from '../../apis/application';
-import DefaultModal from '../Modal/DefaultModal';
+import { GetPdfPreview } from '@/apis/pdf';
+import { GetUserType, SubmitPdf } from '@/apis/application';
 import ApplicationFooter from './ApplicationFooter';
-import { ICurrnettype } from '../../interface/type';
+import Pdf from '../Preview';
+import Modal from '../Modal/Modal';
+import DefaultModal from '../Modal/DefaultModal';
+import { useModal } from '@/hooks/useModal';
+import { ICurrnettype } from '@/interface/type';
 
 const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { data, isLoading } = GetPdfPreview();
