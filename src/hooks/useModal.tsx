@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useModalStateStore } from '../store/useModalStateStore';
+import { useModalStateStore } from '@/store/useModalStateStore';
 
 export const useModal = () => {
   const { modalState, setModalState } = useModalStateStore();

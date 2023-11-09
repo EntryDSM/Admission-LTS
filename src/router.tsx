@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ApplicationPage from './pages/Application';
-import NotFound from './pages/NotFound';
 import Header from './components/Header';
+import NotFound from './pages/NotFound';
+import ApplicationPage from './pages/Application';
 // import { Cookies } from 'react-cookie';
 
 export const Router = () => {

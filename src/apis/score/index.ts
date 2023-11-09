@@ -1,7 +1,7 @@
+import { Toast } from '@team-entry/design_system';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { IGetUserBlackExam, IPatchGraduation, IPatchUserBlackExam } from './type';
-import { Toast } from '@team-entry/design_system';
 
 const router = 'score';
 

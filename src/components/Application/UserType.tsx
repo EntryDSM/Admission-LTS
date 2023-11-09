@@ -1,15 +1,15 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Radio, theme, Dropdown } from '@team-entry/design_system';
+import { EditUserType, GetUserType } from '@/apis/application';
 import ApplicationContent from './ApplicationContent';
-import { generateNumberArray } from '../../utils/GenerateNumberArray';
-import { ICurrnettype, IUserTypeParams } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
-import { useInput } from '../../hooks/useInput';
-import { EditUserType, GetUserType } from '../../apis/application';
-import { useEffect } from 'react';
-import { sliceString } from '../../utils/SliceString';
-import { applicationTypeDateText, applicationTypeGenerator } from '../../constant/translate';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
+import { applicationTypeDateText, applicationTypeGenerator } from '@/constant/translate';
+import { useInput } from '@/hooks/useInput';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { sliceString } from '@/utils/SliceString';
+import { generateNumberArray } from '@/utils/GenerateNumberArray';
+import { ICurrnettype, IUserTypeParams } from '@/interface/type';
 
 const UserType = ({ current, setCurrent }: ICurrnettype) => {
   const date = new Date();

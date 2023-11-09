@@ -1,7 +1,7 @@
 import { Input } from '@team-entry/design_system';
 import GradeWraper from '../GradeWraper';
-import { InputType } from '../../../interface/type';
-import { IWriteGradeElement } from '../../../apis/score/type';
+import { InputType } from '@/interface/type';
+import { IWriteGradeElement } from '@/apis/score/type';
 
 interface IWriteGrade {
   writeGradeElement: IWriteGradeElement;

@@ -1,4 +1,4 @@
-import { ApplicationRemark, ApplicationType, EducationalStatus, getApplicationType } from '../apis/application/types';
+import { ApplicationRemark, ApplicationType, EducationalStatus, getApplicationType } from '@/apis/application/types';
 
 export type applicationType =
   | '기초생활수급자'
