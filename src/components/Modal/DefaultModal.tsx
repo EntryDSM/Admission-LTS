@@ -11,16 +11,14 @@ interface IDefaultModal {
   subTitle: ReactNode;
   button?: ReactNode;
   onClick?: () => void;
-  input?: boolean;
+  isInput?: boolean;
 }
 
-const DefaultModal = ({ color, title, subTitle, input, button, onClick }: IDefaultModal) => {
+const DefaultModal = ({ color, title, subTitle, isInput, button, onClick }: IDefaultModal) => {
   const {
     form: inputState,
     onChange: changeInput,
-  } = useInput<{inputString:string}>({
-    inputString:'',
-  });
+  } = useInput<string>('');
 
   return (
     <>
@@ -32,11 +30,11 @@ const DefaultModal = ({ color, title, subTitle, input, button, onClick }: IDefau
         {subTitle}
       </Text>
       <InputButtonBox>
-        {input && (
-          <Input width={260} type='text' placeholder='확인했습니다' onChange={changeInput} name='inputString'/>
+        {isInput && (
+          <Input width={260} type='text' placeholder='확인했습니다' onChange={changeInput} name='inputString' value={inputState}/>
         )}
         {button && onClick && (
-          <Button kind="contained" color="orange" onClick={onClick} disabled={inputState.inputString === '확인했습니다' || !input ? false : true}>
+          <Button kind="contained" color="orange" onClick={onClick} disabled={inputState === '확인했습니다' || !isInput ? false : true}>
             {button}
           </Button>
         )}

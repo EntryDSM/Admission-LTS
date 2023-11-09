@@ -70,7 +70,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
                   </div>
                 </>
               }
-              input={true}
+              isInput={true}
               button="제출"
               onClick={mutate}
             />
