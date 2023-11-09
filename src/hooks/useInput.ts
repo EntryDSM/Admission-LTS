@@ -1,11 +1,15 @@
 import { useCallback, useState } from 'react';
 import { InputType } from '../interface/type';
 
-export const useInput = <T,>(initialForm: T) => {
+export const useInput = <T>(initialForm: T) => {
   const [form, setForm] = useState<T>(initialForm);
   const onChange = useCallback((e: InputType) => {
     const { name, value } = e.currentTarget;
-    setForm((form) => ({ ...form, [name]: value }));
+    if (typeof initialForm === 'object') {
+      setForm((form) => ({ ...form, [name]: value }));
+    } else {
+      setForm(value as T);
+    }
   }, []);
   return { form, onChange, setForm };
 };
