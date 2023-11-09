@@ -57,14 +57,16 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
               color="black900"
               title="제출"
               subTitle={
-                <div style={{ lineHeight: '24px' }}>
-                  최종제출을 하면 <strong>수정이 불가능</strong> 합니다.
-                  <br />
-                  <br />
-                  최종 원서를 출력하여 <strong>서명과 직인</strong>을 찍은 뒤<br /> 반드시
-                  <strong> 본교로 발송</strong> 또는 <strong>방문 접수</strong>하세요.
-                </div>
+                <>
+                  <div style={{color:"red"}}>
+                    ⚠ 원서를 제출하면 더 이상 수정할 수 없습니다.
+                  </div>
+                  <div>
+                    '확인했습니다'를 입력하고 제출버튼을 눌러주세요
+                  </div>
+                </>
               }
+              input="확인했습니다"
               button="제출"
               onClick={mutate}
             />
