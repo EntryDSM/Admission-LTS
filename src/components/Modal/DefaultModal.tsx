@@ -1,7 +1,7 @@
+import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { Button, Text, theme } from '@team-entry/design_system';
 import { colorKeyOfType } from '@team-entry/design_system/build/style/color';
-import { ReactNode } from 'react';
 
 interface IDefaultModal {
   color: colorKeyOfType;

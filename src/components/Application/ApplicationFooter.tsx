@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Button, theme } from '@team-entry/design_system';
-import { IApplicationFooterProps } from '../../interface/type';
-import { useModal } from '../../hooks/useModal';
+import { useModal } from '@/hooks/useModal';
+import { IApplicationFooterProps } from '@/interface/type';
 
 const ApplicationFooter = ({ current, isDisabled, prevClick, nextClick }: IApplicationFooterProps) => {
   const progress = [[0], [1], [2], [3], [4, 5, 6, 7, 8], [9]];

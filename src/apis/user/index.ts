@@ -1,5 +1,5 @@
-import { instance } from '../axios';
 import { useMutation } from '@tanstack/react-query';
+import { instance } from '../axios';
 import { IAuthorizationResponse } from './types';
 
 export const ReissueToken = async (refresh_token: string) => {

@@ -1,11 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
-import ApplicationContent from './ApplicationContent';
-import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
-import Modal from '../Modal/Modal';
-import { generateNumberArray } from '../../utils/GenerateNumberArray';
 import {
   EditUserInfo,
   EditUserPhto,
@@ -13,13 +9,17 @@ import {
   GetUserInfo,
   GetUserProfile,
   GetUserType,
-} from '../../apis/application';
-import { ICurrnettype, IUserBlackExam, IUserInfo, IUserPhoto } from '../../interface/type';
+} from '@/apis/application';
+import { EditUserBlackExam, GetUserBlackExam } from '@/apis/score';
+import ApplicationContent from './ApplicationContent';
 import ApplicationFooter from './ApplicationFooter';
-import { EditUserBlackExam, GetUserBlackExam } from '../../apis/score';
-import { useInput } from '../../hooks/useInput';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
-import { dataURLtoFile } from '../../utils/dataURLtoFile';
+import Modal from '../Modal/Modal';
+import { useModal } from '@/hooks/useModal';
+import { useInput } from '@/hooks/useInput';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { dataURLtoFile } from '@/utils/dataURLtoFile';
+import { generateNumberArray } from '@/utils/GenerateNumberArray';
+import { ICurrnettype, IUserBlackExam, IUserInfo, IUserPhoto } from '@/interface/type';
 
 const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const date = new Date();

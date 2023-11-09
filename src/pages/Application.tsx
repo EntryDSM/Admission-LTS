@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import ApplicationTitle from '../components/Application/ApplicationTitle';
-import UserType from '../components/Application/UserType';
-import UserInfo from '../components/Application/UserInfo';
-import UserWrite from '../components/Application/UserWrite';
-import UserPreview from '../components/Application/UserPreview';
-import GradeProgram from '../components/Grade/GradeProgram';
-import UserMiddleSchool from '../components/Application/UserMiddleShool';
-import Modal from '../components/Modal/Modal';
-import DefaultModal from '../components/Modal/DefaultModal';
-import { useModal } from '../hooks/useModal';
-import { PostUserEntry } from '../apis/user';
 import { Cookies } from 'react-cookie';
+import { PostUserEntry } from '@/apis/user';
+import ApplicationTitle from '@/components/Application/ApplicationTitle';
+import UserType from '@/components/Application/UserType';
+import UserInfo from '@/components/Application/UserInfo';
+import UserWrite from '@/components/Application/UserWrite';
+import UserPreview from '@/components/Application/UserPreview';
+import GradeProgram from '@/components/Grade/GradeProgram';
+import UserMiddleSchool from '@/components/Application/UserMiddleShool';
+import Modal from '@/components/Modal/Modal';
+import DefaultModal from '@/components/Modal/DefaultModal';
+import { useModal } from '@/hooks/useModal';
 
 const titles = [
   '지원자 전형 구분',

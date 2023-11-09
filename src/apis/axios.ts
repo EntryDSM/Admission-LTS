@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from 'react-cookie';
 import { ReissueToken } from './user';
-import { COOKIE_DOMAIN } from '../constant/env';
+import { COOKIE_DOMAIN } from '@/constant/env';
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
