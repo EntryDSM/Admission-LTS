@@ -1,4 +1,3 @@
-import {useEffect} from 'react';
 import { useInput } from '../../hooks/useInput';
 import styled from '@emotion/styled';
 import { Button, Text, theme } from '@team-entry/design_system';
@@ -12,7 +11,7 @@ interface IDefaultModal {
   subTitle: ReactNode;
   button?: ReactNode;
   onClick?: () => void;
-  input?: ReactNode;
+  input?: boolean;
 }
 
 const DefaultModal = ({ color, title, subTitle, input, button, onClick }: IDefaultModal) => {
@@ -37,7 +36,7 @@ const DefaultModal = ({ color, title, subTitle, input, button, onClick }: IDefau
           <Input width={260} type='text' placeholder='확인했습니다' onChange={changeInput} name='inputString'/>
         )}
         {button && onClick && (
-          <Button kind="contained" color="orange" onClick={onClick} disabled={inputState.inputString === '확인했습니다' || button === '확인' ? false : true}>
+          <Button kind="contained" color="orange" onClick={onClick} disabled={inputState.inputString === '확인했습니다' || !input ? false : true}>
             {button}
           </Button>
         )}

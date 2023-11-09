@@ -66,7 +66,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
                   </div>
                 </>
               }
-              input="확인했습니다"
+              input={true}
               button="제출"
               onClick={mutate}
             />
