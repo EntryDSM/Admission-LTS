@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
-import { Button, Text, theme } from '@team-entry/design_system';
+import { Button, Text, theme, Input } from '@team-entry/design_system';
 import { colorKeyOfType } from '@team-entry/design_system/build/style/color';
+import { useInput } from '../../hooks/useInput';
 
 interface IDefaultModal {
   color: colorKeyOfType;
@@ -9,23 +10,34 @@ interface IDefaultModal {
   subTitle: ReactNode;
   button?: ReactNode;
   onClick?: () => void;
+  isInput?: boolean;
 }
 
-const DefaultModal = ({ color, title, subTitle, button, onClick }: IDefaultModal) => {
+const DefaultModal = ({ color, title, subTitle, isInput, button, onClick }: IDefaultModal) => {
+  const {
+    form: inputState,
+    onChange: changeInput,
+  } = useInput<string>('');
+
   return (
     <>
-      <Text size="title1" color={color} margin={[0, 0, 20, 0]}>
+      <Text size="title1" color={color} margin={[60, 0, 20, 0]}>
         {title}
       </Text>
       <_ModalLine />
-      <Text size="body2" color="black700" margin={[20, 0, 50, 0]}>
+      <Text size="body2" color="black700" margin={[20, 0, 30, 0]}>
         {subTitle}
       </Text>
-      {button && onClick && (
-        <Button kind="outlined" color="black" onClick={onClick}>
-          {button}
-        </Button>
-      )}
+      <InputButtonBox>
+        {isInput && (
+          <Input width={260} type='text' placeholder='확인했습니다' onChange={changeInput} name='inputString' value={inputState}/>
+        )}
+        {button && onClick && (
+          <Button kind="contained" color="orange" onClick={onClick} disabled={inputState === '확인했습니다' || !isInput ? false : true}>
+            {button}
+          </Button>
+        )}
+      </InputButtonBox>
     </>
   );
 };
@@ -36,4 +48,12 @@ const _ModalLine = styled.div`
   width: 150px;
   height: 1px;
   background-color: ${theme.color.black100};
+`;
+
+const InputButtonBox = styled.div`
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:30px;
+  margin-bottom:30px;
 `;
