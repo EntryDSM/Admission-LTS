@@ -17,22 +17,22 @@ export type ApplicationRemark =
   | '';
 
 export interface IGetUSerType {
-  educational_status: EducationalStatus;
-  application_type: getApplicationType;
-  application_remark: ApplicationRemark;
-  graduated_at: string;
-  daejeon: boolean;
-  out_of_headcount: boolean;
+  educationalStatus: EducationalStatus;
+  applicationType: ApplicationType;
+  applicationRemark: ApplicationRemark;
+  graduatedAt: string;
+  isDaejeon: boolean;
+  isOutOfHeadcount: boolean;
   graduated: boolean;
 }
 
 export interface IPatchUserType {
-  application_type: ApplicationType | '';
-  is_daejeon: boolean | undefined;
-  educational_status: EducationalStatus | '';
-  graduated_at: string;
-  application_remark: ApplicationRemark | null;
-  is_out_of_headcount: boolean;
+  applicationType: ApplicationType | '';
+  isDaejeon: boolean | undefined;
+  educationalStatus: EducationalStatus | '';
+  graduatedAt: string;
+  applicationRemark: ApplicationRemark | null;
+  isOutOfHeadcount: boolean;
 }
 
 export interface IPatchUserInfo {

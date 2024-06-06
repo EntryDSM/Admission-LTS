@@ -18,12 +18,12 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
     onChange: changeUserType,
     setForm: setUserType,
   } = useInput<IUserTypeParams>({
-    application_type: '',
-    is_daejeon: undefined,
-    educational_status: '',
-    graduated_at: [(date.getFullYear() + 1).toString(), '01'],
-    application_remark: null,
-    is_out_of_headcount: false,
+    applicationType: '',
+    isDaejeon: undefined,
+    educationalStatus: '',
+    graduatedAt: [(date.getFullYear() + 1).toString(), '01'],
+    applicationRemark: null,
+    isOutOfHeadcount: false,
   });
 
   const { data } = GetUserType();
@@ -32,12 +32,13 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
   useEffect(() => {
     data &&
       setUserType({
-        application_type: applicationTypeGenerator[data.application_type],
-        is_daejeon: String(data.daejeon),
-        educational_status: data.educational_status,
-        graduated_at: sliceString(data.graduated_at, [4, 2]),
-        application_remark: data.application_remark || '',
-        is_out_of_headcount: data.out_of_headcount,
+        applicationType: data.applicationType,
+        isDaejeon: String(data.isDaejeon),
+        educationalStatus: data.educationalStatus,
+        // graduatedAt: sliceString(data.graduatedAt, [4, 2]),
+        graduatedAt: [''], // api graduatedAt 누락됨. 임시 데이터
+        applicationRemark: data.applicationRemark || '',
+        isOutOfHeadcount: data.isOutOfHeadcount,
       });
   }, [data]);
 
@@ -48,12 +49,12 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
       [
         () =>
           mutateAsync({
-            application_type: userType.application_type,
-            is_daejeon: userType.is_daejeon === 'true',
-            educational_status: userType.educational_status,
-            is_out_of_headcount: false,
-            graduated_at: userType.graduated_at.join(''),
-            application_remark: userType.application_remark || null,
+            applicationType: userType.applicationType,
+            isDaejeon: userType.isDaejeon === 'true',
+            educationalStatus: userType.educationalStatus,
+            isOutOfHeadcount: false,
+            graduatedAt: userType.graduatedAt.join(''),
+            applicationRemark: userType.applicationRemark || null,
           }),
       ],
       () => setCurrent(current + 1),
@@ -66,25 +67,25 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
         <ApplicationContent grid={3} title="전형 선택">
           <Radio
             label="일반"
-            name="application_type"
+            name="applicationType"
             value="COMMON"
             onClick={changeUserType}
-            checked={userType.application_type === 'COMMON'}
+            checked={userType.applicationType === 'COMMON'}
           />
           <Radio
             label="마이스터 인재"
-            name="application_type"
+            name="applicationType"
             value="MEISTER"
             onClick={changeUserType}
-            checked={userType.application_type === 'MEISTER'}
+            checked={userType.applicationType === 'MEISTER'}
           />
           <_RadioWrapper>
             <Radio
               label="사회통합전형"
-              name="application_type"
+              name="applicationType"
               value="SOCIAL"
               onClick={changeUserType}
-              checked={userType.application_type === 'SOCIAL'}
+              checked={userType.applicationType === 'SOCIAL'}
             />
           </_RadioWrapper>
         </ApplicationContent>
@@ -92,58 +93,58 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
         <ApplicationContent grid={2} title="지역 선택">
           <Radio
             label="대전"
-            name="is_daejeon"
+            name="isDaejeon"
             value="true"
             onClick={changeUserType}
-            checked={userType.is_daejeon === 'true'}
+            checked={userType.isDaejeon === 'true'}
           />
           <Radio
             label="전국"
-            name="is_daejeon"
+            name="isDaejeon"
             value="false"
             onClick={changeUserType}
-            checked={userType.is_daejeon === 'false'}
+            checked={userType.isDaejeon === 'false'}
           />
         </ApplicationContent>
 
         <ApplicationContent grid={3} title="졸업 구분">
           <Radio
             label="졸업 예정"
-            name="educational_status"
+            name="educationalStatus"
             value="PROSPECTIVE_GRADUATE"
             onClick={changeUserType}
-            checked={userType.educational_status === 'PROSPECTIVE_GRADUATE'}
+            checked={userType.educationalStatus === 'PROSPECTIVE_GRADUATE'}
           />
           <Radio
             label="졸업"
-            name="educational_status"
+            name="educationalStatus"
             value="GRADUATE"
             onClick={changeUserType}
-            checked={userType.educational_status === 'GRADUATE'}
+            checked={userType.educationalStatus === 'GRADUATE'}
           />
           <Radio
             label="검정고시"
-            name="educational_status"
+            name="educationalStatus"
             value="QUALIFICATION_EXAM"
             onClick={changeUserType}
-            checked={userType.educational_status === 'QUALIFICATION_EXAM'}
+            checked={userType.educationalStatus === 'QUALIFICATION_EXAM'}
           />
         </ApplicationContent>
 
-        <ApplicationContent grid={2} title={applicationTypeDateText[userType.educational_status]}>
+        <ApplicationContent grid={2} title={applicationTypeDateText[userType.educationalStatus]}>
           <Dropdown
-            className="graduated_at"
+            className="graduatedAt"
             width={85}
-            value={userType.graduated_at[0]}
-            onChange={(year) => setUserType({ ...userType, graduated_at: [year, userType.graduated_at[1]] })}
+            value={userType.graduatedAt[0]}
+            onChange={(year) => setUserType({ ...userType, graduatedAt: [year, userType.graduatedAt[1]] })}
             options={generateNumberArray(2010, date.getFullYear() + 1)}
             unit="년"
           />
           <Dropdown
-            className="graduated_at"
+            className="graduatedAt"
             width={85}
-            value={userType.graduated_at[1]}
-            onChange={(month) => setUserType({ ...userType, graduated_at: [userType.graduated_at[0], month] })}
+            value={userType.graduatedAt[1]}
+            onChange={(month) => setUserType({ ...userType, graduatedAt: [userType.graduatedAt[0], month] })}
             options={generateNumberArray(1, 12)}
             unit="월"
           />
@@ -151,24 +152,24 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
         <ApplicationContent grid={3} title="특기사항">
           <Radio
             label="해당없음"
-            name="application_remark"
+            name="applicationRemark"
             value=""
             onClick={changeUserType}
-            checked={userType.application_remark === ''}
+            checked={userType.applicationRemark === ''}
           />
           <Radio
             label="국가 유공자"
-            name="application_remark"
+            name="applicationRemark"
             value="NATIONAL_MERIT"
             onClick={changeUserType}
-            checked={userType.application_remark === 'NATIONAL_MERIT'}
+            checked={userType.applicationRemark === 'NATIONAL_MERIT'}
           />
           <Radio
             label="특례 입학 대상"
-            name="application_remark"
+            name="applicationRemark"
             value="PRIVILEGED_ADMISSION"
             onClick={changeUserType}
-            checked={userType.application_remark === 'PRIVILEGED_ADMISSION'}
+            checked={userType.applicationRemark === 'PRIVILEGED_ADMISSION'}
           />
         </ApplicationContent>
       </_ApplicationWrapper>

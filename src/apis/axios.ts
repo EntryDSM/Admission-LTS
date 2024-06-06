@@ -12,7 +12,7 @@ const cookie = new Cookies();
 
 instance.interceptors.request.use(
   (config) => {
-    const accessToken = cookie.get('access_token');
+    const accessToken = cookie.get('accessToken');
     const returnConfig = {
       ...config,
     };

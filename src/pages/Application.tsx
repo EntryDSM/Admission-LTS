@@ -31,7 +31,7 @@ const Application = () => {
   const { close, modalState, setModalState } = useModal();
   const { mutate } = PostUserEntry();
   const cookie = new Cookies();
-  const refresh_token = cookie.get('refresh_token');
+  const refresh_token = cookie.get('refreshToken');
   useEffect(() => setModalState('ADMISSION'), []);
 
   const elements = [

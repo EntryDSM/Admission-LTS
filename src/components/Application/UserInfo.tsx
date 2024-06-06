@@ -54,7 +54,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const { data: userProfile } = GetUserProfile();
   const { data: getUserInfo } = GetUserInfo();
   const { data: getUserType } = GetUserType();
-  const isBlackExam = getUserType?.educational_status === 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus === 'QUALIFICATION_EXAM';
   const { data: getUserBlackExam } = GetUserBlackExam(isBlackExam);
 
   const inputRef = useRef<HTMLInputElement>(null);

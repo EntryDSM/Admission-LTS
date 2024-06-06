@@ -19,7 +19,7 @@ const router = 'application';
 /** 전형 구분 선택 */
 export const EditUserType = () => {
   const response = async (param: IPatchUserType) => {
-    return instance.patch(`${router}/users/type`, param);
+    return instance.patch(`${router}/type`, param);
   };
   const queryClient = useQueryClient();
   return useMutation(response, {
@@ -40,7 +40,7 @@ export const EditUserType = () => {
 /** 전형 구분 조회 */
 export const GetUserType = () => {
   const response = async () => {
-    const { data } = await instance.get<IGetUSerType>(`${router}/users/type`);
+    const { data } = await instance.get<IGetUSerType>(`${router}/type`);
     return data;
   };
   return useQuery(['userType'], response);
@@ -88,7 +88,7 @@ export const EditUserPhto = () => {
   const response = async (params: IPatchUserPhoto) => {
     const form = new FormData();
     form.append('photo', params.photo);
-    return instance.post(`${router}/users/photo `, form, {
+    return instance.post(`${router}/photo `, form, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -129,7 +129,7 @@ export const EditAdditionalInfo = () => {
 /** 졸업/졸업예정 추가정보 조회 */
 export const GetAdditionalInfo = () => {
   const response = async () => {
-    const { data } = await instance.get<IUserMiddleSchool>(`${router}/users/graduation`);
+    const { data } = await instance.get<IUserMiddleSchool>(`${router}/graduation`);
     return data;
   };
   return useQuery(['userMiddleSchool'], response);

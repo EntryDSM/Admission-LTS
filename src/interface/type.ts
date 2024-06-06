@@ -16,9 +16,9 @@ export interface ICurrnettype {
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface IUserTypeParams extends Omit<IPatchUserType, 'graduated_at' | 'is_daejeon'> {
-  is_daejeon: string | undefined;
-  graduated_at: string[];
+export interface IUserTypeParams extends Omit<IPatchUserType, 'graduatedAt' | 'isDaejeon'> {
+  isDaejeon: string | undefined;
+  graduatedAt: string[];
 }
 
 export interface IUserPhoto {
