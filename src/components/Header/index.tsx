@@ -1,6 +1,7 @@
 import * as _ from './style';
 import { Text } from '@team-entry/design_system';
 import LogoOrange from '@/assets/LogoOrange.svg';
+import { MAIN_URL } from '@/constant/env';
 
 const Header = () => {
   return (
@@ -8,7 +9,7 @@ const Header = () => {
       <div style={{ minWidth: '60rem' }}>
         <_._LogoButton
           onClick={() => {
-            window.location.href = 'https://www.entrydsm.hs.kr/';
+            window.location.href = `${MAIN_URL}`;
           }}
         >
           <img src={LogoOrange} alt="" style={{ width: '35px', height: '48px', marginRight: 12, cursor: 'pointer' }} />

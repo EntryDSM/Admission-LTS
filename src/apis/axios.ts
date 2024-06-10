@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { Cookies } from 'react-cookie';
 import { ReissueToken } from './user';
-import { COOKIE_DOMAIN } from '@/constant/env';
+import { APPLY_URL, AUTH_URL, COOKIE_DOMAIN } from '@/constant/env';
 
 export const instance = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -72,11 +72,11 @@ instance.interceptors.response.use(
                 cookie.remove('access_token');
                 cookie.remove('refresh_token');
                 cookie.remove('authority');
-                window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
+                window.location.replace(`${AUTH_URL}/login?redirect_url=${APPLY_URL}`);
               }
             });
         } else {
-          window.location.replace('https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr');
+          window.location.replace(`${AUTH_URL}/login?redirect_url=${APPLY_URL}`);
         }
       } else return Promise.reject(error);
     }
