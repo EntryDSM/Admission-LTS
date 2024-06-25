@@ -36,16 +36,15 @@ export interface IPatchUserType {
 }
 
 export interface IPatchUserInfo {
-  name: string;
+  applicantName: string;
   sex: string;
-  birthday: string;
-  parent_name: string;
-  parent_tel: string;
-  telephone_number: string;
-  address: string;
-  detail_address: string;
-  post_code: string;
-  photo_file_name: string;
+  birthDate: string;
+  parentName: string;
+  parentTel: string;
+  applicantTel: string;
+  streetAddress: string;
+  detailAddress: string;
+  postalCode: string;
 }
 
 export interface IPatchUserPhoto {
@@ -56,17 +55,17 @@ export interface IUserMiddleSchool {
   name: string;
   sex: string;
   birthday: string;
-  school_code: string;
-  school_tel: string;
-  school_name: string;
-  student_number: string;
-  parent_name: string;
-  telephone_number: string;
-  parent_tel: string;
+  schoolCode: string;
+  schoolTel: string;
+  schoolName: string;
+  studentNumber: string;
+  parentName: string;
+  telephoneNumber: string;
+  parentTel: string;
   address: string;
-  detail_address: string;
-  post_code: string;
-  photo_file_name: string;
+  detailAddress: string;
+  postCode: string;
+  photoPath: string;
 }
 
 export interface IPatchUserIntroduce {

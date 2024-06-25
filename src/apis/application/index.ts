@@ -48,8 +48,8 @@ export const GetUserType = () => {
 
 /** 인적사항 입력 */
 export const EditUserInfo = () => {
-  const response = async (params: Omit<IPatchUserInfo, 'photo_file_name'>) => {
-    return instance.patch(`${router}/users`, params);
+  const response = async (params: IPatchUserInfo) => {
+    return instance.patch(`${router}`, params);
   };
   return useMutation(response, {
     onError: (e) => {
@@ -77,17 +77,17 @@ export const EditUserInfo = () => {
 /** 인적사항 조회 */
 export const GetUserInfo = () => {
   const response = async () => {
-    const { data } = await instance.get<IPatchUserInfo>(`${router}/users`);
+    const { data } = await instance.get<IPatchUserInfo>(`${router}`);
     return data;
   };
   return useQuery(['userInfos'], response);
 };
 
 /** 증명사진 입력 */
-export const EditUserPhto = () => {
+export const EditUserPhoto = () => {
   const response = async (params: IPatchUserPhoto) => {
     const form = new FormData();
-    form.append('photo', params.photo);
+    form.append('image', params.photo);
     return instance.post(`${router}/photo `, form, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -108,9 +108,7 @@ export const EditUserPhto = () => {
 /** 유저 이름, 전화번호 조회 */
 export const GetUserProfile = () => {
   const response = async () => {
-    const { data } = await instance.get<{ name: string; telephone_number: string; is_student: boolean }>(
-      `${router}/users/info`,
-    );
+    const { data } = await instance.get<{ name: string; phoneNumber: string; isParent: boolean }>(`user/info`);
     return data;
   };
   return useQuery(['userProfile'], response);

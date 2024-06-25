@@ -23,23 +23,23 @@ export interface IUserTypeParams extends Omit<IPatchUserType, 'graduatedAt' | 'i
 
 export interface IUserPhoto {
   photo: string;
-  photo_file_name: File | string;
+  photoFileName: File | string;
 }
 
 export interface IUserBlackExam {
-  ged_average_score: string;
+  gedAverageScore: string;
 }
 
 export interface IUserInfo {
-  name: string;
-  telephone_number: string;
+  applicantName: string;
+  applicantTel: string;
   sex: string;
-  birthday: string[];
-  parent_name: string;
-  parent_tel: string;
-  address: string;
-  detail_address: string;
-  post_code: string;
+  birthDate: string[];
+  parentName: string;
+  parentTel: string;
+  streetAddress: string;
+  detailAddress: string;
+  postalCode: string;
 }
 
 export interface IPatchUserMiddleSchool {
