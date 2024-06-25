@@ -31,7 +31,7 @@ instance.interceptors.response.use(
   async (error: AxiosError<AxiosError>) => {
     if (axios.isAxiosError(error) && error.response) {
       const { config } = error;
-      const refreshToken = cookie.get('refresh_token');
+      const refreshToken = cookie.get('refreshToken');
       const authority = cookie.get('authority');
 
       if (
@@ -44,13 +44,13 @@ instance.interceptors.response.use(
         if (refreshToken) {
           ReissueToken(refreshToken)
             .then((res) => {
-              cookie.set('access_token', res?.access_token, {
+              cookie.set('accessToken', res?.accessToken, {
                 path: '/',
                 secure: true,
                 sameSite: 'none',
                 domain: COOKIE_DOMAIN,
               });
-              cookie.set('refresh_token', res?.refresh_token, {
+              cookie.set('refreshToken', res?.refreshToken, {
                 path: '/',
                 secure: true,
                 sameSite: 'none',
@@ -58,7 +58,7 @@ instance.interceptors.response.use(
               });
               cookie.set('authority', authority == 'admin' ? 'admin' : 'user', { path: '/' });
               if (originalRequest) {
-                if (originalRequest.headers) originalRequest.headers['Authorization'] = `Bearer ${res?.access_token}`;
+                if (originalRequest.headers) originalRequest.headers['Authorization'] = `Bearer ${res?.accessToken}`;
                 return axios(originalRequest);
               }
             })
@@ -69,8 +69,8 @@ instance.interceptors.response.use(
                 res?.response?.data.message === 'Expired Token' ||
                 res.response?.data.message === 'Invalid Token'
               ) {
-                cookie.remove('access_token');
-                cookie.remove('refresh_token');
+                cookie.remove('accessToken');
+                cookie.remove('refreshToken');
                 cookie.remove('authority');
                 window.location.replace(`${AUTH_URL}/login?redirect_url=${APPLY_URL}`);
               }
