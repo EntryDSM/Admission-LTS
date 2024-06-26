@@ -54,18 +54,22 @@ export interface IPatchUserPhoto {
 export interface IUserMiddleSchool {
   name: string;
   sex: string;
-  birthday: string;
+  birthDate: string;
   schoolCode: string;
   schoolTel: string;
   schoolName: string;
-  studentNumber: string;
   parentName: string;
-  telephoneNumber: string;
   parentTel: string;
-  address: string;
+  applicantTel: string;
+  streetAddress: string;
   detailAddress: string;
-  postCode: string;
+  postalCode: string;
   photoPath: string;
+  studentNumber: {
+    gradeNumber: string;
+    classNumber: string;
+    studentNumber: string;
+  };
 }
 
 export interface IPatchUserIntroduce {

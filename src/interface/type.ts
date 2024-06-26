@@ -43,15 +43,15 @@ export interface IUserInfo {
 }
 
 export interface IPatchUserMiddleSchool {
-  student_number: string;
-  school_code: string;
-  school_tel: string;
+  gradeNumber: number;
+  classNumber: number;
+  studentNumber: string;
+  schoolCode: string;
 }
 
 export interface IUserMiddleSchool {
-  student_number: string[];
-  school_code: string;
-  school_tel: string;
+  studentNumber: string[];
+  schoolCode: string;
 }
 
 export interface IUserMiddleSchoolName {

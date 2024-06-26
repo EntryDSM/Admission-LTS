@@ -117,7 +117,7 @@ export const GetUserProfile = () => {
 /** 졸업/졸업예정 추가정보 입력 */
 export const EditAdditionalInfo = () => {
   const response = async (params: IPatchUserMiddleSchool) => {
-    return instance.patch(`${router}/users/graduation`, params);
+    return instance.patch(`${router}/graduation`, params);
   };
   return useMutation(response, {
     onError: () => Toast('중학교 정보 제출에 실패하였습니다.', { type: 'error' }),
