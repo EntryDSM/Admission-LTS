@@ -6,8 +6,7 @@ import ApplicationContent from './ApplicationContent';
 import ApplicationFooter from './ApplicationFooter';
 import { applicationTypeDateText, applicationTypeGenerator } from '@/constant/translate';
 import { useInput } from '@/hooks/useInput';
-import { useCombineMutation } from '@/hooks/useCombineMutation';
-import { sliceString } from '@/utils/SliceString';
+import { useCombineMutation } from '@/hooks/useCombineMutation'; 
 import { generateNumberArray } from '@/utils/GenerateNumberArray';
 import { ICurrnettype, IUserTypeParams } from '@/interface/type';
 
