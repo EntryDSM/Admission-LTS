@@ -19,13 +19,13 @@ const GradePreview = ({ gradeCurrent, selectGradeElement, writeGradeElement }: I
     maxScore: 0,
   });
   const { data: getUserType } = GetUserType();
-  const isCommon = getUserType?.application_type === '일반전형';
+  const isCommon = getUserType?.applicationType === 'COMMON';
 
   useEffect(() => {
     setScore({
       gradeScore: getSelectGradeScore(gradeCurrent, isCommon, selectGradeElement),
       attendenceScore: gradeCurrent === 4 ? getAttendenceScore(writeGradeElement) : 0,
-      volunteerScore: getVoluntterScore(writeGradeElement.volunteer_time),
+      volunteerScore: getVoluntterScore(writeGradeElement.volunteerTime),
       maxScore: getMaxScore(isCommon),
     });
   }, [gradeCurrent, writeGradeElement]);

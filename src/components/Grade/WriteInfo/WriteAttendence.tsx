@@ -15,9 +15,9 @@ const WriteAttendence = ({ writeGradeElement, changeWriteGradeElement }: IWriteG
         <Input
           type="number"
           width={230}
-          name="day_absence_count"
+          name="absenceDayCount"
           placeholder="결석 횟수"
-          value={writeGradeElement.day_absence_count}
+          value={writeGradeElement.absenceDayCount}
           onChange={changeWriteGradeElement}
           unit="일"
         />
@@ -26,9 +26,9 @@ const WriteAttendence = ({ writeGradeElement, changeWriteGradeElement }: IWriteG
         <Input
           type="number"
           width={230}
-          name="lateness_count"
+          name="latenessCount"
           placeholder="지각 횟수"
-          value={writeGradeElement.lateness_count}
+          value={writeGradeElement.latenessCount}
           onChange={changeWriteGradeElement}
           unit="회"
         />
@@ -37,9 +37,9 @@ const WriteAttendence = ({ writeGradeElement, changeWriteGradeElement }: IWriteG
         <Input
           type="number"
           width={230}
-          name="early_leave_count"
+          name="earlyLeaveCount"
           placeholder="조퇴 횟수"
-          value={writeGradeElement.early_leave_count}
+          value={writeGradeElement.earlyLeaveCount}
           onChange={changeWriteGradeElement}
           unit="회"
         />
@@ -48,9 +48,9 @@ const WriteAttendence = ({ writeGradeElement, changeWriteGradeElement }: IWriteG
         <Input
           type="number"
           width={230}
-          name="lecture_absence_count"
+          name="lectureAbsenceCount"
           placeholder="결과 횟수"
-          value={writeGradeElement.lecture_absence_count}
+          value={writeGradeElement.lectureAbsenceCount}
           onChange={changeWriteGradeElement}
           unit="회"
         />
@@ -59,9 +59,9 @@ const WriteAttendence = ({ writeGradeElement, changeWriteGradeElement }: IWriteG
         <Input
           type="number"
           width={230}
-          name="volunteer_time"
+          name="volunteerTime"
           placeholder="봉사 시간"
-          value={writeGradeElement.volunteer_time}
+          value={writeGradeElement.volunteerTime}
           onChange={changeWriteGradeElement}
           unit="시간"
         />

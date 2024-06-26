@@ -4,7 +4,7 @@ import { GetUserType } from '@/apis/application';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
   const { data: userType } = GetUserType();
-  const isGraduate = userType?.educational_status === 'GRADUATE';
+  const isGraduate = userType?.educationalStatus === 'GRADUATE';
   const progess = isGraduate
     ? [
         { element: <_Circle key={1} isNow={1 <= step} /> },

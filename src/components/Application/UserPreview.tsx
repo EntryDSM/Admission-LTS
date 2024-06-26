@@ -20,7 +20,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { mutate } = SubmitPdf();
   const { data: getUserType } = GetUserType();
 
-  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus == 'QUALIFICATION_EXAM';
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);

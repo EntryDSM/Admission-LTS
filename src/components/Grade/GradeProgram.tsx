@@ -17,13 +17,13 @@ import { ICurrnettype } from '@/interface/type';
 
 const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({
-    korean_grade: ['X', 'X', 'X', 'X'],
-    social_grade: ['X', 'X', 'X', 'X'],
-    history_grade: ['X', 'X', 'X', 'X'],
-    math_grade: ['X', 'X', 'X', 'X'],
-    science_grade: ['X', 'X', 'X', 'X'],
-    english_grade: ['X', 'X', 'X', 'X'],
-    tech_and_home_grade: ['X', 'X', 'X', 'X'],
+    koreanGrade: ['X', 'X', 'X', 'X'],
+    socialGrade: ['X', 'X', 'X', 'X'],
+    historyGrade: ['X', 'X', 'X', 'X'],
+    mathGrade: ['X', 'X', 'X', 'X'],
+    scienceGrade: ['X', 'X', 'X', 'X'],
+    englishGrade: ['X', 'X', 'X', 'X'],
+    techAndHomeGrade: ['X', 'X', 'X', 'X'],
   });
 
   const {
@@ -31,11 +31,11 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
     setForm: setWriteGradeElement,
     onChange: changeWriteGradeElement,
   } = useInput<IWriteGradeElement>({
-    day_absence_count: 0,
-    lecture_absence_count: 0,
-    lateness_count: 0,
-    early_leave_count: 0,
-    volunteer_time: 0,
+    absenceDayCount: 0,
+    lectureAbsenceCount: 0,
+    latenessCount: 0,
+    earlyLeaveCount: 0,
+    volunteerTime: 0,
   });
 
   const { data: userType } = GetUserType();
@@ -43,7 +43,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { combinedMutations } = useCombineMutation();
   const { mutateAsync } = EditUserGraduation();
 
-  const isGraduate = userType?.educational_status === 'GRADUATE';
+  const isGraduate = userType?.educationalStatus === 'GRADUATE';
   const gradeCurrent = current - 4;
   const titles = isGraduate
     ? [
@@ -64,35 +64,36 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
   useEffect(() => {
     userGraduation &&
       (setWriteGradeElement({
-        day_absence_count: userGraduation.day_absence_count,
-        lecture_absence_count: userGraduation.lecture_absence_count,
-        lateness_count: userGraduation.lateness_count,
-        early_leave_count: userGraduation.early_leave_count,
-        volunteer_time: userGraduation.volunteer_time,
+        absenceDayCount: userGraduation.absenceDayCount,
+        lectureAbsenceCount: userGraduation.lectureAbsenceCount,
+        latenessCount: userGraduation.latenessCount,
+        earlyLeaveCount: userGraduation.earlyLeaveCount,
+        volunteerTime: userGraduation.volunteerTime,
       }),
       setSelectGradeElement({
-        korean_grade: isGraduate
-          ? userGraduation.korean_grade.split('')
-          : ['X', ...userGraduation.korean_grade.split('').slice(1)],
-        social_grade: isGraduate
-          ? userGraduation.social_grade.split('')
-          : ['X', ...userGraduation.social_grade.split('').slice(1)],
-        history_grade: isGraduate
-          ? userGraduation.history_grade.split('')
-          : ['X', ...userGraduation.history_grade.split('').slice(1)],
-        math_grade: isGraduate
-          ? userGraduation.math_grade.split('')
-          : ['X', ...userGraduation.math_grade.split('').slice(1)],
-        science_grade: isGraduate
-          ? userGraduation.science_grade.split('')
-          : ['X', ...userGraduation.science_grade.split('').slice(1)],
-        english_grade: isGraduate
-          ? userGraduation.english_grade.split('')
-          : ['X', ...userGraduation.english_grade.split('').slice(1)],
-        tech_and_home_grade: isGraduate
-          ? userGraduation.tech_and_home_grade.split('')
-          : ['X', ...userGraduation.tech_and_home_grade.split('').slice(1)],
+        koreanGrade: isGraduate
+          ? userGraduation.koreanGrade.split('')
+          : ['X', ...userGraduation.koreanGrade.split('').slice(1)],
+        socialGrade: isGraduate
+          ? userGraduation.socialGrade.split('')
+          : ['X', ...userGraduation.socialGrade.split('').slice(1)],
+        historyGrade: isGraduate
+          ? userGraduation.historyGrade.split('')
+          : ['X', ...userGraduation.historyGrade.split('').slice(1)],
+        mathGrade: isGraduate
+          ? userGraduation.mathGrade.split('')
+          : ['X', ...userGraduation.mathGrade.split('').slice(1)],
+        scienceGrade: isGraduate
+          ? userGraduation.scienceGrade.split('')
+          : ['X', ...userGraduation.scienceGrade.split('').slice(1)],
+        englishGrade: isGraduate
+          ? userGraduation.englishGrade.split('')
+          : ['X', ...userGraduation.englishGrade.split('').slice(1)],
+        techAndHomeGrade: isGraduate
+          ? userGraduation.techAndHomeGrade.split('')
+          : ['X', ...userGraduation.techAndHomeGrade.split('').slice(1)],
       }));
+    !isGraduate && gradeCurrent === 0 && onNextClick();
   }, [userGraduation]);
 
   const onNextClick = () => {
@@ -100,18 +101,18 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
       [
         () =>
           mutateAsync({
-            korean_grade: selectGradeElement.korean_grade.join(''),
-            social_grade: selectGradeElement.social_grade.join(''),
-            history_grade: selectGradeElement.history_grade.join(''),
-            math_grade: selectGradeElement.math_grade.join(''),
-            science_grade: selectGradeElement.science_grade.join(''),
-            english_grade: selectGradeElement.english_grade.join(''),
-            tech_and_home_grade: selectGradeElement.tech_and_home_grade.join(''),
-            day_absence_count: Number(writeGradeElement.day_absence_count),
-            lecture_absence_count: Number(writeGradeElement.lecture_absence_count),
-            lateness_count: Number(writeGradeElement.lateness_count),
-            early_leave_count: Number(writeGradeElement.early_leave_count),
-            volunteer_time: Number(writeGradeElement.volunteer_time),
+            koreanGrade: selectGradeElement.koreanGrade.join(''),
+            socialGrade: selectGradeElement.socialGrade.join(''),
+            historyGrade: selectGradeElement.historyGrade.join(''),
+            mathGrade: selectGradeElement.mathGrade.join(''),
+            scienceGrade: selectGradeElement.scienceGrade.join(''),
+            englishGrade: selectGradeElement.englishGrade.join(''),
+            techAndHomeGrade: selectGradeElement.techAndHomeGrade.join(''),
+            absenceDayCount: Number(writeGradeElement.absenceDayCount),
+            lectureAbsenceCount: Number(writeGradeElement.lectureAbsenceCount),
+            latenessCount: Number(writeGradeElement.latenessCount),
+            earlyLeaveCount: Number(writeGradeElement.earlyLeaveCount),
+            volunteerTime: Number(writeGradeElement.volunteerTime),
           }),
       ],
       () => setCurrent(current + 1),
@@ -136,7 +137,14 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
               selectGradeElement={selectGradeElement}
               writeGradeElement={writeGradeElement}
             />
-            {gradeCurrent < 4 && (
+            {!isGraduate && gradeCurrent < 4 && (
+              <AllSelect
+                selectGradeElement={selectGradeElement}
+                setSelectGradeElement={setSelectGradeElement}
+                current={gradeCurrent}
+              />
+            )}
+            {isGraduate && gradeCurrent < 5 && (
               <AllSelect
                 selectGradeElement={selectGradeElement}
                 setSelectGradeElement={setSelectGradeElement}
@@ -147,7 +155,8 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         </Header>
         <ProgressBar step={titles[gradeCurrent].step} />
         <_Selects>
-          {gradeCurrent < 4 &&
+          {!isGraduate &&
+            gradeCurrent < 4 &&
             Object.entries(subject).map((item) => {
               return (
                 <SelectGrade
@@ -160,7 +169,24 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
                 />
               );
             })}
-          {gradeCurrent === 4 && (
+          {!isGraduate && gradeCurrent === 4 && (
+            <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
+          )}
+          {isGraduate &&
+            gradeCurrent < 5 &&
+            Object.entries(subject).map((item) => {
+              return (
+                <SelectGrade
+                  key={item[0]}
+                  title={item[0]}
+                  gradesKey={item[1] as keyof ISelectGradeElement}
+                  selectGradeElement={selectGradeElement}
+                  setSelectGradeElement={setSelectGradeElement}
+                  current={gradeCurrent}
+                />
+              );
+            })}
+          {isGraduate && gradeCurrent === 5 && (
             <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
           )}
         </_Selects>
