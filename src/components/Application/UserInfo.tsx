@@ -306,7 +306,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
           <VStack margin={[30, 0]} gap={10}>
             <HStack gap={20}>
               <Input
-                name="postCode"
+                name="postalCode"
                 type="text"
                 width={125}
                 placeholder="우편번호"
