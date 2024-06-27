@@ -10,7 +10,6 @@ import Modal from '../Modal/Modal';
 import { useModal } from '@/hooks/useModal';
 import { useInput } from '@/hooks/useInput';
 import { useCombineMutation } from '@/hooks/useCombineMutation';
-import { sliceString } from '@/utils/SliceString';
 import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '@/interface/type';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
@@ -35,11 +34,11 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     if (!!data) {
       setUserMiddleSchool({
         studentNumber: [
-          data.studentNumber.gradeNumber,
-          data.studentNumber.classNumber,
-          data.studentNumber.studentNumber,
+          data.studentNumber ? data.studentNumber.gradeNumber : userMiddleSchool.studentNumber[0],
+          data.studentNumber ? data.studentNumber.classNumber : userMiddleSchool.studentNumber[1],
+          data.studentNumber ? data.studentNumber.studentNumber : userMiddleSchool.studentNumber[2],
         ],
-        schoolCode: data.schoolCode,
+        schoolCode: data.schoolCode ? data.schoolCode : userMiddleSchool.schoolCode,
       });
       setSchoolName(data.schoolName);
     }
