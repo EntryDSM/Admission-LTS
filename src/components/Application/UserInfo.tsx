@@ -2,14 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
 import DaumPostCode from 'react-daum-postcode';
-import {
-  EditUserInfo,
-  EditUserPhoto,
-  GetAdditionalInfo,
-  GetUserInfo,
-  GetUserProfile,
-  GetUserType,
-} from '@/apis/application';
+import { EditUserInfo, EditUserPhoto, GetUserInfo, GetUserProfile, GetUserType } from '@/apis/application';
 import { EditUserBlackExam, GetUserBlackExam } from '@/apis/score';
 import ApplicationContent from './ApplicationContent';
 import ApplicationFooter from './ApplicationFooter';
@@ -50,7 +43,6 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     gedAverageScore: '',
   });
 
-  const { data: getAddionalInfo } = GetAdditionalInfo();
   const { data: userProfile } = GetUserProfile();
   const { data: getUserInfo } = GetUserInfo();
   const { data: getUserType } = GetUserType();
@@ -73,13 +65,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   };
 
   useEffect(() => {
-    console.log('멋진 아이');
-    initImgFile(getAddionalInfo?.photoPath!).then((file) => setImgFile(file));
-  }, [getAddionalInfo?.photoPath]);
-
-  useEffect(() => {
-    console.log(imgFile);
-  }, [imgFile]);
+    initImgFile(getUserInfo?.photoPath!).then((file) => setImgFile(file));
+  }, [getUserInfo?.photoPath]);
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -131,16 +118,17 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         applicantTel: getUserInfo.applicantTel,
         birthDate: getUserInfo.birthDate.split('-'),
       });
-    getAddionalInfo &&
+    getUserInfo &&
+      getUserInfo!.photoPath &&
       setUserPhoto({
-        photo: getAddionalInfo.photoPath,
+        photo: getUserInfo.photoPath,
         photoFileName: imgFile!,
       });
     getUserBlackExam &&
       setBlackExam({
-        gedAverageScore: getUserBlackExam.average_score,
+        gedAverageScore: getUserBlackExam.averageScore,
       });
-  }, [getUserInfo, getAddionalInfo, getUserBlackExam, imgFile]);
+  }, [getUserInfo, getUserBlackExam, imgFile]);
 
   const isDisabled =
     Object.values(userInfo).some((item) => !!item === false) ||
@@ -158,7 +146,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
                 parentTel: userInfo.parentTel.replace(/-/g, ''),
               }),
             () => patchUserPhoto({ photo: userPhoto.photoFileName as File }),
-            () => patchBlackExam({ ged_average_score: Number(blackExam.gedAverageScore) }),
+            () => patchBlackExam({ averageScore: Number(blackExam.gedAverageScore) }),
           ]
         : [
             () =>
