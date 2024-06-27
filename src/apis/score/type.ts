@@ -1,9 +1,9 @@
 export interface IPatchUserBlackExam {
-  ged_average_score: number;
+  averageScore: number;
 }
 
 export interface IGetUserBlackExam {
-  average_score: string;
+  averageScore: string;
 }
 
 export interface IPatchGraduation {

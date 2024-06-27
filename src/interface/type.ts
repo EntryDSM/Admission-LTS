@@ -1,4 +1,4 @@
-import { IPatchUserType } from '@/apis/application/types';
+import { EducationalStatus, IPatchUserType } from '@/apis/application/types';
 
 export type InputType =
   | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -16,9 +16,9 @@ export interface ICurrnettype {
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface IUserTypeParams extends Omit<IPatchUserType, 'graduatedAt' | 'isDaejeon'> {
-  isDaejeon: string | undefined;
-  graduatedAt: string[];
+export interface IUserTypeParams extends Omit<IPatchUserType, 'graduateDate' | 'educationalStatus'> {
+  graduateDate: string[];
+  educationalStatus: EducationalStatus | '';
 }
 
 export interface IUserPhoto {

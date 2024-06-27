@@ -1,4 +1,4 @@
-export type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM' | '';
+export type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM';
 
 export type ApplicationType = 'COMMON' | 'MEISTER' | 'SOCIAL';
 
@@ -20,19 +20,34 @@ export interface IGetUSerType {
   educationalStatus: EducationalStatus;
   applicationType: ApplicationType;
   applicationRemark: ApplicationRemark;
-  graduatedAt: string;
   isDaejeon: boolean;
   isOutOfHeadcount: boolean;
-  graduated: boolean;
+  graduatedDate: string;
 }
 
 export interface IPatchUserType {
   applicationType: ApplicationType | '';
   isDaejeon: boolean | undefined;
-  educationalStatus: EducationalStatus | '';
-  graduatedAt: string;
   applicationRemark: ApplicationRemark | null;
   isOutOfHeadcount: boolean;
+}
+
+export interface IPatchGraduationType {
+  graduateDate: string;
+  educationalStatus: EducationalStatus;
+}
+
+export interface IGetUserInfo {
+  sex: string;
+  birthDate: string;
+  applicantName: string;
+  applicantTel: string;
+  parentName: string;
+  parentTel: string;
+  streetAddress: string;
+  postalCode: string;
+  detailAddress: string;
+  photoPath: string;
 }
 
 export interface IPatchUserInfo {
