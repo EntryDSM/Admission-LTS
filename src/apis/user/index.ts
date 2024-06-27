@@ -3,7 +3,7 @@ import { instance } from '../axios';
 import { IAuthorizationResponse } from './types';
 
 export const ReissueToken = async (refresh_token: string) => {
-  const response = await instance.put<IAuthorizationResponse>('user/auth', null, {
+  const response = await instance.put<IAuthorizationResponse>(`user/auth`, null, {
     headers: {
       'X-Refresh-Token': `${refresh_token}`,
     },
@@ -15,7 +15,7 @@ export const ReissueToken = async (refresh_token: string) => {
 /** 원서 생성 */
 export const PostUserEntry = () => {
   const response = async () => {
-    return instance.post('user/entry');
+    return instance.post('application');
   };
   return useMutation(response);
 };
