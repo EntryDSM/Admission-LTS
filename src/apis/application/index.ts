@@ -4,7 +4,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { useModal } from '@/hooks/useModal';
 import {
+  IGetUserInfo,
   IGetUSerType,
+  IPatchGraduationType,
   IPatchUserInfo,
   IPatchUserIntroduce,
   IPatchUserPhoto,
@@ -35,6 +37,14 @@ export const EditUserType = () => {
       queryClient.invalidateQueries(['userType']);
     },
   });
+};
+
+/** 졸업 유형 선택 */
+export const PatchGraduationType = () => {
+  const response = async (param: IPatchGraduationType) => {
+    return instance.patch(`${router}/graduation/type`, param);
+  };
+  return useMutation(response);
 };
 
 /** 전형 구분 조회 */
@@ -77,7 +87,7 @@ export const EditUserInfo = () => {
 /** 인적사항 조회 */
 export const GetUserInfo = () => {
   const response = async () => {
-    const { data } = await instance.get<IPatchUserInfo>(`${router}`);
+    const { data } = await instance.get<IGetUserInfo>(`${router}`);
     return data;
   };
   return useQuery(['userInfos'], response);
@@ -175,12 +185,12 @@ export const EditUserPlan = () => {
 export const SubmitPdf = () => {
   const { setModalState } = useModal();
   const response = async () => {
-    return instance.post(`${router}`);
+    return instance.post(`${router}/final-submit`);
   };
   return useMutation(response, {
     onSuccess: () => setModalState('SUCCESS'),
     onError: (e) => {
-      let message = '';
+      let message = '이상한 오류';
       if (isAxiosError(e)) {
         switch (e.response?.data.message) {
           case 'Application process is not completed':

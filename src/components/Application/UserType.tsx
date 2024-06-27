@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Radio, theme, Dropdown } from '@team-entry/design_system';
-import { EditUserType, GetUserType } from '@/apis/application';
+import { EditUserType, GetUserType, PatchGraduationType } from '@/apis/application';
 import ApplicationContent from './ApplicationContent';
 import ApplicationFooter from './ApplicationFooter';
-import { applicationTypeDateText, applicationTypeGenerator } from '@/constant/translate';
+import { applicationTypeDateText } from '@/constant/translate';
 import { useInput } from '@/hooks/useInput';
-import { useCombineMutation } from '@/hooks/useCombineMutation'; 
+import { useCombineMutation } from '@/hooks/useCombineMutation';
 import { generateNumberArray } from '@/utils/GenerateNumberArray';
 import { ICurrnettype, IUserTypeParams } from '@/interface/type';
+import { EducationalStatus } from '@/apis/application/types';
 
 const UserType = ({ current, setCurrent }: ICurrnettype) => {
   const date = new Date();
@@ -20,22 +21,22 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
     applicationType: '',
     isDaejeon: undefined,
     educationalStatus: '',
-    graduatedAt: [(date.getFullYear() + 1).toString(), '01'],
+    graduateDate: [(date.getFullYear() + 1).toString(), '01'],
     applicationRemark: null,
     isOutOfHeadcount: false,
   });
 
   const { data } = GetUserType();
-  const { mutateAsync } = EditUserType();
+  const { mutateAsync: editUserType } = EditUserType();
+  const { mutateAsync: editGraduationType } = PatchGraduationType();
 
   useEffect(() => {
     data &&
       setUserType({
         applicationType: data.applicationType,
-        isDaejeon: String(data.isDaejeon),
+        isDaejeon: data.isDaejeon,
         educationalStatus: data.educationalStatus,
-        // graduatedAt: sliceString(data.graduatedAt, [4, 2]),
-        graduatedAt: [''], // api graduatedAt 누락됨. 임시 데이터
+        graduateDate: (data.graduatedDate && data.graduatedDate.split('-').splice(0, 2)) || userType.graduateDate,
         applicationRemark: data.applicationRemark || '',
         isOutOfHeadcount: data.isOutOfHeadcount,
       });
@@ -43,17 +44,20 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
 
   const { combinedMutations } = useCombineMutation();
 
-  const onNextClick = () => {
+  const onNextClick = () => { 
     combinedMutations(
       [
         () =>
-          mutateAsync({
+          editUserType({
             applicationType: userType.applicationType,
-            isDaejeon: userType.isDaejeon === 'true',
-            educationalStatus: userType.educationalStatus,
+            isDaejeon: userType.isDaejeon,
             isOutOfHeadcount: false,
-            graduatedAt: userType.graduatedAt.join(''),
             applicationRemark: userType.applicationRemark || null,
+          }),
+        () =>
+          editGraduationType({
+            educationalStatus: userType.educationalStatus as EducationalStatus,
+            graduateDate: userType.graduateDate.join('-'),
           }),
       ],
       () => setCurrent(current + 1),
@@ -90,19 +94,13 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
         </ApplicationContent>
 
         <ApplicationContent grid={2} title="지역 선택">
-          <Radio
-            label="대전"
-            name="isDaejeon"
-            value="true"
-            onClick={changeUserType}
-            checked={userType.isDaejeon === 'true'}
-          />
+          <Radio label="대전" name="isDaejeon" value="true" onClick={changeUserType} checked={userType.isDaejeon} />
           <Radio
             label="전국"
             name="isDaejeon"
             value="false"
             onClick={changeUserType}
-            checked={userType.isDaejeon === 'false'}
+            checked={userType.isDaejeon === false}
           />
         </ApplicationContent>
 
@@ -130,20 +128,23 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
           />
         </ApplicationContent>
 
-        <ApplicationContent grid={2} title={applicationTypeDateText[userType.educationalStatus]}>
+        <ApplicationContent
+          grid={2}
+          title={(userType.educationalStatus && applicationTypeDateText[userType.educationalStatus]) || ''}
+        >
           <Dropdown
-            className="graduatedAt"
+            className="graduateDate"
             width={85}
-            value={userType.graduatedAt[0]}
-            onChange={(year) => setUserType({ ...userType, graduatedAt: [year, userType.graduatedAt[1]] })}
+            value={userType.graduateDate[0]}
+            onChange={(year) => setUserType({ ...userType, graduateDate: [year, userType.graduateDate[1]] })}
             options={generateNumberArray(2010, date.getFullYear() + 1)}
             unit="년"
           />
           <Dropdown
-            className="graduatedAt"
+            className="graduateDate"
             width={85}
-            value={userType.graduatedAt[1]}
-            onChange={(month) => setUserType({ ...userType, graduatedAt: [userType.graduatedAt[0], month] })}
+            value={userType.graduateDate[1]}
+            onChange={(month) => setUserType({ ...userType, graduateDate: [userType.graduateDate[0], month] })}
             options={generateNumberArray(1, 12)}
             unit="월"
           />
