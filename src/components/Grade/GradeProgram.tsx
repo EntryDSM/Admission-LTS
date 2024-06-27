@@ -70,29 +70,14 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         volunteerTime: userGraduation.volunteerTime,
       }),
       setSelectGradeElement({
-        koreanGrade: isGraduate
-          ? userGraduation.koreanGrade.split('')
-          : ['X', ...userGraduation.koreanGrade.split('').slice(1)],
-        socialGrade: isGraduate
-          ? userGraduation.socialGrade.split('')
-          : ['X', ...userGraduation.socialGrade.split('').slice(1)],
-        historyGrade: isGraduate
-          ? userGraduation.historyGrade.split('')
-          : ['X', ...userGraduation.historyGrade.split('').slice(1)],
-        mathGrade: isGraduate
-          ? userGraduation.mathGrade.split('')
-          : ['X', ...userGraduation.mathGrade.split('').slice(1)],
-        scienceGrade: isGraduate
-          ? userGraduation.scienceGrade.split('')
-          : ['X', ...userGraduation.scienceGrade.split('').slice(1)],
-        englishGrade: isGraduate
-          ? userGraduation.englishGrade.split('')
-          : ['X', ...userGraduation.englishGrade.split('').slice(1)],
-        techAndHomeGrade: isGraduate
-          ? userGraduation.techAndHomeGrade.split('')
-          : ['X', ...userGraduation.techAndHomeGrade.split('').slice(1)],
+        koreanGrade: userGraduation.koreanGrade.split('').slice(1),
+        socialGrade: userGraduation.socialGrade.split('').slice(1),
+        historyGrade: userGraduation.historyGrade.split('').slice(1),
+        mathGrade: userGraduation.mathGrade.split('').slice(1),
+        scienceGrade: userGraduation.scienceGrade.split('').slice(1),
+        englishGrade: userGraduation.englishGrade.split('').slice(1),
+        techAndHomeGrade: userGraduation.techAndHomeGrade.split('').slice(1),
       }));
-    !isGraduate && gradeCurrent === 0 && onNextClick();
   }, [userGraduation]);
 
   const onNextClick = () => {
@@ -100,13 +85,13 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
       [
         () =>
           mutateAsync({
-            koreanGrade: selectGradeElement.koreanGrade.join(''),
-            socialGrade: selectGradeElement.socialGrade.join(''),
-            historyGrade: selectGradeElement.historyGrade.join(''),
-            mathGrade: selectGradeElement.mathGrade.join(''),
-            scienceGrade: selectGradeElement.scienceGrade.join(''),
-            englishGrade: selectGradeElement.englishGrade.join(''),
-            techAndHomeGrade: selectGradeElement.techAndHomeGrade.join(''),
+            koreanGrade: (!isGraduate ? 'X' : '') + selectGradeElement.koreanGrade.join(''),
+            socialGrade: (!isGraduate ? 'X' : '') + selectGradeElement.socialGrade.join(''),
+            historyGrade: (!isGraduate ? 'X' : '') + selectGradeElement.historyGrade.join(''),
+            mathGrade: (!isGraduate ? 'X' : '') + selectGradeElement.mathGrade.join(''),
+            scienceGrade: (!isGraduate ? 'X' : '') + selectGradeElement.scienceGrade.join(''),
+            englishGrade: (!isGraduate ? 'X' : '') + selectGradeElement.englishGrade.join(''),
+            techAndHomeGrade: (!isGraduate ? 'X' : '') + selectGradeElement.techAndHomeGrade.join(''),
             absenceDayCount: Number(writeGradeElement.absenceDayCount),
             lectureAbsenceCount: Number(writeGradeElement.lectureAbsenceCount),
             latenessCount: Number(writeGradeElement.latenessCount),
@@ -114,7 +99,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
             volunteerTime: Number(writeGradeElement.volunteerTime),
           }),
       ],
-      () => setCurrent(current + 1),
+      () => setCurrent(!isGraduate && gradeCurrent === 3 ? current + 2 : current + 1),
     );
   };
 
@@ -136,14 +121,14 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
               selectGradeElement={selectGradeElement}
               writeGradeElement={writeGradeElement}
             />
-            {!isGraduate && gradeCurrent < 4 && (
+            {!isGraduate && gradeCurrent < 3 && (
               <AllSelect
                 selectGradeElement={selectGradeElement}
                 setSelectGradeElement={setSelectGradeElement}
                 current={gradeCurrent}
               />
             )}
-            {isGraduate && gradeCurrent < 5 && (
+            {isGraduate && gradeCurrent < 4 && (
               <AllSelect
                 selectGradeElement={selectGradeElement}
                 setSelectGradeElement={setSelectGradeElement}
@@ -155,6 +140,23 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         <ProgressBar step={titles[gradeCurrent].step} />
         <_Selects>
           {!isGraduate &&
+            gradeCurrent < 3 &&
+            Object.entries(subject).map((item) => {
+              return (
+                <SelectGrade
+                  key={item[0]}
+                  title={item[0]}
+                  gradesKey={item[1] as keyof ISelectGradeElement}
+                  selectGradeElement={selectGradeElement}
+                  setSelectGradeElement={setSelectGradeElement}
+                  current={gradeCurrent}
+                />
+              );
+            })}
+          {!isGraduate && titles[gradeCurrent].step === 4 && (
+            <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
+          )}
+          {isGraduate &&
             gradeCurrent < 4 &&
             Object.entries(subject).map((item) => {
               return (
@@ -168,24 +170,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
                 />
               );
             })}
-          {!isGraduate && gradeCurrent === 4 && (
-            <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
-          )}
-          {isGraduate &&
-            gradeCurrent < 5 &&
-            Object.entries(subject).map((item) => {
-              return (
-                <SelectGrade
-                  key={item[0]}
-                  title={item[0]}
-                  gradesKey={item[1] as keyof ISelectGradeElement}
-                  selectGradeElement={selectGradeElement}
-                  setSelectGradeElement={setSelectGradeElement}
-                  current={gradeCurrent}
-                />
-              );
-            })}
-          {isGraduate && gradeCurrent === 5 && (
+          {isGraduate && titles[gradeCurrent].step === 5 && (
             <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
           )}
         </_Selects>
@@ -193,7 +178,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
       <ApplicationFooter
         current={current}
         isDisabled={false}
-        prevClick={!isGraduate && gradeCurrent === 1 ? () => setCurrent(current - 2) : () => setCurrent(current - 1)}
+        prevClick={() => setCurrent(current - 1)}
         nextClick={onNextClick}
       />
     </>
