@@ -1,4 +1,4 @@
-export const COOKIE_DOMAIN = import.meta.env.NODE_ENV === 'development' ? 'localhost' : 'entrydsm.hs.kr';
+export const COOKIE_DOMAIN = import.meta.env.MODE === 'development' ? 'localhost' : 'entrydsm.hs.kr';
 
 export const MAIN_URL = import.meta.env.REACT_APP_MAIN_URL;
 

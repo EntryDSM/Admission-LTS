@@ -33,14 +33,13 @@ instance.interceptors.response.use(
       const { config } = error;
       const refreshToken = cookie.get('refreshToken');
       const authority = cookie.get('authority');
-
       if (
         error.response.data.message === 'Invalid Token' ||
         error.response.data.message === 'Expired Token' ||
-        error.response.data.message === 'User Not Found'
+        error.response.data.message === 'User Not Found' ||
+        error.response.data.message === '잘못된 토큰이 유효하지 않습니다'
       ) {
         const originalRequest = config;
-
         if (refreshToken) {
           ReissueToken(refreshToken)
             .then((res) => {

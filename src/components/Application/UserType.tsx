@@ -44,7 +44,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
 
   const { combinedMutations } = useCombineMutation();
 
-  const onNextClick = () => { 
+  const onNextClick = () => {
     combinedMutations(
       [
         () =>
