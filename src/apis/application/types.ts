@@ -27,7 +27,7 @@ export interface IGetUSerType {
 
 export interface IPatchUserType {
   applicationType: ApplicationType | '';
-  isDaejeon: boolean | undefined;
+  isDaejeon: string | undefined;
   applicationRemark: ApplicationRemark | null;
   isOutOfHeadcount: boolean;
 }

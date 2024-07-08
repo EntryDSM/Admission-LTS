@@ -34,7 +34,7 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
     data &&
       setUserType({
         applicationType: data.applicationType,
-        isDaejeon: data.isDaejeon,
+        isDaejeon: String(data.isDaejeon),
         educationalStatus: data.educationalStatus,
         graduateDate: (data.graduatedDate && data.graduatedDate.split('-').splice(0, 2)) || userType.graduateDate,
         applicationRemark: data.applicationRemark || '',
@@ -94,16 +94,21 @@ const UserType = ({ current, setCurrent }: ICurrnettype) => {
         </ApplicationContent>
 
         <ApplicationContent grid={2} title="지역 선택">
-          <Radio label="대전" name="isDaejeon" value="true" onClick={changeUserType} checked={userType.isDaejeon} />
+          <Radio
+            label="대전"
+            name="isDaejeon"
+            value="true"
+            onClick={changeUserType}
+            checked={userType.isDaejeon === 'true'}
+          />
           <Radio
             label="전국"
             name="isDaejeon"
             value="false"
             onClick={changeUserType}
-            checked={userType.isDaejeon === false}
+            checked={userType.isDaejeon === 'false'}
           />
         </ApplicationContent>
-
         <ApplicationContent grid={3} title="졸업 구분">
           <Radio
             label="졸업 예정"
