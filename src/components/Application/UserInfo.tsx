@@ -152,7 +152,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             () =>
               patchUserInfo({
                 ...userInfo,
-                applicantTel: userInfo.applicantName.replace(/-/g, ''),
+                applicantTel: userInfo.applicantTel.replace(/-/g, ''),
                 birthDate: userInfo.birthDate.join('-'),
                 parentTel: userInfo.parentTel.replace(/-/g, ''),
               }),
