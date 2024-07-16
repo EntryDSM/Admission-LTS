@@ -36,6 +36,10 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
     latenessCount: 0,
     earlyLeaveCount: 0,
     volunteerTime: 0,
+    extraScore: {
+      hasCertificate: false,
+      hasCompetitionPrize: false,
+    },
   });
 
   const { data: userType } = GetUserType();
@@ -44,6 +48,8 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { mutateAsync } = EditUserGraduation();
 
   const isGraduate = userType?.educationalStatus === 'GRADUATE';
+  const isBlackExam = userType?.educationalStatus === 'QUALIFICATION_EXAM';
+  const isCommon = userType?.applicationType === 'COMMON';
   const gradeCurrent = current - 4;
   const titles = isGraduate
     ? [
@@ -53,6 +59,8 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         { step: 4, title: '2학년 1학기(직전 전학기)', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 5, title: '출석 점수 & 봉사 점수' },
       ]
+    : isBlackExam
+    ? [{ step: 1, title: '가산점' }]
     : [
         { step: 1, title: '3학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 2, title: '직전 학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
@@ -68,15 +76,27 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         latenessCount: userGraduation.latenessCount,
         earlyLeaveCount: userGraduation.earlyLeaveCount,
         volunteerTime: userGraduation.volunteerTime,
+        extraScore: {
+          hasCertificate: userGraduation.extraScore?.hasCertificate || false,
+          hasCompetitionPrize: userGraduation.extraScore?.hasCompetitionPrize || false,
+        },
       }),
       setSelectGradeElement({
-        koreanGrade: userGraduation.koreanGrade.split('').slice(1),
-        socialGrade: userGraduation.socialGrade.split('').slice(1),
-        historyGrade: userGraduation.historyGrade.split('').slice(1),
-        mathGrade: userGraduation.mathGrade.split('').slice(1),
-        scienceGrade: userGraduation.scienceGrade.split('').slice(1),
-        englishGrade: userGraduation.englishGrade.split('').slice(1),
-        techAndHomeGrade: userGraduation.techAndHomeGrade.split('').slice(1),
+        koreanGrade: isGraduate ? userGraduation.koreanGrade.split('') : userGraduation.koreanGrade.split('').slice(1),
+        socialGrade: isGraduate ? userGraduation.koreanGrade.split('') : userGraduation.socialGrade.split('').slice(1),
+        historyGrade: isGraduate
+          ? userGraduation.historyGrade.split('')
+          : userGraduation.historyGrade.split('').slice(1),
+        mathGrade: isGraduate ? userGraduation.koreanGrade.split('') : userGraduation.mathGrade.split('').slice(1),
+        scienceGrade: isGraduate
+          ? userGraduation.scienceGrade.split('')
+          : userGraduation.scienceGrade.split('').slice(1),
+        englishGrade: isGraduate
+          ? userGraduation.englishGrade.split('')
+          : userGraduation.englishGrade.split('').slice(1),
+        techAndHomeGrade: isGraduate
+          ? userGraduation.techAndHomeGrade.split('')
+          : userGraduation.techAndHomeGrade.split('').slice(1),
       }));
   }, [userGraduation]);
 
@@ -97,9 +117,20 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
             latenessCount: Number(writeGradeElement.latenessCount),
             earlyLeaveCount: Number(writeGradeElement.earlyLeaveCount),
             volunteerTime: Number(writeGradeElement.volunteerTime),
+            extraScore: {
+              hasCertificate: writeGradeElement.extraScore.hasCertificate,
+              hasCompetitionPrize: writeGradeElement.extraScore.hasCompetitionPrize,
+            },
           }),
       ],
-      () => setCurrent(!isGraduate && gradeCurrent === 3 ? current + 2 : current + 1),
+      () =>
+        setCurrent(
+          !isGraduate && gradeCurrent === 3
+            ? current + 2
+            : isBlackExam && gradeCurrent === 1
+            ? current + 5
+            : current + 1,
+        ),
     );
   };
 
@@ -140,6 +171,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         <ProgressBar step={titles[gradeCurrent].step} />
         <_Selects>
           {!isGraduate &&
+            !isBlackExam &&
             gradeCurrent < 3 &&
             Object.entries(subject).map((item) => {
               return (
@@ -153,8 +185,14 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
                 />
               );
             })}
-          {!isGraduate && titles[gradeCurrent].step === 4 && (
-            <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
+          {!isGraduate && !isBlackExam && titles[gradeCurrent].step === 4 && (
+            <WriteAttendence
+              writeGradeElement={writeGradeElement}
+              changeWriteGradeElement={changeWriteGradeElement}
+              setWriteGradeElement={setWriteGradeElement}
+              isCommon={isCommon}
+              educationalStatus={userType?.educationalStatus}
+            />
           )}
           {isGraduate &&
             gradeCurrent < 4 &&
@@ -171,7 +209,22 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
               );
             })}
           {isGraduate && titles[gradeCurrent].step === 5 && (
-            <WriteAttendence writeGradeElement={writeGradeElement} changeWriteGradeElement={changeWriteGradeElement} />
+            <WriteAttendence
+              writeGradeElement={writeGradeElement}
+              changeWriteGradeElement={changeWriteGradeElement}
+              setWriteGradeElement={setWriteGradeElement}
+              isCommon={isCommon}
+              educationalStatus={userType.educationalStatus}
+            />
+          )}
+          {isBlackExam && titles[gradeCurrent].step === 1 && (
+            <WriteAttendence
+              writeGradeElement={writeGradeElement}
+              changeWriteGradeElement={changeWriteGradeElement}
+              setWriteGradeElement={setWriteGradeElement}
+              isCommon={isCommon}
+              educationalStatus={userType.educationalStatus}
+            />
           )}
         </_Selects>
       </_Wrapper>

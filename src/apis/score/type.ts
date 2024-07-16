@@ -19,6 +19,10 @@ export interface IPatchGraduation {
   scienceGrade: string;
   englishGrade: string;
   techAndHomeGrade: string;
+  extraScore: {
+    hasCertificate: boolean;
+    hasCompetitionPrize: boolean;
+  };
 }
 
 export interface ISelectGradeElement {
@@ -37,4 +41,10 @@ export interface IWriteGradeElement {
   lectureAbsenceCount: number;
   latenessCount: number;
   earlyLeaveCount: number;
+  extraScore: ExtraScore;
 }
+
+export type ExtraScore = {
+  hasCertificate: boolean;
+  hasCompetitionPrize: boolean;
+};

@@ -40,7 +40,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
         break;
       case 'QUALIFICATION_EXAM':
         queryClient.invalidateQueries(['PdfPreview']);
-        setCurrent(current + 6);
+        setCurrent(current + 1);
         break;
       default:
         setCurrent(current + 1);

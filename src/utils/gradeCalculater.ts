@@ -1,5 +1,5 @@
 import { gradeToScore } from '@/constant/grade';
-import { ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
+import { ExtraScore, ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
 
 /**성적산출 최고 점수 */
 export const getMaxScore = (isCommon: boolean) => {
@@ -18,6 +18,14 @@ export const getAttendenceScore = (writeGradeElement: IWriteGradeElement) => {
 /**봉사 점수 */
 export const getVoluntterScore = (volunterrTime: number) => {
   return Math.min(15, volunterrTime);
+};
+
+/**가산점 계산 함수*/
+export const getExtraScore = (extraScore: ExtraScore) => {
+  let score = 0;
+  if (extraScore.hasCertificate) score += 6;
+  if (extraScore.hasCompetitionPrize) score += 3;
+  return score;
 };
 
 /**각 학기별 점수 계산 */
@@ -42,22 +50,36 @@ export const getSelectGradeScore = (
   gradeCurrent: number,
   isCommmon: boolean,
   selectGradeElement: ISelectGradeElement,
+  isGraduate: boolean,
 ) => {
   const allSubjectsGrade: number[] = [0, 0, 0, 0];
   let result = 0;
+  console.log(selectGradeElement);
   for (let i = 0; i < gradeCurrent; i++) {
     allSubjectsGrade[i] = getSelectSemesterGradeScore(i, selectGradeElement);
+    console.log(allSubjectsGrade[i]);
   }
 
-  if (!allSubjectsGrade[0] && !!allSubjectsGrade[1]) allSubjectsGrade[1] *= 2;
+  if (!isGraduate && !allSubjectsGrade[2] && !!allSubjectsGrade[0]) allSubjectsGrade[0] *= 2;
 
-  if (!allSubjectsGrade[2] && !allSubjectsGrade[3]) {
-    allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1]) / 2;
-    allSubjectsGrade[3] = (allSubjectsGrade[0] + allSubjectsGrade[1]) / 2;
-  } else if (!allSubjectsGrade[3]) {
-    allSubjectsGrade[3] = (allSubjectsGrade[0] + allSubjectsGrade[1] + allSubjectsGrade[2]) / 3;
-  } else if (!allSubjectsGrade[2]) {
-    allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1] + allSubjectsGrade[3]) / 3;
+  if (!isGraduate) {
+    if (!allSubjectsGrade[1] && !allSubjectsGrade[2]) {
+      allSubjectsGrade[1] = allSubjectsGrade[0] / 2;
+      allSubjectsGrade[2] = allSubjectsGrade[0] / 2;
+    } else if (!allSubjectsGrade[2]) {
+      allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1]) / 3;
+    } else if (!allSubjectsGrade[1]) {
+      allSubjectsGrade[1] = (allSubjectsGrade[0] + allSubjectsGrade[2]) / 3;
+    }
+  } else {
+    if (!allSubjectsGrade[2] && !allSubjectsGrade[3]) {
+      allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1]) / 2;
+      allSubjectsGrade[3] = (allSubjectsGrade[0] + allSubjectsGrade[1]) / 2;
+    } else if (!allSubjectsGrade[2]) {
+      allSubjectsGrade[2] = (allSubjectsGrade[0] + allSubjectsGrade[1] + allSubjectsGrade[3]) / 3;
+    } else if (!allSubjectsGrade[3]) {
+      allSubjectsGrade[3] = (allSubjectsGrade[0] + allSubjectsGrade[1] + allSubjectsGrade[2]) / 3;
+    }
   }
 
   for (let i = 0; i < gradeCurrent; i++) {
