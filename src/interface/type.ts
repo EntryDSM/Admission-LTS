@@ -52,6 +52,7 @@ export interface IPatchUserMiddleSchool {
 export interface IUserMiddleSchool {
   studentNumber: string[];
   schoolCode: string;
+  teacherName: string;
 }
 
 export interface IUserMiddleSchoolName {

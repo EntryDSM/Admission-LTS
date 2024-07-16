@@ -17,7 +17,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     form: userMiddleSchool,
     setForm: setUserMiddleSchool,
     onChange: changeUserMiddleSchool,
-  } = useInput<IUserMiddleSchool>({ studentNumber: ['', '', ''], schoolCode: '' });
+  } = useInput<IUserMiddleSchool>({ studentNumber: ['', '', ''], schoolCode: '', teacherName: '' });
   const { form: schoolName, setForm: setSchoolName } = useInput('');
 
   /** 중학교 겁색을 위한 form */
@@ -39,6 +39,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
           data.studentNumber ? data.studentNumber.studentNumber : userMiddleSchool.studentNumber[2],
         ],
         schoolCode: data.schoolCode ? data.schoolCode : userMiddleSchool.schoolCode,
+        teacherName: data.teacherName,
       });
       setSchoolName(data.schoolName);
     }
@@ -83,6 +84,11 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     setUserMiddleSchool((prev) => ({ ...prev, studentNumber: oldArray }));
   };
 
+  const onChangeTeacherName = (e: InputType) => {
+    const old = e.currentTarget.value;
+    setUserMiddleSchool((prev) => ({ ...prev, teacherName: old }));
+  };
+
   const isDisabled = Object.values(userMiddleSchool).some((item) => !!item === false);
 
   const onNextClick = () => {
@@ -110,6 +116,15 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
               검색
             </Button>
           </Stack>
+        </ApplicationContent>
+        <ApplicationContent grid={1} title="중학교 교사 성명">
+          <Input
+            name="teacherName"
+            type="text"
+            value={userMiddleSchool.teacherName}
+            width={230}
+            onChange={onChangeTeacherName}
+          />
         </ApplicationContent>
         <ApplicationContent grid={3} title="중학교 학번" placeholder="반, 번호는 최대 2자리수 까지 입력 가능합니다.">
           <Input
@@ -140,6 +155,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
             maxLength={2}
           />
         </ApplicationContent>
+
         {modalState === 'SEARCH_SCHOOL' && (
           <Modal onClose={close}>
             <Input
