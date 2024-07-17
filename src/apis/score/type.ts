@@ -1,40 +1,52 @@
 export interface IPatchUserBlackExam {
-  ged_average_score: number;
+  averageScore: number;
+  extraScore: ExtraScore;
 }
 
 export interface IGetUserBlackExam {
-  average_score: string;
+  averageScore: string;
+  extraScore: ExtraScore;
 }
 
 export interface IPatchGraduation {
-  volunteer_time: number;
-  day_absence_count: number;
-  lecture_absence_count: number;
-  lateness_count: number;
-  early_leave_count: number;
-  korean_grade: string;
-  social_grade: string;
-  history_grade: string;
-  math_grade: string;
-  science_grade: string;
-  english_grade: string;
-  tech_and_home_grade: string;
+  volunteerTime: number;
+  absenceDayCount: number;
+  lectureAbsenceCount: number;
+  latenessCount: number;
+  earlyLeaveCount: number;
+  koreanGrade: string;
+  socialGrade: string;
+  historyGrade: string;
+  mathGrade: string;
+  scienceGrade: string;
+  englishGrade: string;
+  techAndHomeGrade: string;
+  extraScore: {
+    hasCertificate: boolean;
+    hasCompetitionPrize: boolean;
+  };
 }
 
 export interface ISelectGradeElement {
-  korean_grade: string[];
-  social_grade: string[];
-  history_grade: string[];
-  math_grade: string[];
-  science_grade: string[];
-  english_grade: string[];
-  tech_and_home_grade: string[];
+  koreanGrade: string[];
+  socialGrade: string[];
+  historyGrade: string[];
+  mathGrade: string[];
+  scienceGrade: string[];
+  englishGrade: string[];
+  techAndHomeGrade: string[];
 }
 
 export interface IWriteGradeElement {
-  volunteer_time: number;
-  day_absence_count: number;
-  lecture_absence_count: number;
-  lateness_count: number;
-  early_leave_count: number;
+  volunteerTime: number;
+  absenceDayCount: number;
+  lectureAbsenceCount: number;
+  latenessCount: number;
+  earlyLeaveCount: number;
+  extraScore: ExtraScore;
 }
+
+export type ExtraScore = {
+  hasCertificate: boolean;
+  hasCompetitionPrize: boolean;
+};

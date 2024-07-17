@@ -31,7 +31,7 @@ const Application = () => {
   const { close, modalState, setModalState } = useModal();
   const { mutate } = PostUserEntry();
   const cookie = new Cookies();
-  const refresh_token = cookie.get('refresh_token');
+  const refresh_token = cookie.get('refreshToken');
   useEffect(() => setModalState('ADMISSION'), []);
 
   const elements = [
@@ -76,7 +76,7 @@ export default Application;
 const _Container = styled.div`
   display: flex;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
 `;
 
 const _Wrapper = styled.div`

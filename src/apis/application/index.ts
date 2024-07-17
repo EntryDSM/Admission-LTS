@@ -4,7 +4,9 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { instance } from '../axios';
 import { useModal } from '@/hooks/useModal';
 import {
+  IGetUserInfo,
   IGetUSerType,
+  IPatchGraduationType,
   IPatchUserInfo,
   IPatchUserIntroduce,
   IPatchUserPhoto,
@@ -19,7 +21,7 @@ const router = 'application';
 /** 전형 구분 선택 */
 export const EditUserType = () => {
   const response = async (param: IPatchUserType) => {
-    return instance.patch(`${router}/users/type`, param);
+    return instance.patch(`${router}/type`, param);
   };
   const queryClient = useQueryClient();
   return useMutation(response, {
@@ -37,10 +39,18 @@ export const EditUserType = () => {
   });
 };
 
+/** 졸업 유형 선택 */
+export const PatchGraduationType = () => {
+  const response = async (param: IPatchGraduationType) => {
+    return instance.patch(`${router}/graduation/type`, param);
+  };
+  return useMutation(response);
+};
+
 /** 전형 구분 조회 */
 export const GetUserType = () => {
   const response = async () => {
-    const { data } = await instance.get<IGetUSerType>(`${router}/users/type`);
+    const { data } = await instance.get<IGetUSerType>(`${router}/type`);
     return data;
   };
   return useQuery(['userType'], response);
@@ -48,8 +58,8 @@ export const GetUserType = () => {
 
 /** 인적사항 입력 */
 export const EditUserInfo = () => {
-  const response = async (params: Omit<IPatchUserInfo, 'photo_file_name'>) => {
-    return instance.patch(`${router}/users`, params);
+  const response = async (params: IPatchUserInfo) => {
+    return instance.patch(`${router}`, params);
   };
   return useMutation(response, {
     onError: (e) => {
@@ -77,18 +87,18 @@ export const EditUserInfo = () => {
 /** 인적사항 조회 */
 export const GetUserInfo = () => {
   const response = async () => {
-    const { data } = await instance.get<IPatchUserInfo>(`${router}/users`);
+    const { data } = await instance.get<IGetUserInfo>(`${router}`);
     return data;
   };
   return useQuery(['userInfos'], response);
 };
 
 /** 증명사진 입력 */
-export const EditUserPhto = () => {
+export const EditUserPhoto = () => {
   const response = async (params: IPatchUserPhoto) => {
     const form = new FormData();
-    form.append('photo', params.photo);
-    return instance.post(`${router}/users/photo `, form, {
+    form.append('image', params.photo);
+    return instance.post(`${router}/photo `, form, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -108,9 +118,7 @@ export const EditUserPhto = () => {
 /** 유저 이름, 전화번호 조회 */
 export const GetUserProfile = () => {
   const response = async () => {
-    const { data } = await instance.get<{ name: string; telephone_number: string; is_student: boolean }>(
-      `${router}/users/info`,
-    );
+    const { data } = await instance.get<{ name: string; phoneNumber: string; isParent: boolean }>(`user/info`);
     return data;
   };
   return useQuery(['userProfile'], response);
@@ -119,7 +127,7 @@ export const GetUserProfile = () => {
 /** 졸업/졸업예정 추가정보 입력 */
 export const EditAdditionalInfo = () => {
   const response = async (params: IPatchUserMiddleSchool) => {
-    return instance.patch(`${router}/users/graduation`, params);
+    return instance.patch(`${router}/graduation`, params);
   };
   return useMutation(response, {
     onError: () => Toast('중학교 정보 제출에 실패하였습니다.', { type: 'error' }),
@@ -129,7 +137,7 @@ export const EditAdditionalInfo = () => {
 /** 졸업/졸업예정 추가정보 조회 */
 export const GetAdditionalInfo = () => {
   const response = async () => {
-    const { data } = await instance.get<IUserMiddleSchool>(`${router}/users/graduation`);
+    const { data } = await instance.get<IUserMiddleSchool>(`${router}/graduation`);
     return data;
   };
   return useQuery(['userMiddleSchool'], response);
@@ -177,12 +185,12 @@ export const EditUserPlan = () => {
 export const SubmitPdf = () => {
   const { setModalState } = useModal();
   const response = async () => {
-    return instance.post(`${router}`);
+    return instance.post(`${router}/final-submit`);
   };
   return useMutation(response, {
     onSuccess: () => setModalState('SUCCESS'),
     onError: (e) => {
-      let message = '';
+      let message = '이상한 오류';
       if (isAxiosError(e)) {
         switch (e.response?.data.message) {
           case 'Application process is not completed':

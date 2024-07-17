@@ -26,7 +26,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   const { data: getUserStudyPlan } = GetUserStudyPlan();
   const { data: getUserType } = GetUserType();
 
-  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus == 'QUALIFICATION_EXAM';
 
   useEffect(() => {
     getUserIntroduce && setUserWrite((prev) => ({ ...prev, userIntroduce: getUserIntroduce.content }));
@@ -34,13 +34,13 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   }, [getUserIntroduce, getUserStudyPlan]);
 
   const nextCurrentGenerator = () => {
-    switch (getUserType?.educational_status) {
+    switch (getUserType?.educationalStatus) {
       case 'PROSPECTIVE_GRADUATE':
-        setCurrent(current + 2);
+        setCurrent(current + 1);
         break;
       case 'QUALIFICATION_EXAM':
         queryClient.invalidateQueries(['PdfPreview']);
-        setCurrent(current + 6);
+        setCurrent(current + 1);
         break;
       default:
         setCurrent(current + 1);

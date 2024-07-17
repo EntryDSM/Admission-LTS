@@ -12,15 +12,15 @@ export const Router = () => {
     window.location.href = `${MAIN_URL}`;
   }, []);
 
-  // const cookie = new Cookies();
-  // const refreshToken = cookie.get('refresh_token');
-  // const accessToken = cookie.get('access_token');
+  const cookie = new Cookies();
+  const refreshToken = cookie.get('refreshToken');
+  const accessToken = cookie.get('accessToken');
 
-  // useEffect(() => {
-  //   if (!accessToken && !refreshToken) {
-  //     window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
-  //   }
-  // }, [accessToken, refreshToken]);
+  useEffect(() => {
+    if (!accessToken && !refreshToken) {
+      window.location.href = 'https://auth.entrydsm.hs.kr/login?redirect_url=https://apply.entrydsm.hs.kr';
+    }
+  }, [accessToken, refreshToken]);
 
   return (
     <BrowserRouter>

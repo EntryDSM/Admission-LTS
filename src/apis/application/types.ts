@@ -1,4 +1,4 @@
-export type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM' | '';
+export type EducationalStatus = 'PROSPECTIVE_GRADUATE' | 'GRADUATE' | 'QUALIFICATION_EXAM';
 
 export type ApplicationType = 'COMMON' | 'MEISTER' | 'SOCIAL';
 
@@ -17,35 +17,49 @@ export type ApplicationRemark =
   | '';
 
 export interface IGetUSerType {
-  educational_status: EducationalStatus;
-  application_type: getApplicationType;
-  application_remark: ApplicationRemark;
-  graduated_at: string;
-  daejeon: boolean;
-  out_of_headcount: boolean;
-  graduated: boolean;
+  educationalStatus: EducationalStatus;
+  applicationType: ApplicationType;
+  applicationRemark: ApplicationRemark;
+  isDaejeon: boolean;
+  isOutOfHeadcount: boolean;
+  graduatedDate: string;
 }
 
 export interface IPatchUserType {
-  application_type: ApplicationType | '';
-  is_daejeon: boolean | undefined;
-  educational_status: EducationalStatus | '';
-  graduated_at: string;
-  application_remark: ApplicationRemark | null;
-  is_out_of_headcount: boolean;
+  applicationType: ApplicationType | '';
+  isDaejeon: string | undefined;
+  applicationRemark: ApplicationRemark | null;
+  isOutOfHeadcount: boolean;
+}
+
+export interface IPatchGraduationType {
+  graduateDate: string;
+  educationalStatus: EducationalStatus;
+}
+
+export interface IGetUserInfo {
+  sex: string;
+  birthDate: string;
+  applicantName: string;
+  applicantTel: string;
+  parentName: string;
+  parentTel: string;
+  streetAddress: string;
+  postalCode: string;
+  detailAddress: string;
+  photoPath: string;
 }
 
 export interface IPatchUserInfo {
-  name: string;
+  applicantName: string;
   sex: string;
-  birthday: string;
-  parent_name: string;
-  parent_tel: string;
-  telephone_number: string;
-  address: string;
-  detail_address: string;
-  post_code: string;
-  photo_file_name: string;
+  birthDate: string;
+  parentName: string;
+  parentTel: string;
+  applicantTel: string;
+  streetAddress: string;
+  detailAddress: string;
+  postalCode: string;
 }
 
 export interface IPatchUserPhoto {
@@ -55,18 +69,23 @@ export interface IPatchUserPhoto {
 export interface IUserMiddleSchool {
   name: string;
   sex: string;
-  birthday: string;
-  school_code: string;
-  school_tel: string;
-  school_name: string;
-  student_number: string;
-  parent_name: string;
-  telephone_number: string;
-  parent_tel: string;
-  address: string;
-  detail_address: string;
-  post_code: string;
-  photo_file_name: string;
+  birthDate: string;
+  schoolCode: string;
+  schoolTel: string;
+  schoolName: string;
+  parentName: string;
+  parentTel: string;
+  applicantTel: string;
+  streetAddress: string;
+  detailAddress: string;
+  postalCode: string;
+  photoPath: string;
+  studentNumber: {
+    gradeNumber: string;
+    classNumber: string;
+    studentNumber: string;
+  };
+  teacherName: string;
 }
 
 export interface IPatchUserIntroduce {

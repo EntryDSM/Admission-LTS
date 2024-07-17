@@ -33,5 +33,4 @@ export const applicationTypeDateText: Record<EducationalStatus, string> = {
   PROSPECTIVE_GRADUATE: '졸업예정 연월',
   GRADUATE: '졸업 연월',
   QUALIFICATION_EXAM: '검정고시 합격 연월',
-  '': '졸업 연월',
 };

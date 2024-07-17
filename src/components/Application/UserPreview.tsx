@@ -20,7 +20,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { mutate } = SubmitPdf();
   const { data: getUserType } = GetUserType();
 
-  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus == 'QUALIFICATION_EXAM';
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -106,7 +106,13 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
       <ApplicationFooter
         current={current}
         isDisabled={false}
-        prevClick={isBlackExam ? () => setCurrent(current - 6) : () => setCurrent(current - 1)}
+        prevClick={
+          isBlackExam
+            ? () => setCurrent(current - 6)
+            : getUserType?.educationalStatus === 'PROSPECTIVE_GRADUATE'
+            ? () => setCurrent(current - 2)
+            : () => setCurrent(current - 1)
+        }
       />
     </>
   );
