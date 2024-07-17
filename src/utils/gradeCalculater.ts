@@ -60,7 +60,7 @@ export const getSelectGradeScore = (
     console.log(allSubjectsGrade[i]);
   }
 
-  if (!isGraduate && !allSubjectsGrade[2] && !!allSubjectsGrade[0]) allSubjectsGrade[0] *= 2;
+  if (!isGraduate && !!allSubjectsGrade[0]) allSubjectsGrade[0] *= 2;
 
   if (!isGraduate) {
     if (!allSubjectsGrade[1] && !allSubjectsGrade[2]) {
