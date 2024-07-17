@@ -40,7 +40,11 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     setForm: setBlackExam,
     onChange: changeBlackExam,
   } = useInput<IUserBlackExam>({
-    gedAverageScore: '',
+    averageScore: '',
+    extraScore: {
+      hasCertificate: false,
+      hasCompetitionPrize: false,
+    },
   });
 
   const { data: userProfile } = GetUserProfile();
@@ -126,13 +130,17 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
       });
     getUserBlackExam &&
       setBlackExam({
-        gedAverageScore: getUserBlackExam.averageScore,
+        averageScore: getUserBlackExam.averageScore,
+        extraScore: {
+          hasCertificate: getUserBlackExam.extraScore.hasCertificate,
+          hasCompetitionPrize: getUserBlackExam.extraScore.hasCompetitionPrize,
+        },
       });
   }, [getUserInfo, getUserBlackExam, imgFile]);
 
   const isDisabled =
     Object.values(userInfo).some((item) => !!item === false) ||
-    (userPhoto.photo === 'data:image/png;base64,null' && isBlackExam === !!blackExam.gedAverageScore);
+    (userPhoto.photo === 'data:image/png;base64,null' && isBlackExam === !!blackExam.averageScore);
 
   const onNextClick = () => {
     combinedMutations(
@@ -146,7 +154,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
                 parentTel: userInfo.parentTel.replace(/-/g, ''),
               }),
             () => patchUserPhoto({ photo: userPhoto.photoFileName as File }),
-            () => patchBlackExam({ averageScore: Number(blackExam.gedAverageScore) }),
+            () => patchBlackExam({ averageScore: Number(blackExam.averageScore), extraScore: blackExam.extraScore }),
           ]
         : [
             () =>
@@ -282,8 +290,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
               type="number"
               placeholder="검정고시 평균"
               width={230}
-              name="gedAverageScore"
-              value={blackExam.gedAverageScore}
+              name="averageScore"
+              value={blackExam.averageScore}
               onChange={changeBlackExam}
               unit="점"
             />
@@ -355,6 +363,7 @@ const _ApplicationWrapper = styled.div`
   border-top: 1px solid ${theme.color.black600};
   border-bottom: 1px solid ${theme.color.black600};
   margin-top: 49px;
+  overflow-x: hidden;
 `;
 
 const _ApplicationImg = styled.div`
