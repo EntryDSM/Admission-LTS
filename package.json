@@ -45,7 +45,8 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.4",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.3.2",
+    "vite-plugin-favicon": "^1.0.8"
   },
   "main": "index.js",
   "repository": "https://github.com/EntryDSM/Admission-LTS.git",

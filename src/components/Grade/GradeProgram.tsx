@@ -163,8 +163,6 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
     );
   };
 
-  console.log(gradeCurrent);
-
   return (
     <>
       <_Wrapper>
