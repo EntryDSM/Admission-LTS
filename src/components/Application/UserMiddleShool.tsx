@@ -1,24 +1,23 @@
+import { useEffect, useState } from 'react';
+import { AxiosResponse } from 'axios';
 import styled from '@emotion/styled';
 import { Button, Input, Stack, Text, theme } from '@team-entry/design_system';
+import { instance } from '@/apis/axios';
+import { EditAdditionalInfo, GetAdditionalInfo } from '@/apis/application';
 import ApplicationContent from './ApplicationContent';
-import { useModal } from '../../hooks/useModal';
-import Modal from '../Modal/Modal';
-import { AxiosResponse } from 'axios';
-import { instance } from '../../apis/axios';
-import { useInput } from '../../hooks/useInput';
-import { useEffect, useState } from 'react';
-import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '../../interface/type';
 import ApplicationFooter from './ApplicationFooter';
-import { EditAdditionalInfo, GetAdditionalInfo } from '../../apis/application';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
-import { sliceString } from '../../utils/SliceString';
+import Modal from '../Modal/Modal';
+import { useModal } from '@/hooks/useModal';
+import { useInput } from '@/hooks/useInput';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '@/interface/type';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   const {
     form: userMiddleSchool,
     setForm: setUserMiddleSchool,
     onChange: changeUserMiddleSchool,
-  } = useInput<IUserMiddleSchool>({ student_number: ['', '', ''], school_code: '', school_tel: '' });
+  } = useInput<IUserMiddleSchool>({ studentNumber: ['', '', ''], schoolCode: '', teacherName: '' });
   const { form: schoolName, setForm: setSchoolName } = useInput('');
 
   /** 중학교 겁색을 위한 form */
@@ -34,17 +33,21 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
   useEffect(() => {
     if (!!data) {
       setUserMiddleSchool({
-        student_number: sliceString(data.student_number ?? '', [1, 2, 2]),
-        school_code: data.school_code,
-        school_tel: data.school_tel,
+        studentNumber: [
+          data.studentNumber ? data.studentNumber.gradeNumber : userMiddleSchool.studentNumber[0],
+          data.studentNumber ? data.studentNumber.classNumber : userMiddleSchool.studentNumber[1],
+          data.studentNumber ? data.studentNumber.studentNumber : userMiddleSchool.studentNumber[2],
+        ],
+        schoolCode: data.schoolCode ? data.schoolCode : userMiddleSchool.schoolCode,
+        teacherName: data.teacherName,
       });
-      setSchoolName(data.school_name);
+      setSchoolName(data.schoolName);
     }
   }, [data]);
 
   const searchSchool = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
+      const response: AxiosResponse = await instance.get<ISearchSchools>(`schools?school_name=${form}`);
       const data = response.data;
       setSchoolList(data?.content);
       clearTimeout(timer);
@@ -57,7 +60,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     }
     const newTimer = Number(
       setTimeout(async () => {
-        const response: AxiosResponse = await instance.get<ISearchSchools>(`application/schools?name=${form}`);
+        const response: AxiosResponse = await instance.get<ISearchSchools>(`schools?school_name=${form}`);
         const data = response.data;
         setSchoolList(data?.content);
       }, 500),
@@ -65,20 +68,25 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
     setTimer(newTimer);
   }, [form]);
 
-  const confirmSchool = (school_code: string, school_name: string) => {
-    setUserMiddleSchool({ ...userMiddleSchool, school_code });
-    setSchoolName(school_name);
+  const confirmSchool = (schoolCode: string, schoolName: string) => {
+    setUserMiddleSchool({ ...userMiddleSchool, schoolCode });
+    setSchoolName(schoolName);
     close();
   };
 
   const onChangeStudentNumber = (e: InputType, index: number, maxLength: number) => {
-    const oldArray = userMiddleSchool.student_number;
+    const oldArray = userMiddleSchool.studentNumber;
     if (e.currentTarget.value.length >= maxLength) {
       oldArray[index] = e.currentTarget.value.slice(0, maxLength);
     } else {
       oldArray[index] = e.currentTarget.value;
     }
-    setUserMiddleSchool((prev) => ({ ...prev, student_number: oldArray }));
+    setUserMiddleSchool((prev) => ({ ...prev, studentNumber: oldArray }));
+  };
+
+  const onChangeTeacherName = (e: InputType) => {
+    const old = e.currentTarget.value;
+    setUserMiddleSchool((prev) => ({ ...prev, teacherName: old }));
   };
 
   const isDisabled = Object.values(userMiddleSchool).some((item) => !!item === false);
@@ -89,11 +97,9 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
         () =>
           mutateAsync({
             ...userMiddleSchool,
-            student_number: userMiddleSchool.student_number
-              .map((item) => String(item.padStart(2, '0')))
-              .join('')
-              .slice(1),
-            school_tel: userMiddleSchool.school_tel.replace(/-/g, ''),
+            gradeNumber: parseInt(userMiddleSchool.studentNumber[0]),
+            classNumber: parseInt(userMiddleSchool.studentNumber[1]),
+            studentNumber: userMiddleSchool.studentNumber[2],
           }),
       ],
       () => setCurrent(current + 1),
@@ -111,10 +117,19 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
             </Button>
           </Stack>
         </ApplicationContent>
+        <ApplicationContent grid={1} title="중학교 교사 성명">
+          <Input
+            name="teacherName"
+            type="text"
+            value={userMiddleSchool.teacherName}
+            width={230}
+            onChange={onChangeTeacherName}
+          />
+        </ApplicationContent>
         <ApplicationContent grid={3} title="중학교 학번" placeholder="반, 번호는 최대 2자리수 까지 입력 가능합니다.">
           <Input
             type="number"
-            value={userMiddleSchool.student_number[0]}
+            value={userMiddleSchool.studentNumber[0]}
             onChange={(e) => onChangeStudentNumber(e, 0, 1)}
             placeholder="학년"
             width={120}
@@ -123,7 +138,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
           />
           <Input
             type="number"
-            value={userMiddleSchool.student_number[1]}
+            value={userMiddleSchool.studentNumber[1]}
             onChange={(e) => onChangeStudentNumber(e, 1, 2)}
             placeholder="반"
             width={120}
@@ -132,7 +147,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
           />
           <Input
             type="number"
-            value={userMiddleSchool.student_number[2]}
+            value={userMiddleSchool.studentNumber[2]}
             onChange={(e) => onChangeStudentNumber(e, 2, 2)}
             placeholder="번호"
             width={120}
@@ -140,17 +155,7 @@ const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
             maxLength={2}
           />
         </ApplicationContent>
-        <ApplicationContent grid={1} title="중학교 전화번호" placeholder="‘-’ 문자를 제외한 숫자만 입력해주세요">
-          <Input
-            type="tel"
-            name="school_tel"
-            value={userMiddleSchool.school_tel}
-            onChange={changeUserMiddleSchool}
-            placeholder="중학교 전화번호"
-            width={230}
-            maxLength={13}
-          />
-        </ApplicationContent>
+
         {modalState === 'SEARCH_SCHOOL' && (
           <Modal onClose={close}>
             <Input
@@ -208,7 +213,7 @@ const _SearchPreviews = styled.div`
   height: 200px;
   align-items: center;
   margin-top: 25px;
-  overflow: scroll;
+  overflow-x: hidden;
 `;
 
 const _SearchPreview = styled.div`

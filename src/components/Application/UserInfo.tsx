@@ -1,25 +1,18 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
-import ApplicationContent from './ApplicationContent';
-import { useModal } from '../../hooks/useModal';
 import DaumPostCode from 'react-daum-postcode';
-import Modal from '../Modal/Modal';
-import { generateNumberArray } from '../../utils/GenerateNumberArray';
-import {
-  EditUserInfo,
-  EditUserPhto,
-  GetAdditionalInfo,
-  GetUserInfo,
-  GetUserProfile,
-  GetUserType,
-} from '../../apis/application';
-import { ICurrnettype, IUserBlackExam, IUserInfo, IUserPhoto } from '../../interface/type';
+import { EditUserInfo, EditUserPhoto, GetUserInfo, GetUserProfile, GetUserType } from '@/apis/application';
+import { EditUserBlackExam, GetUserBlackExam } from '@/apis/score';
+import ApplicationContent from './ApplicationContent';
 import ApplicationFooter from './ApplicationFooter';
-import { EditUserBlackExam, GetUserBlackExam } from '../../apis/score';
-import { useInput } from '../../hooks/useInput';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
-import { dataURLtoFile } from '../../utils/dataURLtoFile';
+import Modal from '../Modal/Modal';
+import { useModal } from '@/hooks/useModal';
+import { useInput } from '@/hooks/useInput';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { generateNumberArray } from '@/utils/GenerateNumberArray';
+import { ICurrnettype, IUserBlackExam, IUserInfo, IUserPhoto } from '@/interface/type';
+import { dataURLtoFile } from '@/utils/dataURLtoFile';
 
 const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const date = new Date();
@@ -28,42 +21,56 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     setForm: setUserInfo,
     onChange: changeUserInfo,
   } = useInput<IUserInfo>({
-    name: '',
-    telephone_number: '00000000000',
+    applicantName: '',
+    applicantTel: '00000000000',
     sex: '',
-    birthday: [(date.getFullYear() - 15).toString(), '01', '01'],
-    parent_name: '',
-    parent_tel: '',
-    address: '',
-    detail_address: '',
-    post_code: '',
+    birthDate: [(date.getFullYear() - 15).toString(), '01', '01'],
+    parentName: '',
+    parentTel: '',
+    streetAddress: '',
+    detailAddress: '',
+    postalCode: '',
   });
   const { form: userPhoto, setForm: setUserPhoto } = useInput<IUserPhoto>({
     photo: '',
-    photo_file_name: '',
+    photoFileName: '',
   });
   const {
     form: blackExam,
     setForm: setBlackExam,
     onChange: changeBlackExam,
   } = useInput<IUserBlackExam>({
-    ged_average_score: '',
+    averageScore: '',
+    extraScore: {
+      hasCertificate: false,
+      hasCompetitionPrize: false,
+    },
   });
 
-  const { data: getAddionalInfo } = GetAdditionalInfo();
   const { data: userProfile } = GetUserProfile();
   const { data: getUserInfo } = GetUserInfo();
   const { data: getUserType } = GetUserType();
-  const isBlackExam = getUserType?.educational_status === 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus === 'QUALIFICATION_EXAM';
   const { data: getUserBlackExam } = GetUserBlackExam(isBlackExam);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const { close, modalState, setModalState } = useModal();
 
-  const { mutateAsync: patchUserPhoto } = EditUserPhto();
+  const { mutateAsync: patchUserPhoto } = EditUserPhoto();
   const { mutateAsync: patchUserInfo } = EditUserInfo();
   const { mutateAsync: patchBlackExam } = EditUserBlackExam();
   const { combinedMutations } = useCombineMutation();
+
+  const [imgFile, setImgFile] = useState<File>();
+
+  const initImgFile = async (dataurl: string) => {
+    const res = await dataURLtoFile(dataurl);
+    return res;
+  };
+
+  useEffect(() => {
+    initImgFile(getUserInfo?.photoPath!).then((file) => setImgFile(file));
+  }, [getUserInfo?.photoPath]);
 
   const saveImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target;
@@ -74,7 +81,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         const reader = new FileReader();
         reader.readAsDataURL(files[0]);
         reader.onloadend = () => {
-          setUserPhoto({ photo: reader.result as string, photo_file_name: files[0] });
+          setUserPhoto({ photo: reader.result as string, photoFileName: files[0] });
         };
       }
     }
@@ -84,8 +91,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
     close();
     setUserInfo({
       ...userInfo,
-      address: data?.address,
-      post_code: data?.zonecode,
+      streetAddress: data?.address,
+      postalCode: data?.zonecode,
     });
   };
 
@@ -96,39 +103,44 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   useEffect(() => {
     setUserInfo({
       ...userInfo,
-      [userProfile?.is_student ? 'name' : 'parent_name']: userProfile?.name,
-      [userProfile?.is_student ? 'telephone_number' : 'parent_tel']: userProfile?.telephone_number.replace(/-/g, ''),
+      [userProfile?.isParent ? 'parentName' : 'applicantName']: userProfile?.name,
+      [userProfile?.isParent ? 'parentTel' : 'applicantTel']: userProfile?.phoneNumber.replace(/-/g, ''),
     });
   }, [userProfile]);
 
   useEffect(() => {
     getUserInfo &&
-      getUserInfo!.birthday &&
+      getUserInfo!.birthDate &&
       setUserInfo({
-        name: getUserInfo.name,
-        parent_name: getUserInfo.parent_name,
-        parent_tel: getUserInfo.parent_tel,
-        post_code: getUserInfo.post_code,
-        detail_address: getUserInfo.detail_address,
+        applicantName: getUserInfo.applicantName,
+        parentName: getUserInfo.parentName,
+        parentTel: getUserInfo.parentTel,
+        postalCode: getUserInfo.postalCode,
+        detailAddress: getUserInfo.detailAddress,
         sex: getUserInfo.sex,
-        address: getUserInfo.address,
-        telephone_number: getUserInfo.telephone_number,
-        birthday: getUserInfo.birthday.split('-'),
+        streetAddress: getUserInfo.streetAddress,
+        applicantTel: getUserInfo.applicantTel,
+        birthDate: getUserInfo.birthDate.split('-'),
       });
     getUserInfo &&
+      getUserInfo!.photoPath &&
       setUserPhoto({
-        photo: 'data:image/png;base64,' + getUserInfo.photo_file_name,
-        photo_file_name: dataURLtoFile('data:image/png;base64,' + getUserInfo.photo_file_name),
+        photo: getUserInfo.photoPath,
+        photoFileName: imgFile!,
       });
     getUserBlackExam &&
       setBlackExam({
-        ged_average_score: getUserBlackExam.average_score,
+        averageScore: getUserBlackExam.averageScore,
+        extraScore: {
+          hasCertificate: getUserBlackExam.extraScore.hasCertificate,
+          hasCompetitionPrize: getUserBlackExam.extraScore.hasCompetitionPrize,
+        },
       });
-  }, [getUserInfo, getAddionalInfo, getUserBlackExam]);
+  }, [getUserInfo, getUserBlackExam, imgFile]);
 
   const isDisabled =
     Object.values(userInfo).some((item) => !!item === false) ||
-    (!userPhoto.photo_file_name && isBlackExam === !!blackExam.ged_average_score);
+    (userPhoto.photo === 'data:image/png;base64,null' && isBlackExam === !!blackExam.averageScore);
 
   const onNextClick = () => {
     combinedMutations(
@@ -137,22 +149,22 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             () =>
               patchUserInfo({
                 ...userInfo,
-                telephone_number: userInfo.telephone_number.replace(/-/g, ''),
-                birthday: userInfo.birthday.join('-'),
-                parent_tel: userInfo.parent_tel.replace(/-/g, ''),
+                applicantTel: userInfo.applicantTel.replace(/-/g, ''),
+                birthDate: userInfo.birthDate.join('-'),
+                parentTel: userInfo.parentTel.replace(/-/g, ''),
               }),
-            () => patchUserPhoto({ photo: userPhoto.photo_file_name as File }),
-            () => patchBlackExam({ ged_average_score: Number(blackExam.ged_average_score) }),
+            () => patchUserPhoto({ photo: userPhoto.photoFileName as File }),
+            () => patchBlackExam({ averageScore: Number(blackExam.averageScore), extraScore: blackExam.extraScore }),
           ]
         : [
             () =>
               patchUserInfo({
                 ...userInfo,
-                telephone_number: userInfo.telephone_number.replace(/-/g, ''),
-                birthday: userInfo.birthday.join('-'),
-                parent_tel: userInfo.parent_tel.replace(/-/g, ''),
+                applicantTel: userInfo.applicantTel.replace(/-/g, ''),
+                birthDate: userInfo.birthDate.join('-'),
+                parentTel: userInfo.parentTel.replace(/-/g, ''),
               }),
-            () => patchUserPhoto({ photo: userPhoto.photo_file_name as File }),
+            () => patchUserPhoto({ photo: userPhoto.photoFileName as File }),
           ],
       isBlackExam ? () => setCurrent(current + 2) : () => setCurrent(current + 1),
     );
@@ -164,7 +176,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         <ApplicationContent title="증명사진" grid={1}>
           <Stack align="center" gap={20}>
             <_ApplicationImg onClick={handleImage}>
-              {userPhoto.photo ? (
+              {userPhoto.photo !== 'data:image/png;base64,null' ? (
                 <Img src={userPhoto.photo} alt="사진을 다시 입력해주세요" />
               ) : (
                 <Text color="black700" size="body3">
@@ -190,10 +202,10 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             type="text"
             placeholder="이름"
             width={230}
-            name="name"
-            value={userInfo.name}
+            name="applicantName"
+            value={userInfo.applicantName}
             onChange={changeUserInfo}
-            disabled={userProfile?.is_student}
+            disabled={!userProfile?.isParent}
           />
         </ApplicationContent>
 
@@ -203,31 +215,31 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
         </ApplicationContent>
         <ApplicationContent grid={3} title="생년월일">
           <Dropdown
-            className="birthday"
+            className="birthDate"
             width={85}
-            value={userInfo.birthday[0]}
+            value={userInfo.birthDate[0]}
             onChange={(year) =>
-              setUserInfo({ ...userInfo, birthday: [year, userInfo.birthday[1], userInfo.birthday[2]] })
+              setUserInfo({ ...userInfo, birthDate: [year, userInfo.birthDate[1], userInfo.birthDate[2]] })
             }
             options={generateNumberArray(2000, date.getFullYear())}
             unit="년"
           />
           <Dropdown
-            className="birthday"
+            className="birthDate"
             width={85}
-            value={userInfo.birthday[1]}
+            value={userInfo.birthDate[1]}
             onChange={(month) =>
-              setUserInfo({ ...userInfo, birthday: [userInfo.birthday[0], month, userInfo.birthday[2]] })
+              setUserInfo({ ...userInfo, birthDate: [userInfo.birthDate[0], month, userInfo.birthDate[2]] })
             }
             options={generateNumberArray(1, 12)}
             unit="월"
           />
           <Dropdown
-            className="birthday"
+            className="birthDate"
             width={85}
-            value={userInfo.birthday[2]}
+            value={userInfo.birthDate[2]}
             onChange={(date) =>
-              setUserInfo({ ...userInfo, birthday: [userInfo.birthday[0], userInfo.birthday[1], date] })
+              setUserInfo({ ...userInfo, birthDate: [userInfo.birthDate[0], userInfo.birthDate[1], date] })
             }
             options={generateNumberArray(1, 31)}
             unit="일"
@@ -239,11 +251,11 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             type="tel"
             placeholder="본인 연락처"
             width={230}
-            name="telephone_number"
+            name="applicantTel"
             maxLength={13}
-            value={userInfo.telephone_number}
+            value={userInfo.applicantTel}
             onChange={changeUserInfo}
-            disabled={userProfile?.is_student}
+            disabled={!userProfile?.isParent}
           />
         </ApplicationContent>
 
@@ -252,10 +264,10 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             type="text"
             placeholder="보호자명"
             width={230}
-            name="parent_name"
-            value={userInfo.parent_name}
+            name="parentName"
+            value={userInfo.parentName}
             onChange={changeUserInfo}
-            disabled={!userProfile?.is_student}
+            disabled={userProfile?.isParent}
           />
         </ApplicationContent>
 
@@ -265,10 +277,10 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             placeholder="보호자 연락처"
             width={230}
             maxLength={13}
-            name="parent_tel"
-            value={userInfo.parent_tel}
+            name="parentTel"
+            value={userInfo.parentTel}
             onChange={changeUserInfo}
-            disabled={!userProfile?.is_student}
+            disabled={userProfile?.isParent}
           />
         </ApplicationContent>
 
@@ -278,8 +290,8 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
               type="number"
               placeholder="검정고시 평균"
               width={230}
-              name="ged_average_score"
-              value={blackExam.ged_average_score}
+              name="averageScore"
+              value={blackExam.averageScore}
               onChange={changeBlackExam}
               unit="점"
             />
@@ -290,14 +302,21 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
           <VStack margin={[30, 0]} gap={10}>
             <HStack gap={20}>
               <Input
-                name="post_code"
+                name="postalCode"
                 type="text"
                 width={125}
                 placeholder="우편번호"
-                value={userInfo.post_code}
+                value={userInfo.postalCode}
                 disabled
               />
-              <Input name="address" type="text" width={240} placeholder="기본주소" value={userInfo.address} disabled />
+              <Input
+                name="address"
+                type="text"
+                width={240}
+                placeholder="기본주소"
+                value={userInfo.streetAddress}
+                disabled
+              />
               <Button
                 kind="outlined"
                 onClick={() => {
@@ -309,12 +328,12 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
             </HStack>
             <HStack gap={20}>
               <Input
-                name="detail_address"
+                name="detailAddress"
                 type="text"
                 width={485}
                 placeholder="상세주소"
                 onChange={changeUserInfo}
-                value={userInfo.detail_address}
+                value={userInfo.detailAddress}
               />
             </HStack>
           </VStack>
@@ -344,6 +363,7 @@ const _ApplicationWrapper = styled.div`
   border-top: 1px solid ${theme.color.black600};
   border-bottom: 1px solid ${theme.color.black600};
   margin-top: 49px;
+  overflow-x: hidden;
 `;
 
 const _ApplicationImg = styled.div`

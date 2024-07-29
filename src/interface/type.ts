@@ -1,4 +1,4 @@
-import { IPatchUserType } from '../apis/application/types';
+import { EducationalStatus, IPatchUserType } from '@/apis/application/types';
 
 export type InputType =
   | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -16,42 +16,47 @@ export interface ICurrnettype {
   setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }
 
-export interface IUserTypeParams extends Omit<IPatchUserType, 'graduated_at' | 'is_daejeon'> {
-  is_daejeon: string | undefined;
-  graduated_at: string[];
+export interface IUserTypeParams extends Omit<IPatchUserType, 'graduateDate' | 'educationalStatus'> {
+  graduateDate: string[];
+  educationalStatus: EducationalStatus | '';
 }
 
 export interface IUserPhoto {
   photo: string;
-  photo_file_name: File | string;
+  photoFileName: File | string;
 }
 
 export interface IUserBlackExam {
-  ged_average_score: string;
+  averageScore: string;
+  extraScore: {
+    hasCertificate: boolean;
+    hasCompetitionPrize: boolean;
+  };
 }
 
 export interface IUserInfo {
-  name: string;
-  telephone_number: string;
+  applicantName: string;
+  applicantTel: string;
   sex: string;
-  birthday: string[];
-  parent_name: string;
-  parent_tel: string;
-  address: string;
-  detail_address: string;
-  post_code: string;
+  birthDate: string[];
+  parentName: string;
+  parentTel: string;
+  streetAddress: string;
+  detailAddress: string;
+  postalCode: string;
 }
 
 export interface IPatchUserMiddleSchool {
-  student_number: string;
-  school_code: string;
-  school_tel: string;
+  gradeNumber: number;
+  classNumber: number;
+  studentNumber: string;
+  schoolCode: string;
 }
 
 export interface IUserMiddleSchool {
-  student_number: string[];
-  school_code: string;
-  school_tel: string;
+  studentNumber: string[];
+  schoolCode: string;
+  teacherName: string;
 }
 
 export interface IUserMiddleSchoolName {

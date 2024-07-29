@@ -1,10 +1,11 @@
 import styled from '@emotion/styled';
 import { Text, theme } from '@team-entry/design_system';
-import { GetUserType } from '../../apis/application';
+import { GetUserType } from '@/apis/application';
 
 const ProgressBar = ({ step = 1 }: { step: number }) => {
   const { data: userType } = GetUserType();
-  const isGraduate = userType?.educational_status === 'GRADUATE';
+  const isGraduate = userType?.educationalStatus === 'GRADUATE';
+  const isBlackExam = userType?.educationalStatus === 'QUALIFICATION_EXAM';
   const progess = isGraduate
     ? [
         { element: <_Circle key={1} isNow={1 <= step} /> },
@@ -17,6 +18,8 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
         { element: <_Line key={8} isNow={5 <= step} isGraduate={isGraduate} /> },
         { element: <_Circle key={9} isNow={5 <= step} /> },
       ]
+    : isBlackExam
+    ? []
     : [
         { element: <_Circle key={1} isNow={1 <= step} /> },
         { element: <_Line key={2} isNow={2 <= step} isGraduate={isGraduate} /> },
@@ -29,6 +32,8 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
 
   const title = isGraduate
     ? ['3학년 2학기', '3학년 1학기', '2학년 2학기', '2학년 1학기', '출석 및 봉사']
+    : isBlackExam
+    ? ['가산점 입력']
     : ['3학년 1학기', '직전 학기', '직전전 학기', '출석 및 봉사'];
 
   return (

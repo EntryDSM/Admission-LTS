@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Icon, Skeleton, Text } from '@team-entry/design_system';
-import Pdf from '../Preview';
-import { GetPdfPreview } from '../../apis/pdf';
-import Modal from '../Modal/Modal';
-import { useModal } from '../../hooks/useModal';
-import { GetUserType, SubmitPdf } from '../../apis/application';
-import DefaultModal from '../Modal/DefaultModal';
+import { GetPdfPreview } from '@/apis/pdf';
+import { GetUserType, SubmitPdf } from '@/apis/application';
 import ApplicationFooter from './ApplicationFooter';
-import { ICurrnettype } from '../../interface/type';
+import Pdf from '../Preview';
+import Modal from '../Modal/Modal';
+import DefaultModal from '../Modal/DefaultModal';
+import { useModal } from '@/hooks/useModal';
+import { ICurrnettype } from '@/interface/type';
+import { MAIN_URL } from '@/constant/env';
 
 const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { data, isLoading } = GetPdfPreview();
@@ -19,7 +20,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
   const { mutate } = SubmitPdf();
   const { data: getUserType } = GetUserType();
 
-  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus == 'QUALIFICATION_EXAM';
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -57,14 +58,21 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
               color="black900"
               title="제출"
               subTitle={
-                <div style={{ lineHeight: '24px' }}>
-                  최종제출을 하면 <strong>수정이 불가능</strong> 합니다.
-                  <br />
-                  <br />
-                  최종 원서를 출력하여 <strong>서명과 직인</strong>을 찍은 뒤<br /> 반드시
-                  <strong> 본교로 발송</strong> 또는 <strong>방문 접수</strong>하세요.
-                </div>
+                <>
+                  <div style={{ color: 'red' }}>⚠ 원서를 제출하면 더 이상 수정할 수 없습니다.</div>
+                  <div>
+                    <br />
+                    최종 원서를 출력하여 서명과 직인을 찍은 뒤
+                    <br />
+                    반드시 본교로 발송 또는 방문 접수하세요.
+                  </div>
+                  <div>
+                    <br />
+                    '확인했습니다'를 입력하고 제출버튼을 눌러주세요.
+                  </div>
+                </>
               }
+              isInput={true}
               button="제출"
               onClick={mutate}
             />
@@ -79,7 +87,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
                 '원서 접수에 성공했습니다 \n 지원해주셔서 감사합니다 \n\n pdf 다운로드는 마이페이지를 확인해주세요'
               }
               button="확인"
-              onClick={() => (window.location.href = 'https://www.entrydsm.hs.kr/mypage')}
+              onClick={() => (window.location.href = `${MAIN_URL}/mypage`)}
             />
           </Modal>
         )}
@@ -90,7 +98,7 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
               title="오류"
               subTitle={'원서 제출 중 오류가 발생했습니다\n관리자에게 문의 바랍니다'}
               button="홈으로"
-              onClick={() => (window.location.href = 'https://www.entrydsm.hs.kr')}
+              onClick={() => (window.location.href = `${MAIN_URL}`)}
             />
           </Modal>
         )}
@@ -98,7 +106,13 @@ const UserPreview = ({ current, setCurrent }: ICurrnettype) => {
       <ApplicationFooter
         current={current}
         isDisabled={false}
-        prevClick={isBlackExam ? () => setCurrent(current - 6) : () => setCurrent(current - 1)}
+        prevClick={
+          isBlackExam
+            ? () => setCurrent(current - 5)
+            : getUserType?.educationalStatus === 'PROSPECTIVE_GRADUATE'
+            ? () => setCurrent(current - 2)
+            : () => setCurrent(current - 1)
+        }
       />
     </>
   );

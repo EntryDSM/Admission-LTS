@@ -1,18 +1,12 @@
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Textarea } from '@team-entry/design_system';
-import { ICurrnettype } from '../../interface/type';
-import ApplicationFooter from './ApplicationFooter';
-import {
-  EditUserIntroduce,
-  EditUserPlan,
-  GetUserIntroduce,
-  GetUserStudyPlan,
-  GetUserType,
-} from '../../apis/application';
-import { useTextArea } from '../../hooks/useTextarea';
-import { useCombineMutation } from '../../hooks/useCombineMutation';
-import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
+import { EditUserIntroduce, EditUserPlan, GetUserIntroduce, GetUserStudyPlan, GetUserType } from '@/apis/application';
+import ApplicationFooter from './ApplicationFooter';
+import { useTextArea } from '@/hooks/useTextarea';
+import { useCombineMutation } from '@/hooks/useCombineMutation';
+import { ICurrnettype } from '@/interface/type';
 
 const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   const {
@@ -32,7 +26,7 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   const { data: getUserStudyPlan } = GetUserStudyPlan();
   const { data: getUserType } = GetUserType();
 
-  const isBlackExam = getUserType?.educational_status == 'QUALIFICATION_EXAM';
+  const isBlackExam = getUserType?.educationalStatus == 'QUALIFICATION_EXAM';
 
   useEffect(() => {
     getUserIntroduce && setUserWrite((prev) => ({ ...prev, userIntroduce: getUserIntroduce.content }));
@@ -40,13 +34,13 @@ const UserWrite = ({ current, setCurrent }: ICurrnettype) => {
   }, [getUserIntroduce, getUserStudyPlan]);
 
   const nextCurrentGenerator = () => {
-    switch (getUserType?.educational_status) {
+    switch (getUserType?.educationalStatus) {
       case 'PROSPECTIVE_GRADUATE':
-        setCurrent(current + 2);
+        setCurrent(current + 1);
         break;
       case 'QUALIFICATION_EXAM':
         queryClient.invalidateQueries(['PdfPreview']);
-        setCurrent(current + 6);
+        setCurrent(current + 1);
         break;
       default:
         setCurrent(current + 1);
