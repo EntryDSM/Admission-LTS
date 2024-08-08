@@ -19,7 +19,11 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
         { element: <_Circle key={9} isNow={5 <= step} /> },
       ]
     : isBlackExam
-    ? []
+    ? [
+        { element: <_Circle key={1} isNow={1 <= step} /> },
+        { element: <_Line key={2} isNow={2 <= step} isGraduate={isGraduate} isBlackExam={isBlackExam} /> },
+        { element: <_Circle key={3} isNow={2 <= step} /> },
+      ]
     : [
         { element: <_Circle key={1} isNow={1 <= step} /> },
         { element: <_Line key={2} isNow={2 <= step} isGraduate={isGraduate} /> },
@@ -33,7 +37,7 @@ const ProgressBar = ({ step = 1 }: { step: number }) => {
   const title = isGraduate
     ? ['3학년 2학기', '3학년 1학기', '2학년 2학기', '2학년 1학기', '출석 및 봉사']
     : isBlackExam
-    ? ['가산점 입력']
+    ? ['검정고시 점수', '성적 산출']
     : ['3학년 1학기', '직전 학기', '직전전 학기', '출석 및 봉사'];
 
   return (
@@ -80,8 +84,8 @@ const _Circle = styled.div<{ isNow?: boolean }>`
   margin: 0 0.9rem;
 `;
 
-const _Line = styled.div<{ isNow?: boolean; isGraduate?: boolean }>`
-  width: ${({ isGraduate }) => (isGraduate ? 18 : 25)}%;
+const _Line = styled.div<{ isNow?: boolean; isGraduate?: boolean; isBlackExam?: boolean }>`
+  width: ${({ isGraduate, isBlackExam }) => (isBlackExam ? 100 : isGraduate ? 18 : 25)}%;
   height: 0.15rem;
   border-radius: 5px;
   background-color: ${({ isNow }) => (isNow ? theme.color.orange500 : theme.color.black100)};

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { Text } from '@team-entry/design_system';
 import { GetUserType } from '@/apis/application';
 import { EditUserBlackExam, EditUserGraduation, GetUserBlackExam, GetUserGraduation } from '@/apis/score';
-import { ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
+import { IBlackExamGradeElement, ISelectGradeElement, IWriteGradeElement } from '@/apis/score/type';
 import ProgressBar from './ProgressBar';
 import GradePreview from './GradePreview';
 import AllSelect from './SelectGrade/AllSelect';
@@ -14,6 +14,7 @@ import { subject } from '@/constant/grade';
 import { useInput } from '@/hooks/useInput';
 import { useCombineMutation } from '@/hooks/useCombineMutation';
 import { ICurrnettype } from '@/interface/type';
+import WriteBlackExam from './WriteInfo/WriteBlackExam';
 
 const Program = ({ current, setCurrent }: ICurrnettype) => {
   const { form: selectGradeElement, setForm: setSelectGradeElement } = useInput<ISelectGradeElement>({
@@ -42,6 +43,19 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
     },
   });
 
+  const {
+    form: blackExamGradeElement,
+    setForm: setBlackExamGradeElement,
+    onChange: changeBlackExamGradeElement,
+  } = useInput<IBlackExamGradeElement>({
+    koreanGrade: 0,
+    socialGrade: 0,
+    englishGrade: 0,
+    mathGrade: 0,
+    scienceGrade: 0,
+    electivesGrade: 0,
+  });
+
   const { data: userType } = GetUserType();
   const { data: userGraduation } = GetUserGraduation();
   const { combinedMutations } = useCombineMutation();
@@ -62,7 +76,10 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         { step: 5, title: '출석 점수 & 봉사 점수' },
       ]
     : isBlackExam
-    ? [{ step: 1, title: '가산점' }]
+    ? [
+        { step: 1, title: '검정고시 점수 입력' },
+        { step: 2, title: '가산점' },
+      ]
     : [
         { step: 1, title: '3학년 1학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
         { step: 2, title: '직전 학기', subTitle: '과목이 없는 경우 X로 기입하세요' },
@@ -70,8 +87,21 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         { step: 4, title: '출석 점수 & 봉사 점수' },
       ];
 
+  console.log(blackExamGradeElement);
+  console.log(gradeCurrent);
+  console.log(isBlackExam);
+
   useEffect(() => {
     if (isBlackExam) {
+      userBlackExam &&
+        setBlackExamGradeElement({
+          koreanGrade: userBlackExam.koreanGrade,
+          mathGrade: userBlackExam.mathGrade,
+          socialGrade: userBlackExam.socialGrade,
+          scienceGrade: userBlackExam.scienceGrade,
+          electivesGrade: userBlackExam.electivesGrade,
+          englishGrade: userBlackExam.englishGrade,
+        });
       userBlackExam &&
         setWriteGradeElement({
           absenceDayCount: 0,
@@ -116,7 +146,7 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
             : userGraduation.techAndHomeGrade.split('').slice(1),
         }));
     }
-  }, [userGraduation, userBlackExam]);
+  }, [userGraduation]);
 
   const onNextClick = () => {
     combinedMutations(
@@ -124,7 +154,12 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
         () => {
           if (isBlackExam) {
             return editBlackExam({
-              averageScore: Number(userBlackExam?.averageScore),
+              koreanGrade: blackExamGradeElement.koreanGrade,
+              englishGrade: blackExamGradeElement.englishGrade,
+              mathGrade: blackExamGradeElement.mathGrade,
+              socialGrade: blackExamGradeElement.socialGrade,
+              scienceGrade: blackExamGradeElement.scienceGrade,
+              electivesGrade: blackExamGradeElement.electivesGrade,
               extraScore: {
                 hasCertificate: writeGradeElement?.extraScore.hasCertificate,
                 hasCompetitionPrize: writeGradeElement?.extraScore.hasCompetitionPrize,
@@ -249,6 +284,15 @@ const Program = ({ current, setCurrent }: ICurrnettype) => {
             />
           )}
           {isBlackExam && titles[gradeCurrent].step === 1 && (
+            <WriteBlackExam
+              writeGradeElement={blackExamGradeElement}
+              changeWriteGradeElement={changeBlackExamGradeElement}
+              setWriteGradeElement={setBlackExamGradeElement}
+              isCommon={isCommon}
+              educationalStatus={userType.educationalStatus}
+            />
+          )}
+          {isBlackExam && titles[gradeCurrent].step === 2 && (
             <WriteAttendence
               writeGradeElement={writeGradeElement}
               changeWriteGradeElement={changeWriteGradeElement}
