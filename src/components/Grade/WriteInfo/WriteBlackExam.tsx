@@ -1,8 +1,7 @@
 import { Input } from '@team-entry/design_system';
 import GradeWraper from '../GradeWraper';
 import { InputType } from '@/interface/type';
-import { IBlackExamGradeElement, IWriteGradeElement } from '@/apis/score/type';
-import SelectAdditionalPoint from '../SelectGrade/SelectAdditionalPoint';
+import { IBlackExamGradeElement } from '@/apis/score/type';
 import { EducationalStatus } from '@/apis/application/types';
 
 interface IWriteGrade {
@@ -13,13 +12,7 @@ interface IWriteGrade {
   educationalStatus?: EducationalStatus;
 }
 
-const WriteBlackExam = ({
-  writeGradeElement,
-  changeWriteGradeElement,
-  setWriteGradeElement,
-  isCommon,
-  educationalStatus,
-}: IWriteGrade) => {
+const WriteBlackExam = ({ writeGradeElement, changeWriteGradeElement }: IWriteGrade) => {
   return (
     <>
       <GradeWraper title="국어">

@@ -13,11 +13,11 @@ import { useCombineMutation } from '@/hooks/useCombineMutation';
 import { ICurrnettype, ISearchSchool, ISearchSchools, IUserMiddleSchool, InputType } from '@/interface/type';
 
 const UserMiddleSchool = ({ current, setCurrent }: ICurrnettype) => {
-  const {
-    form: userMiddleSchool,
-    setForm: setUserMiddleSchool,
-    onChange: changeUserMiddleSchool,
-  } = useInput<IUserMiddleSchool>({ studentNumber: ['', '', ''], schoolCode: '', teacherName: '' });
+  const { form: userMiddleSchool, setForm: setUserMiddleSchool } = useInput<IUserMiddleSchool>({
+    studentNumber: ['', '', ''],
+    schoolCode: '',
+    teacherName: '',
+  });
   const { form: schoolName, setForm: setSchoolName } = useInput('');
 
   /** 중학교 겁색을 위한 form */

@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import { Button, Dropdown, HStack, Input, Radio, Stack, Text, VStack, theme } from '@team-entry/design_system';
 import DaumPostCode from 'react-daum-postcode';
 import { EditUserInfo, EditUserPhoto, GetUserInfo, GetUserProfile, GetUserType } from '@/apis/application';
-import { EditUserBlackExam, GetUserBlackExam } from '@/apis/score';
 import ApplicationContent from './ApplicationContent';
 import ApplicationFooter from './ApplicationFooter';
 import Modal from '../Modal/Modal';
@@ -11,7 +10,7 @@ import { useModal } from '@/hooks/useModal';
 import { useInput } from '@/hooks/useInput';
 import { useCombineMutation } from '@/hooks/useCombineMutation';
 import { generateNumberArray } from '@/utils/GenerateNumberArray';
-import { ICurrnettype, IUserBlackExam, IUserInfo, IUserPhoto } from '@/interface/type';
+import { ICurrnettype, IUserInfo, IUserPhoto } from '@/interface/type';
 import { dataURLtoFile } from '@/utils/dataURLtoFile';
 
 const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
@@ -34,17 +33,6 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   const { form: userPhoto, setForm: setUserPhoto } = useInput<IUserPhoto>({
     photo: '',
     photoFileName: '',
-  });
-  const {
-    form: blackExam,
-    setForm: setBlackExam,
-    onChange: changeBlackExam,
-  } = useInput<IUserBlackExam>({
-    averageScore: '',
-    extraScore: {
-      hasCertificate: false,
-      hasCompetitionPrize: false,
-    },
   });
 
   const { data: userProfile } = GetUserProfile();
@@ -129,8 +117,7 @@ const UserInfo = ({ current, setCurrent }: ICurrnettype) => {
   }, [getUserInfo, imgFile]);
 
   const isDisabled =
-    Object.values(userInfo).some((item) => !!item === false) ||
-    (userPhoto.photo === 'data:image/png;base64,null' && isBlackExam === !!blackExam.averageScore);
+    Object.values(userInfo).some((item) => !!item === false) || userPhoto.photo === 'data:image/png;base64,null';
 
   const onNextClick = () => {
     combinedMutations(

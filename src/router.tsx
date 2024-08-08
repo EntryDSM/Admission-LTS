@@ -4,7 +4,7 @@ import Header from './components/Header';
 import NotFound from './pages/NotFound';
 import ApplicationPage from './pages/Application';
 import { MAIN_URL } from './constant/env';
-// import { Cookies } from 'react-cookie';
+import { Cookies } from 'react-cookie';
 
 export const Router = () => {
   useEffect(() => {

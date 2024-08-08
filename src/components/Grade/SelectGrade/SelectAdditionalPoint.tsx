@@ -1,4 +1,4 @@
-import { InputType, Text, theme } from '@team-entry/design_system';
+import { Text, theme } from '@team-entry/design_system';
 import styled from '@emotion/styled';
 import { ExtraScore, IWriteGradeElement } from '@/apis/score/type';
 import { SetStateAction } from 'react';
